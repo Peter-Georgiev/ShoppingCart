@@ -1,0 +1,157 @@
+{#
+   This is the base template used as the application layout which contains the
+   common elements and decorates all the other templates.
+   See http://symfony.com/doc/current/book/templating.html#template-inheritance-and-layouts
+#}
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}Shopping Cart{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+
+<body id="{% block body_id %}{% endblock %}">
+
+{% block header %}
+    <header>
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="{{ path('shop_index') }}" class="navbar-brand">SHOPPING CART</a>
+
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+
+                        {% block categories %}
+                            {# •	Listing products in categories #}
+                        {% endblock %}
+
+                        {% block create %}
+
+                            {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
+
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Create/View
+                                        <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ path('category_create') }}">
+                                                Create Category
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ path('product_create') }}">
+                                                Create Product
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            {% endif %}
+
+                        {% endblock %}
+
+                        {% if app.getUser() %}
+
+                            <li>
+                                <a href="{{ path('payment_view_cart') }}">
+                                    My Cart
+                                    {% block countInCart %}
+                                        {# •	Count add to carts product #}
+                                    {% endblock %}
+                                </a>
+                            </li>
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ app.getUser().getUsername() }}
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+
+                                    <li>
+                                        <a href="{{ path('user_profile') }}">
+                                            My Profile
+                                        </a>
+                                    </li>
+
+                                    {% if app.getUser() and app.getUser().isAdmin() %}
+
+                                        <li>
+                                            <a href="{{ path('users_view') }}">
+                                                All Users
+                                            </a>
+                                        </li>
+
+                                    {% endif %}
+
+                                    <li>
+                                        <a href="{{ path('security_logout') }}">
+                                            Logout
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+
+                        {% else %}
+
+                            <li>
+                                <a href="{{ path('user_register') }}">
+                                    REGISTER
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ path('security_login') }}">
+                                    LOGIN
+                                </a>
+                            </li>
+
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+<div class="container body-container">
+    {% block body %}
+        <div class="row">
+            <div id="main" class="col-sm-9">
+                {% block main %}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+</div>
+
+{% block footer %}
+    <footer>
+        <div class="container modal-footer">
+            <p>&copy; 2017 - Shopping Cart</p>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>

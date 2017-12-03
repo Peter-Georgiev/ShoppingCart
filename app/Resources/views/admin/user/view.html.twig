@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'profile' %}
+
+{% block main %}
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-sm-2 ">Username</th>
+                    <th>Full Name</th>
+                    <th>Cash</th>
+                    <th>ROLE</th>
+                    <th></th>
+                </tr>
+                <tbody>
+                </thead>
+
+                {% for user in users %}
+                    <form class="form-horizontal" action="{{ path('role_change', {id: user.id}) }}" method="POST">
+                        <tr>
+
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_username"
+                                       name="user[username]" value="{{ user.username }}" disabled>
+                            </td>
+
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_firstName"
+                                       name="user[firstName]" value="{{ user.firstName }} {{ user.lastName }}" disabled>
+                            </td>
+
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_lastName"
+                                       name="user[lastName]" value="{{ user.cash }} BGN" disabled>
+                            </td>
+
+                            {% for role in user.roles %}
+                                <td class="col-sm-3 ">
+                                    <input class="form-control" id="user_lastName"
+                                           name="role[name]" value="{{ role }}" disabled>
+                                </td>
+                            {% endfor %}
+
+                            <td class="col-sm-1">
+                                <div class="col-sm-1 col-sm-offset-1">
+                                    <button type="submit" class="btn btn-primary">EDIT</button>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </form>
+                {% endfor %}
+
+                {{ form_row(form._token) }}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}

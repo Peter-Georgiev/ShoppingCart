@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block categories %}
+    {#•	Listing products in categories #}
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
+            <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('shop_index')}}">All Categories</a></li>
+            {% for category in categories %}
+            <li><a href="{{ path('product_listing_category', {'id' : category.id}) }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+{% endblock %}
+
+{% block countInCart %}
+    {# •	Count add to carts product #}
+    <span class="badge">{{ payments|length }}</span>
+{% endblock %}
+
+{% block main %}
+    <div class="container body-content">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-6">
+                    <article>
+                        <header>
+                            <h2>{{ product.name }}</h2>
+                        </header>
+
+                        <p>
+                            Category: {{ product.category.name }}
+                        </p>
+
+                        <p>
+                            Model: {{ product.model }},
+                            Quantity: {{ product.qtty }},
+                            Price: {{ product.price }}
+                        </p>
+
+                        <small class="owner">
+                            Owner: {{ product.owner }}
+                        </small>
+
+                        <footer>
+                            <div class="pull-right">
+                                {% if app.getUser() and app.getUser().isAdmin() %}
+
+                                    <a class="btn btn-default btn-xs"
+                                       href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
+                                    <a class="btn btn-default btn-xs"
+                                       href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
+
+                                {% elseif  app.getUser() and (app.getUser().isEdit()) and (app.getUser().isOwner(product) == null) %}
+
+                                    <a class="btn btn-default btn-xs"
+                                       href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
+                                    <a class="btn btn-default btn-xs"
+                                        href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
+
+                                {% elseif  app.getUser() and (app.getUser().isEdit()) and (app.getUser().isOwner(product) != null) %}
+
+                                    <a class="btn btn-default btn-xs"
+                                       href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
+
+                                {% elseif app.getUser() and (app.getUser().isOwner(product) == null) %}
+
+                                    <a class="btn btn-default btn-xs"
+                                       href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
+
+                                {% elseif app.getUser() and (app.getUser().isOwner(product) != null) %}
+
+
+                                {% else %}
+
+                                    <a class="btn btn-default btn-xs"
+                                       href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
+
+                                {% endif %}
+                            </div>
+                        </footer>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

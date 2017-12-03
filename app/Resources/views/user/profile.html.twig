@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'profile' %}
+
+{% block main %}
+    <div>
+        <label>Username: </label>
+        {{ user.username }}
+        <br>
+        <label>Full name: </label>
+        {{ user.firstName }} {{ user.lastName }}
+        <br>
+        <label>Your balance: </label>
+        {{ user.cash }}
+        <br>
+        <label>Role: </label>
+        {{ role }}
+    </div>
+    {% if app.getUser() and ((app.getUser().isAdmin() or app.getUser().isEdit())) %}
+        <div>
+            <a class="btn btn-default btn-xs"
+               href="{{ path('users_view', {'users' : app.getUser()}) }}">EDIT ROLES USERS &raquo;</a>
+        </div>
+    {% endif %}
+{% endblock %}

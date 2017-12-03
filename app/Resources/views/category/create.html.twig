@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" action="{{ path('category_create') }}" method="POST">
+
+
+                <fieldset>
+                    <legend>New Category</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="category_name">Product Category</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="category_name" placeholder="Product Category"
+                                   name="category[name]">
+                        </div>
+                    </div>
+
+                    {{ form_row(form._token) }}
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('shop_index') }}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-sm-2 ">Category Name</th>
+                </tr>
+                <tbody>
+                </thead>
+
+                {% for category in categories %}
+                    <form class="form-horizontal" action="{{ path('category_view', {id: category.id}) }}" method="POST">
+                        <tr>
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_username"
+                                       name="user[username]" value="{{ category.name }}" disabled>
+                            </td>
+
+                            <td class="col-sm-1">
+                                <div class="col-sm-1 col-sm-offset-1">
+                                    <button type="submit" class="btn btn-primary">Modified</button>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </form>
+                {% endfor %}
+
+                {{ form_row(form._token) }}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+{% endblock %}

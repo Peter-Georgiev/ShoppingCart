@@ -1,0 +1,304 @@
+<?php
+
+namespace ShoppingCartBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Product
+ *
+ * @ORM\Table(name="products",
+ *     options={"collate":"utf8_general_ci", "charset":"utf8", "engine":"InnoDB"})
+ * @ORM\Entity(repositoryClass="ShoppingCartBundle\Repository\ProductRepository")
+ */
+class Product
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="model", type="string", length=255)
+     */
+    private $model;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="qtty", type="decimal", precision=3, scale=1)
+     */
+    private $qtty;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
+     */
+    private $price;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="date_added", type="datetime")
+     */
+    private $dateAdded;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="owner_id", type="integer")
+     */
+    private $ownerId;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\User", inversedBy="products")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     */
+    private $owner;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="category_id", type="integer")
+     */
+    private $categoryId;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\Category", inversedBy="products")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+     private $category;
+
+    /**
+     * Product constructor.
+     */
+    public function __construct()
+    {
+        $this->dateAdded = new \DateTime('now');
+
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Product
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set measure
+     *
+     * @param string $model
+     *
+     * @return Product
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * Get measure
+     *
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * Set qtty
+     *
+     * @param string $qtty
+     *
+     * @return Product
+     */
+    public function setQtty($qtty)
+    {
+        $this->qtty = $qtty;
+
+        return $this;
+    }
+
+    /**
+     * Get qtty
+     *
+     * @return string
+     */
+    public function getQtty()
+    {
+        return $this->qtty;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     *
+     * @return Product
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateAdded(): \DateTime
+    {
+        return $this->dateAdded;
+    }
+
+    /**
+     * @param \DateTime $dateAdded
+     */
+    public function setDateAdded(\DateTime $dateAdded)
+    {
+        $this->dateAdded = $dateAdded;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOwnerId(): int
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * @param int $ownerId
+     *
+     * @return Product
+     */
+    public function setOwnerId(int $ownerId)
+    {
+        $this->ownerId = $ownerId;
+
+        return $this;
+    }
+
+    /**
+     * @param User $owner
+     *
+     * @return Product
+     */
+    public function setOwner(User $owner)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwner(): User
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     *
+     * @return Category
+     */
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Set categoryId
+     *
+     * @param integer $categoryId
+     *
+     * @return Product
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryId
+     *
+     * @return integer
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+}

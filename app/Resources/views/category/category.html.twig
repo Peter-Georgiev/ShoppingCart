@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                <article>
+                    <header>
+                        <h2>{#{ category.name }#}</h2>
+                    </header>
+                    <legend>Category</legend>
+                    <ul class="list-group">
+                        {% for category in categories %}
+                            <li>
+                                <a class="btn btn-default btn-xs"
+                                   href="{{ path('category_edit', {'id' : category.id}) }}">Edit &raquo;</a>
+                                &#160&#160&#160
+                                <a class="btn btn-default btn-xs"
+                                   href="{{ path('category_delete', {'id' : category.id}) }}">Delete &raquo;</a>
+                                &#160&#160&#160
+                                {{ category.name }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </article>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <a class="btn btn-default" href="{{ path('category_create') }}">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

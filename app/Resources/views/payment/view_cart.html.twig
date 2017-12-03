@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block countInCart %}
+    {# •	Count add to carts product #}
+    <span class="badge">{{ payments|length }}</span>
+{% endblock %}
+
+{% block main %}
+
+    <div class="container body-content" xmlns="http://www.w3.org/1999/html">
+        <main class="container small-gutter fluid-md">
+            <div class="row">
+
+                <form id="cartForm" method="post" action="{{ path('payment_remove_products') }}">
+                    <h2 class="pg-title">
+                        {% if payments|length != 0 %}
+                            Your cart
+                            <span class="c-qty">
+                            {% if payments|length > 1 %}
+                                ({{ payments|length }} products)
+                            {% else %}
+                                ({{ payments|length }} product)
+                            {% endif %}
+                            </span>
+                            <button type="submit" class="btn btn-default btn-xs">Remove ALL</button>
+                        {% else %}
+                            Your cart is empty!
+                        {% endif %}
+                    </h2>
+                </form>
+
+
+                <div class="order-p col-lg-9">
+
+                    {% for payment in payments %}
+                        <div class="panel col-sm-8">
+                            <form id="cartForm" method="post"
+                                  action="{{ path('payment_remove_product', {'id' : payment.id}) }}">
+                                <header>
+                                    <h4>Name: {{ payment.products.name }}</h4>
+                                </header>
+
+                                <p>
+                                    Model: {{ payment.products.model }},
+                                    Quantity: {{ payment.qtty }},
+                                </p>
+
+                                <p>
+                                    Добавена: {{ payment.datePurchases|date('d.m.Y \\ H:i:s') }}
+                                </p>
+
+                                <p>
+                                    Price: {{ payment.price }}
+                                    <button type="submit" class="btn btn-default btn-xs pull-right">
+                                        Remove
+                                    </button>
+                                </p>
+
+                            </form>
+                        </div>
+                    {% endfor %}
+
+                    <div class="item">
+                        <div class="cl"></div>
+                    </div>
+
+                </div>
+
+                <div class="cart-ctrl col-lg-3">
+                    <div class="ng-box order-total">
+                        <div class="content">
+
+                            <div>
+                                <a class="btn btn-default" href="{{ path('shop_index') }}">Back Shopping</a>
+                            </div>
+
+                            <div class="t-row">
+                                <span class="capt">Your balance:</span>
+                                <span class="amount">{{ app.getUser().getCash() }}
+                                    <span class="curr">BGN</span></span>
+                                <div class="cl">&nbsp;</div>
+                            </div>
+
+                            {% if payments|length != 0 %}
+                                <div class="title">
+                                    Your order
+                                </div>
+
+                                <div class="total">
+                                    <span class="capt">Total Price:</span>
+                                    <span class="amount total-amount">{{ totalPrice }}</sup>
+                                        <span class="curr">BGN</span>
+                                    </span>
+                                    <div class="cl">&nbsp;</div>
+                                </div>
+
+                                {% if hasCheckout %}
+                                    <form id="cartForm" method="post" action="{{ path('payment_remove_products') }}">
+                                        <button type="submit" class="btn btn-blue-nd big">Checkout</button>
+                                    </form>
+                                {% else %}
+                                    <p class="text-danger text-uppercase">Невъзможно плащане</p>
+                                {% endif %}
+                            {% endif %}
+                            <div class="cl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+{% endblock %}

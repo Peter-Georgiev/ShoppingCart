@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'register' %}
+
+{% block main %}
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" action="{{ path('role_change', {id:user.id}) }}" method="post">
+                <fieldset>
+                    <legend>CHANGE ROLE</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_username">Username</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="user_username" placeholder="Username"
+                                   name="user[username]" value="{{ user.username }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_firstName">First Name</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="user_firstName" placeholder="First Name"
+                                   name="user[firstName]" value="{{ user.firstName }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_lastName">Last Name</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="user_lastName" placeholder="Last Name"
+                                   name="user[lastName]" value="{{ user.lastName }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_lastName">Cash</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="user_lastName" placeholder="Last Name"
+                                   name="user[lastName]" value="{{ user.cash }} BGN" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="role_name">ROLE</label>
+                        {% for userRole in user.roles %}
+                            <div class="col-sm-4 ">
+                                <select class="form-control" id="role_name" name="role[name]">
+                                    <option  value="{{ userRole }}" >{{ userRole }}</option>
+                                    {% for role in roles %}
+                                        <option value="{{ role.name }}" >{{ role.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('users_view') }}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Change role</button>
+                        </div>
+                    </div>
+
+
+                    {{  form_row(form._token) }}
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

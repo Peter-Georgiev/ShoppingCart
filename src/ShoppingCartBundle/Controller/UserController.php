@@ -2,6 +2,7 @@
 
 namespace ShoppingCartBundle\Controller;
 
+use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Role;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Form\UserType;
@@ -64,11 +65,18 @@ class UserController extends Controller
     public function profileAction()
     {
         /** @var User $user */
-        $user = $this->getUser();
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute("shop_index");
+        }
 
-        $role = str_replace('ROLE_', '', $user->getRoles()[0]);
+        $role = str_replace('ROLE_', '', $currentUser->getRoles()[0]);
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
 
-        return $this->render("user/profile.html.twig", ['user' => $user, 'role' => $role]);
+        return $this->render("user/profile.html.twig",
+            array('user' => $currentUser, 'role' => $role, 'payments' => $payments)
+        );
     }
 
     /**
@@ -93,7 +101,13 @@ class UserController extends Controller
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $roles = $this->getDoctrine()->getRepository(Role::class)->findAll();
 
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
+
+
         return $this->render("admin/user/view.html.twig",
-            array('form' => $form->createView(), 'users' => $users, 'roles' => $roles));
+            array('form' => $form->createView(), 'users' => $users,
+                'roles' => $roles, 'payments' => $payments)
+        );
     }
 }

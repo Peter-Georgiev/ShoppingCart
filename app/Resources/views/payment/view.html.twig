@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block countInCart %}
+    {# •	Count add to carts product #}
+    {# defined works with variable names #}
+
+    {% if payments is defined %}
+        <span class="badge">{{ payments|length }}</span>
+    {% endif %}
+
+{% endblock %}
+
+{% block main %}
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-sm-2 ">Product Name</th>
+                    <th class="col-sm-2 ">Model</th>
+                    <th class="col-sm-2 ">Quantity</th>
+                    <th class="col-sm-2 ">Price</th>
+                    <th class="col-sm-2 ">Discount</th>
+                    <th class="col-sm-2 ">Payment</th>
+                </tr>
+                </thead>
+
+                {% for paymentsPaid in paymentsPaids %}
+                    <tr>
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_username"
+                                       name="payment[products.name]" value="{{ paymentsPaid.products.name }}" disabled>
+                            </td>
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_firstName"
+                                       name="payment[products.name]" value="{{ paymentsPaid.products.model }}" disabled>
+                            </td>
+                            <td class="col-sm-1">
+                                <input class="form-control" id="user_lastName"
+                                       name="payment[qtty]" value="{{ paymentsPaid.qtty }}" disabled>
+                            </td>
+                            <td class="col-sm-1 ">
+                                <input class="form-control" id="user_lastName"
+                                       name="payment[price]" value="{{ paymentsPaid.price }} BGN" disabled>
+                            </td>
+                            <td class="col-sm-1 ">
+                                <input class="form-control" id="user_lastName"
+                                       name="payment[price]" value="{{ paymentsPaid.discount }}%" disabled>
+                            </td>
+                            <td class="col-sm-1 ">
+                                <input class="form-control" id="user_lastName"
+                                       name="payment[price]" value="{{ paymentsPaid.payment }} BGN" disabled>
+                            </td>
+                        </tr>
+                {% endfor %}
+
+                <td class="col-sm-1">
+                <td class="col-sm-1 ">
+                    <input class="form-control" id="user_lastName"
+                           name="payment[price]" value="{{ paymentsSum }} BGN" disabled>
+                </td>
+                    <div class="col-sm-1 col-sm-offset-1">
+                        <a type="submit" class="btn btn-primary" href="{{ path('shop_index') }}">Shopping</a>
+                    </div>
+                </td>
+
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}

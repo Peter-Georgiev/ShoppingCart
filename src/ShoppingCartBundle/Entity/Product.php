@@ -2,6 +2,7 @@
 
 namespace ShoppingCartBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -94,11 +95,19 @@ class Product
      private $isDelete;
 
     /**
+     * @var Payment
+     *
+     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Payment", mappedBy="products")
+     */
+    private $payments;
+
+    /**
      * Product constructor.
      */
     public function __construct()
     {
         $this->dateAdded = new \DateTime('now');
+        $this->payments = new ArrayCollection();
         $this->isDelete = false;
     }
 

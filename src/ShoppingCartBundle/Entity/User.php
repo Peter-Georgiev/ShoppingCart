@@ -49,7 +49,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
     private $lastName = '';
 
@@ -77,12 +77,18 @@ class User implements UserInterface
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Role")
+     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Role", inversedBy="users")
      * @ORM\JoinTable(name="users_roles",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")})
      */
     private $roles;
+
+    /**
+     * @var Payment
+     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Payment", mappedBy="users")
+     */
+    private $payments;
 
 
     /**
@@ -91,6 +97,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->payments = new ArrayCollection();
         $this->regTime = new \DateTime();
         $this->roles = new ArrayCollection();
     }
@@ -378,5 +385,24 @@ class User implements UserInterface
     function __toString()
     {
         return $this->firstName . ' ' . $this->lastName;
+    }
+
+    /**
+     * @return Payment
+     */
+    public function getPayments(): Payment
+    {
+        return $this->payments;
+    }
+
+    /**
+     * @param Payment $payments
+     * @return User
+     */
+    public function setPayments(Payment $payments)
+    {
+        $this->payments = $payments;
+
+        return $this;
     }
 }

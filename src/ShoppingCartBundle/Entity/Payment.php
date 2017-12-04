@@ -48,10 +48,10 @@ class Payment
      * @ORM\Column(name="payment", type="decimal", precision=10, scale=2, nullable=false)
      */
     private $payment;
-    
+
     /**
      * @var bool
-     * 
+     *
      * @ORM\Column(name="is_paid", type="boolean")
      */
     private $isPaid;
@@ -92,6 +92,22 @@ class Payment
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $users;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="document_id", type="integer", nullable=true)
+     */
+    private $documentId;
+
+    /**
+     * @var Document
+     *
+     * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\Document", inversedBy="payments")
+     * @ORM\JoinColumn(name="document_id", referencedColumnName="id")
+     */
+    private $documents;
+
 
     /**
      * Payment constructor.
@@ -170,6 +186,12 @@ class Payment
     public function setDiscount(float $discount)
     {
         $this->discount = $discount;
+
+        if ($discount > 0) {
+            $discount = ($discount / $this->price) * 100;
+            $this->payment = $this->price - $discount;
+            return $this;
+        }
 
         return $this;
     }
@@ -274,11 +296,14 @@ class Payment
     }
 
     /**
-     * @param int $userId
+     * @param $userId
+     * @return Payment
      */
     public function setUserId($userId)
     {
         $this->userId = $userId;
+
+        return $this;
     }
 
     /**
@@ -290,11 +315,54 @@ class Payment
     }
 
     /**
-     * @param User $users
+     * @param $users
+     * @return Payment
      */
     public function setUsers($users)
     {
         $this->users = $users;
+
+        return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getDocumentId(): int
+    {
+        return $this->documentId;
+    }
+
+    /**
+     * @param int $documentId
+     * @return Payment
+     */
+    public function setDocumentId(int $documentId)
+    {
+        $this->documentId = $documentId;
+
+        return $this;
+    }
+
+    /**
+     * @return Document
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * @param Document $documents
+     * @return Payment
+     */
+    public function setDocuments(Document $documents)
+    {
+        $this->documents = $documents;
+
+        return $this;
+    }
+
+
 }
 

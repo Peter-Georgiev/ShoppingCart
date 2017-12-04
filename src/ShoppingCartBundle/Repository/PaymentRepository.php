@@ -65,4 +65,36 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findSumPayments($userId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.products', 'pr', Join::WITH, 'pr.id = p.productId')
+            ->innerJoin('p.users', 'u', Join::WITH, 'u.id = p.userId')
+            ->where('p.userId = :userId')
+            ->andWhere('p.isPaid = :isPaid')
+            ->orderBy('p.datePurchases')
+            ->orderBy('p.id')
+            ->setParameter('userId', $userId)
+            ->setParameter('isPaid', true)
+            ->select('SUM(p.price) AS totalPrice')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPayments($userId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.products', 'pr', Join::WITH, 'pr.id = p.productId')
+            ->innerJoin('p.users', 'u', Join::WITH, 'u.id = p.userId')
+            ->innerJoin('p.documents', 'd', Join::WITH, 'd.id = p.documentId')
+            ->where('p.userId = :userId')
+            ->andWhere('p.isPaid = :isPaid')
+            ->orderBy('d.id')
+            ->orderBy('p.datePurchases')
+            ->setParameter('userId', $userId)
+            ->setParameter('isPaid', true)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -5,6 +5,7 @@ namespace ShoppingCartBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ShoppingCartBundle\Entity\Category;
+use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -41,24 +42,35 @@ class CategoryController extends Controller
             return $this->redirectToRoute('category_create');
         }
 
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
         return $this->render('category/create.html.twig',
-            array('form' => $form->createView(), 'categories' => $categories));
+            array('form' => $form->createView(), 'categories' => $categories, 'payments' => $payments));
     }
 
     /**
      * @param Request $request
      *
-     * @Route("/category/view", name="category_view")
+     * @Route("/category/views", name="category_view")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @return Response
      */
     public function viewCategory(Request $request)
     {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if (!$currentUser->isAdmin() && !$currentUser->isEdit()) {
+            return $this->redirectToRoute('shop_index');
+        }
+
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+
         return $this->render('category/category.html.twig',
-            array('categories' => $categories));
+            array('categories' => $categories, 'payments' => $payments));
     }
 
     /**
@@ -95,8 +107,11 @@ class CategoryController extends Controller
             );
         }
 
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
+
         return $this->render('category/delete.html.twig',
-            array('category' => $category, 'form' => $form->createView())
+            array('category' => $category, 'form' => $form->createView(), 'payments' => $payments)
         );
     }
 

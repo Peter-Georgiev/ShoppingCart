@@ -2,7 +2,12 @@
 
 {% block countInCart %}
     {# •	Count add to carts product #}
-    <span class="badge">{{ payments|length }}</span>
+    {# defined works with variable names #}
+
+    {% if payments is defined %}
+        <span class="badge">{{ payments|length }}</span>
+    {% endif %}
+
 {% endblock %}
 
 {% block main %}
@@ -95,7 +100,7 @@
                                 </div>
 
                                 {% if hasCheckout %}
-                                    <form id="cartForm" method="post" action="{{ path('payment_remove_products') }}">
+                                    <form id="cartForm" method="post" action="{{ path('payment_checkout') }}">
                                         <button type="submit" class="btn btn-blue-nd big">Checkout</button>
                                     </form>
                                 {% else %}

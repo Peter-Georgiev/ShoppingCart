@@ -5,6 +5,7 @@ namespace ShoppingCartBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ShoppingCartBundle\Entity\Category;
+use ShoppingCartBundle\Entity\Document;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\User;
@@ -124,5 +125,104 @@ class PaymentController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('payment_view_cart');
+    }
+
+    /**
+     * @Route("/payment/checkout", name="payment_checkout")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function checkout(Request $request)
+    {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute("security_login");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $payments = $em->getRepository(Payment::class)->findYourCart($currentUser->getId());
+
+        if ($payments !== null) {
+
+            $documentId = 0;
+            foreach ($payments as $payment) {
+                /**
+                 * @var Payment $payment
+                 * @var Product $product
+                 */
+                $product = $this->getDoctrine()->getRepository(Product::class)
+                    ->find($payment->getProducts()->getId());
+                $quantity = $product->getQtty() - $payment->getQtty();
+
+                if ($quantity >= 0) {
+                    $em = $this->getDoctrine()->getManager();
+
+                    if ($documentId === 0) {
+                        $document = new Document();
+                        $document->setIsBuy();
+                        $em->persist($document);
+                        $em->flush();
+                        $documentId = $document->getId();
+                    }
+
+                    $product->setQtty($quantity);
+                    $em->persist($product);
+                    $em->flush();
+
+                    // Percent ????????????????????????
+                    $percent = 10;
+                    if ($percent > 0) {
+                        $payment->setDiscount(10);
+                    } else {
+                        $payment->setPayment($payment->getPrice());
+                    }
+                    //pay
+                    $pay = $payment->getUsers()->getCash() - $payment->getPrice();
+                    $payment->getUsers()->setCash($pay);
+
+                    $payment->setDocumentId($documentId);
+
+                    $payment->setIsPaid();
+                    $em->persist($payment);
+                    $em->flush();
+
+                    return $this->redirectToRoute('payment_view');
+                }
+            }
+        }
+
+        return $this->redirectToRoute('payment_view_cart');
+    }
+
+    /**
+     * @Route("/payment/view", name="payment_view")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function viewAction()
+    {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute("security_login");
+        }
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
+
+        $paymentsPaids = $this->getDoctrine()->getRepository(Payment::class)
+            ->findAllPayments($currentUser->getId());
+        $paymentsSum = $this->getDoctrine()->getRepository(Payment::class)
+            ->findSumPayments($currentUser->getId());
+        //var_dump($paymentsSum); exit();
+
+        return $this->render('payment/view.html.twig',
+            array('paymentsPaids' => $paymentsPaids,
+                'payments' => $payments, 'paymentsSum' => $paymentsSum[0]['totalPrice'])
+        );
     }
 }

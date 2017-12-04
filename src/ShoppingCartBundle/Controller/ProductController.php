@@ -3,6 +3,7 @@
 namespace ShoppingCartBundle\Controller;
 
 use ShoppingCartBundle\Entity\Category;
+use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Form\CategoryType;
@@ -25,6 +26,12 @@ class ProductController extends Controller
      */
     public function createProduct(Request $request)
     {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if (!$currentUser->isAdmin() && !$currentUser->isEdit()) {
+            return $this->redirectToRoute("shop_index");
+        }
+
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -50,8 +57,13 @@ class ProductController extends Controller
 
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         $products = $this->getDoctrine()->getRepository(Product::class)->findAllProducts();
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
+
         return $this->render('product/create.html.twig',
-            array('form' => $form->createView(), 'categories' => $categories, 'products' => $products));
+            array('form' => $form->createView(), 'categories' => $categories,
+                'products' => $products, 'payments' => $payments)
+        );
     }
 
     /**
@@ -64,8 +76,12 @@ class ProductController extends Controller
         $product = $this->getDoctrine()
             ->getRepository(Product::class)->find($id);
 
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $this->getUser()->getId());
+
         return $this->render('product/product.html.twig',
-            ['product' => $product]);
+            array('product' => $product, 'payments' => $payments)
+    );
     }
 
     /**
@@ -115,8 +131,13 @@ class ProductController extends Controller
         }
 
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
+
         return $this->render('product/edit.html.twig',
-            array('product' => $product, 'form' => $form->createView(), 'categories' => $categories));
+            array('product' => $product, 'form' => $form->createView(),
+                'categories' => $categories, 'payments' => $payments)
+        );
     }
 
     /**
@@ -156,8 +177,11 @@ class ProductController extends Controller
             );
         }
 
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
+
         return $this->render('product/delete.html.twig',
-            array('product' => $product, 'form' => $form->createView())
+            array('product' => $product, 'form' => $form->createView(), 'payments' => $payments)
         );
     }
 
@@ -172,7 +196,19 @@ class ProductController extends Controller
     {
         $products = $this->getDoctrine()->getManager()
             ->getRepository(Product::class)->findAllProductsInCategories($id);
+
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
+
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+
+        if ($currentUser !== null) {
+            $payments = $this->getDoctrine()->getRepository(Payment::class)
+                ->findYourCart($currentUser->getId());
+
+            return $this->render('home/index.html.twig',
+                array('products' => $products, 'categories' => $categories, 'payments' => $payments));
+        }
 
         return $this->render('home/index.html.twig',
             array('products' => $products, 'categories' => $categories));

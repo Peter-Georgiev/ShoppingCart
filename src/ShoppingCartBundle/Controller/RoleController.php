@@ -4,6 +4,7 @@ namespace ShoppingCartBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Role;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Form\RoleType;
@@ -45,8 +46,12 @@ class RoleController extends Controller
         }
 
         $roles = $this->getDoctrine()->getRepository(Role::class)->findAll();
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
+
         return $this->render("admin/role/change.html.twig",
-            array('form' => $form->createView(), 'user' => $user, 'roles' => $roles)
+            array('form' => $form->createView(), 'user' => $user,
+                'roles' => $roles, 'payments' => $payments)
         );
     }
 }

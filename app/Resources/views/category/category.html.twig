@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 
+{% block countInCart %}
+    {# •	Count add to carts product #}
+    {# defined works with variable names #}
+
+    {% if payments is defined %}
+        <span class="badge">{{ payments|length }}</span>
+    {% endif %}
+
+{% endblock %}
+
 {% block main %}
 
     <div class="container body-content">

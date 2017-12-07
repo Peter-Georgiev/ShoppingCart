@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'login' %}
+
+{% block main %}
+
+    {% block banip %}
+        {# •	Count add to carts product #}
+        {# defined works with variable names #}
+
+        {% if banip is defined %}
+            <h1 class="text-danger">Your IP: {{ banip }} Ban</h1>
+        {% endif %}
+
+    {% endblock %}
+
+    {% block banuser %}
+        {# •	Count add to carts product #}
+        {# defined works with variable names #}
+
+        {% if banuser is defined %}
+            <h1 class="text-danger">Your name {{ banuser }} Ban</h1>
+        {% endif %}
+
+    {% endblock %}
+
+{% endblock %}

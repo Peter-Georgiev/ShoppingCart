@@ -1,6 +1,7 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
+use ShoppingCartBundle\Entity\Category;
 
 /**
  * CategoryRepository
@@ -17,6 +18,19 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('c.name')
             ->orderBy('c.id')
             ->setParameter('isDelete', false)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findCategoryIdByName($categoryName)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.isDelete = :isDelete')
+            ->andWhere('c.name = :name')
+            ->orderBy('c.name')
+            ->orderBy('c.id')
+            ->setParameter('isDelete', false)
+            ->setParameter('name', $categoryName)
             ->getQuery()
             ->getResult();
     }

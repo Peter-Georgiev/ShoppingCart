@@ -16,16 +16,14 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('p')
             ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
             ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
-            //->where('p.delProduct = :del')
             ->where('p.qtty > 0')
-            ->where('p.isDelete = :isDelete')
+            ->andWhere('p.isDelete = :isDelete')
             ->orderBy('p.name')
             ->orderBy('p.id')
             ->setParameter('isDelete', false)
             ->getQuery()
             ->getResult();
     }
-
 
     public function findAllProductsInCategories($categoryId)
     {
@@ -48,6 +46,18 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->update()
             ->set('p.isDelete', '?1')
             ->setParameter(1, true)
+            ->where('p.id = ?2')
+            ->setParameter(2, $productId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function updateCatIdInProduct($productId, $categoryId)
+    {
+        return $this->createQueryBuilder('p')
+            ->update()
+            ->set('p.categoryId', '?1')
+            ->setParameter(1, $categoryId)
             ->where('p.id = ?2')
             ->setParameter(2, $productId)
             ->getQuery()

@@ -11,6 +11,11 @@
 {% endblock %}
 
 {% block main %}
+    {% if danger is defined %}
+        <div class="container body-content">
+            <h1 class="text-danger text-center">{{ danger }}</h1>
+        </div>
+    {% endif %}
     <div class="container body-content span=8 offset=2">
         <div class="well">
             <form class="form-horizontal" action="{{ path('product_delete', {id: product.id}) }}" method="POST">

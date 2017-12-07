@@ -19,7 +19,6 @@
         </div>
     {% endif %}
 
-
     <div class="container body-content">
         <div class="row">
             <div class="col-md-12">
@@ -41,14 +40,38 @@
                         Owner: {{ product.owner }}
                     </small>
 
+                    <div class="container body-content span=8 offset=2">
+                        <div class="well">
+                            <form class="form-group" action="{{ path('review_save', {id: product.id}) }}" method="POST">
+                                <label for="message">Message</label>
+                                <textarea name="review[message]" id="review_message" class="table small" rows="3" required>
+                                </textarea>
+                                <input type="submit" value="Send" class="btnm col-sm-1 btn-info">
+                            </form>
+                        </div>
+                    </div>
+
+                    {% for review in product.reviews %}
+                    <div class="container body-content span=8 offset=2">
+                        <div class="well">
+                            <table class="table table-bordered small">
+                            Message: {{ review.message }}
+                            </table>
+                            Written by {{ review.owner.username }}
+                        </div>
+                    </div>
+                    {% endfor %}
+
                     <footer>
                         <div class="pull-right">
-                            {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
-                                <a class="btn btn-default btn-xs"
-                                   href="{{ path('product_edit', {'id' : product.id}) }}">Edit &raquo;</a>
-                                <a class="btn btn-default btn-xs"
-                                   href="{{ path('product_delete', {'id' : product.id}) }}">Delete &raquo;</a>
+                            {% if app.getUser() and (app.getUser().isAdmin()) %}
+                                {#    ADD edit    #}
                             {% endif %}
+
+
+
+
+
                             <a class="btn btn-default btn-xs"
                                href="{{ path('shop_index') }}">back &raquo;</a>
                         </div>

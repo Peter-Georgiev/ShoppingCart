@@ -17,16 +17,15 @@
         <div class="well">
 
             <table class="table table-bordered">
-                <thead>
                 <tr>
                     <th class="col-sm-2 ">Username</th>
                     <th>Full Name</th>
                     <th>Cash</th>
                     <th>ROLE</th>
+                    <th>Ban User</th>
                     <th></th>
                 </tr>
                 <tbody>
-                </thead>
 
                 {% for user in users %}
                     <form class="form-horizontal" action="{{ path('role_change', {id: user.id}) }}" method="POST">
@@ -53,6 +52,16 @@
                                            name="role[name]" value="{{ role }}" disabled>
                                 </td>
                             {% endfor %}
+
+                            <td class="col-sm-2 ">
+                                {% if  user.ban == 0 %}
+                                    <input class="form-control" id="user_isBan"
+                                           name="user[isBan]" value="NO" disabled>
+                                {% else %}
+                                    <input class="form-control" id="user_isBan"
+                                           name="user[isBan]" value="YES" disabled>
+                                {% endif %}
+                            </td>
 
                             <td class="col-sm-1">
                                 <div class="col-sm-1 col-sm-offset-1">

@@ -68,7 +68,7 @@ class User implements UserInterface
     private $cash;
 
     /**
-     * @var ArrayCollection
+     * @var Product
      *
      * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Product", mappedBy="owner")
      */
@@ -90,6 +90,19 @@ class User implements UserInterface
      */
     private $payments;
 
+    /**
+     * @var Review
+     *
+     * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Review", mappedBy="owner")
+     */
+    private $reviews;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_ban", type="boolean")
+     */
+    private $isBan;
 
     /**
      * User constructor.
@@ -100,6 +113,8 @@ class User implements UserInterface
         $this->payments = new ArrayCollection();
         $this->regTime = new \DateTime();
         $this->roles = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+        $this->isBan = false;
     }
 
     /**
@@ -388,9 +403,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return Payment
+     * @return ArrayCollection|Payment
      */
-    public function getPayments(): Payment
+    public function getPayments()
     {
         return $this->payments;
     }
@@ -402,6 +417,44 @@ class User implements UserInterface
     public function setPayments(Payment $payments)
     {
         $this->payments = $payments;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Review
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param Review $reviews
+     * @return User
+     */
+    public function setReviews(Review $reviews)
+    {
+        $this->reviews = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBan(): bool
+    {
+        return $this->isBan;
+    }
+
+    /**
+     * @param bool $isBan
+     * @return User
+     */
+    public function setIsBan(bool $isBan)
+    {
+        $this->isBan = $isBan;
 
         return $this;
     }

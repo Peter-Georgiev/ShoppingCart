@@ -50,6 +50,10 @@
 
                         <footer>
                             <div class="pull-right">
+
+                                <a class="btn btn-default btn-xs"
+                                   href="{{ path('review_view', {'id' : product.id}) }}">Reviews &raquo;</a>
+
                                 {% if app.getUser() and app.getUser().isAdmin() %}
 
                                     <a class="btn btn-default btn-xs"

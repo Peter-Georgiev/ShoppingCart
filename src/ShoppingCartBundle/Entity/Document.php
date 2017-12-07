@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Document
  *
- * @ORM\Table(name="documents")
+ * @ORM\Table(name="documents",
+ *     options={"collate":"utf8_general_ci", "charset":"utf8", "engine":"InnoDB"})
  * @ORM\Entity(repositoryClass="ShoppingCartBundle\Repository\DocumentRepository")
  */
 class Document

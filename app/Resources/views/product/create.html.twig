@@ -12,6 +12,12 @@
 
 {% block main %}
 
+    {% if danger is defined %}
+        <div class="container body-content">
+            <h1 class="text-danger text-center">{{ danger }}</h1>
+        </div>
+    {% endif %}
+
     <div class="container body-content span=8 offset=2">
         <div class="well">
             <form class="form-horizontal" action="{{ path('product_create') }}" method="POST">
@@ -21,10 +27,9 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="category_name">Product Category</label>
                         <div class="col-sm-4 ">
-                            <select type="text" class="form-control" id="category_name" placeholder="Product Category"
-                                   name="category[name]">
+                            <select class="form-control" id="category_name" name="category[name]">
                                 {% for category in categories %}
-                                <option  value="{{ category.name }}" >{{ category.name }}</option>
+                                    <option value="{{ category.name }}">{{ category.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -42,7 +47,7 @@
                         <label class="col-sm-4 control-label" for="product_model">Model</label>
                         <div class="col-sm-4 ">
                             <input type="text" class="form-control" id="product_model" placeholder="Model"
-                            name="product[model]">
+                                   name="product[model]">
                         </div>
                     </div>
 
@@ -90,7 +95,6 @@
                     <th class="col-sm-2 ">Quantity</th>
                     <th class="col-sm-2 ">Price</th>
                 </tr>
-                <tbody>
                 </thead>
 
                 {% for product in products %}
@@ -113,19 +117,20 @@
                                        name="user[lastName]" value="{{ product.price }}" disabled>
                             </td>
 
-                            <td class="col-sm-1">
-                                <div class="col-sm-1 col-sm-offset-1">
-                                    <button type="submit" class="btn btn-primary">Modified</button>
-                                </div>
-                            </td>
+
+                            {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isEdit()) %}
+                                <td class="col-sm-1">
+                                    <div class="col-sm-1 col-sm-offset-1">
+                                        <button type="submit" class="btn btn-primary">Modified</button>
+                                    </div>
+                                </td>
+                            {% endif %}
 
                         </tr>
                     </form>
                 {% endfor %}
 
                 {{ form_row(form._token) }}
-
-                </tbody>
             </table>
 
         </div>

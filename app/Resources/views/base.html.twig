@@ -38,12 +38,25 @@
                             {# •	Listing products in categories #}
                         {% endblock %}
 
+                        {% block banip %}
+                            {# •Ban IP’s  #}
+                        {% endblock %}
+
+                        {% block banuser %}
+                            {# •	Ban users  #}
+                        {% endblock %}
+
                         {% block create %}
+                            <li>
+                                <a href="{{ path('product_create') }}">
+                                    Create Product
+                                </a>
+                            </li>
 
                             {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
 
                                 <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Create/View
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Create/Edit
                                         <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -83,6 +96,12 @@
                                     <li>
                                         <a href="{{ path('user_profile') }}">
                                             My Profile
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ path('payment_view') }}">
+                                            Show Payment
                                         </a>
                                     </li>
 

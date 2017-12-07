@@ -65,10 +65,29 @@
                         {% endfor %}
                     </div>
 
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_ban">Ban User</label>
+                        <div class="col-sm-4 ">
+                            <select class="form-control" id="user_ban" name="ban[ban]">
+                                {% if user.ban == 0 %}
+                                    <option  value="0" >NO</option>
+                                {% else %}
+                                    <option  value="1" >YES</option>
+                                {% endif %}
+                                <option value="0" >NO</option>
+                                <option value="1" >YES</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
                             <a class="btn btn-default" href="{{ path('users_view') }}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Change role</button>
+                            <button type="submit" class="btn btn-danger">Edit User</button>
                         </div>
                     </div>
 

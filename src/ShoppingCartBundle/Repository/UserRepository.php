@@ -10,5 +10,12 @@ namespace ShoppingCartBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function banUserBool($isBan, $userId)
+    {
+        $query = 'UPDATE users SET is_ban = :isBan WHERE id = :userId';
+        $params = array('isBan' => $isBan, 'userId' => $userId);
 
+        return $this->getEntityManager()->getConnection()
+            ->executeQuery($query, $params)->execute();
+    }
 }

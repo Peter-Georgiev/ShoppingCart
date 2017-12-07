@@ -11,6 +11,8 @@ use ShoppingCartBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CategoryController extends Controller
 {
@@ -99,8 +101,19 @@ class CategoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($category);
+                $em->flush();
+            } catch (\Exception $e) {
+                $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+                $payments = $this->getDoctrine()->getRepository(Payment::class)
+                    ->findYourCart( $currentUser->getId());
 
-            $this->getDoctrine()->getRepository(Category::class)->deleteCategory($id);
+                return $this->render('category/category.html.twig',
+                    array('categories' => $categories, 'payments' => $payments,
+                        'danger' => 'КАТЕГОРИЯТА се използва!'));
+            }
 
             return $this->redirectToRoute('category_create',
                 array('id' => $category->getId())

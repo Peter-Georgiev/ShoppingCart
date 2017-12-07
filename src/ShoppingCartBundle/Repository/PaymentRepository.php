@@ -82,7 +82,7 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function findAllPayments($userId)
+    public function findAllBuy($userId)
     {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.products', 'pr', Join::WITH, 'pr.id = p.productId')
@@ -90,10 +90,30 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('p.documents', 'd', Join::WITH, 'd.id = p.documentId')
             ->where('p.userId = :userId')
             ->andWhere('p.isPaid = :isPaid')
-            ->orderBy('d.id')
-            ->orderBy('p.datePurchases')
+            ->andWhere('d.isBuy = :isBuy')
+            ->orderBy('d.id', 'DESC')
+            ->orderBy('p.datePurchases', 'DESC')
             ->setParameter('userId', $userId)
             ->setParameter('isPaid', true)
+            ->setParameter('isBuy', true)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllSales($userId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.products', 'pr', Join::WITH, 'pr.id = p.productId')
+            ->innerJoin('p.users', 'u', Join::WITH, 'u.id = p.userId')
+            ->innerJoin('p.documents', 'd', Join::WITH, 'd.id = p.documentId')
+            ->where('p.userId = :userId')
+            ->andWhere('p.isPaid = :isPaid')
+            ->andWhere('d.isSale = :isSale')
+            ->orderBy('d.id', 'DESC')
+            ->orderBy('p.datePurchases', 'DESC')
+            ->setParameter('userId', $userId)
+            ->setParameter('isPaid', true)
+            ->setParameter('isSale', true)
             ->getQuery()
             ->getResult();
     }

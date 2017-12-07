@@ -2,9 +2,11 @@
 
 namespace ShoppingCartBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use ShoppingCartBundle\Entity\Category;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
+use ShoppingCartBundle\Entity\Review;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Form\CategoryType;
 use ShoppingCartBundle\Form\ProductType;
@@ -28,8 +30,8 @@ class ProductController extends Controller
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
-        if (!$currentUser->isAdmin() && !$currentUser->isEdit()) {
-            return $this->redirectToRoute("shop_index");
+        if ($currentUser === null) {
+            return $this->redirectToRoute("security_login");
         }
 
         $category = new Category();
@@ -73,11 +75,17 @@ class ProductController extends Controller
      */
     public function viewProduct($id)
     {
+        /** @var User $user */
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute("shop_index");
+        }
+
         $product = $this->getDoctrine()
             ->getRepository(Product::class)->find($id);
 
         $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $this->getUser()->getId());
+            ->findYourCart($this->getUser()->getId());
 
         return $this->render('product/product.html.twig',
             array('product' => $product, 'payments' => $payments)
@@ -95,9 +103,8 @@ class ProductController extends Controller
     public function editProduct($id, Request $request)
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
-        $categories = $this->getDoctrine()->getRepository(Category::class)->find($product->getCategoryId());
-
         if ($product === null) {
+
             return $this->redirectToRoute("shop_index");
         }
 
@@ -107,20 +114,22 @@ class ProductController extends Controller
             return $this->redirectToRoute("shop_index");
         }
 
-        if ($currentUser->isAdmin()) {
-            $form = $this->createForm(CategoryType::class, $categories);
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($categories);
-                $em->flush();
-            }
-        }
+        $category = $this->getDoctrine()->getRepository(Category::class)
+            ->find($product->getCategoryId());
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
 
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var ArrayCollection|Category $categories */
+            $categories = $category = $this->getDoctrine()->getRepository(Category::class)
+                ->findCategoryIdByName($category->getName());
+
+            $this->getDoctrine()->getRepository(Product::class)
+                ->updateCatIdInProduct($product->getId(), $categories[0]->getId());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -165,20 +174,28 @@ class ProductController extends Controller
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
+
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
-            //$em->remove($product);
-            //$em->flush();
+            try {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($this->getDoctrine()->getRepository(Product::class)->find($id));
+                $em->flush();
+            } catch (\Exception $e) {
+                $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
 
-            $this->getDoctrine()->getRepository(Product::class)->deleteProduct($id);
+                return $this->render('product/delete.html.twig',
+                    array('product' => $product, 'form' => $form->createView(), 'payments' => $payments,
+                        'danger' => 'Продукта се използва!')
+                );
+            }
 
+            //$this->getDoctrine()->getRepository(Product::class)->deleteProduct($id);
             return $this->redirectToRoute('shop_index',
                 array('id' => $product->getId())
             );
         }
-
-        $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $currentUser->getId());
 
         return $this->render('product/delete.html.twig',
             array('product' => $product, 'form' => $form->createView(), 'payments' => $payments)

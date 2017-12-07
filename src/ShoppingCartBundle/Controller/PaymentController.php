@@ -188,10 +188,9 @@ class PaymentController extends Controller
                     $payment->setIsPaid();
                     $em->persist($payment);
                     $em->flush();
-
-                    return $this->redirectToRoute('payment_view');
                 }
             }
+            return $this->redirectToRoute('payment_view');
         }
 
         return $this->redirectToRoute('payment_view_cart');
@@ -215,7 +214,7 @@ class PaymentController extends Controller
             ->findYourCart($currentUser->getId());
 
         $paymentsPaids = $this->getDoctrine()->getRepository(Payment::class)
-            ->findAllPayments($currentUser->getId());
+            ->findAllBuy($currentUser->getId());
         $paymentsSum = $this->getDoctrine()->getRepository(Payment::class)
             ->findSumPayments($currentUser->getId());
         //var_dump($paymentsSum); exit();

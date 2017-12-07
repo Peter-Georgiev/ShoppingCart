@@ -14,60 +14,37 @@
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
+            <table class="table table-bordered small">
 
-            <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-2 ">Product Name</th>
-                    <th class="col-sm-2 ">Model</th>
-                    <th class="col-sm-2 ">Quantity</th>
-                    <th class="col-sm-2 ">Price</th>
-                    <th class="col-sm-2 ">Discount</th>
-                    <th class="col-sm-2 ">Payment</th>
+                    <th class="col-lg-1 small ">Product Name</th>
+                    <th class="col-lg-1 small">Model</th>
+                    <th class="col-lg-1 small">Quantity</th>
+                    <th class="col-lg-1 small">Price</th>
+                    <th class="col-lg-1 small">Discount</th>
+                    <th class="col-lg-1 small">Payment</th>
+                    <th class="col-lg-2 small">Invoice/Date Paid</th>
+                    <th class="col-lg-1 small"></th>
                 </tr>
                 </thead>
 
                 {% for paymentsPaid in paymentsPaids %}
-                    <tr>
-                            <td class="col-sm-2 ">
-                                <input class="form-control" id="user_username"
-                                       name="payment[products.name]" value="{{ paymentsPaid.products.name }}" disabled>
-                            </td>
-                            <td class="col-sm-2 ">
-                                <input class="form-control" id="user_firstName"
-                                       name="payment[products.name]" value="{{ paymentsPaid.products.model }}" disabled>
-                            </td>
-                            <td class="col-sm-1">
-                                <input class="form-control" id="user_lastName"
-                                       name="payment[qtty]" value="{{ paymentsPaid.qtty }}" disabled>
-                            </td>
-                            <td class="col-sm-1 ">
-                                <input class="form-control" id="user_lastName"
-                                       name="payment[price]" value="{{ paymentsPaid.price }} BGN" disabled>
-                            </td>
-                            <td class="col-sm-1 ">
-                                <input class="form-control" id="user_lastName"
-                                       name="payment[price]" value="{{ paymentsPaid.discount }}%" disabled>
-                            </td>
-                            <td class="col-sm-1 ">
-                                <input class="form-control" id="user_lastName"
-                                       name="payment[price]" value="{{ paymentsPaid.payment }} BGN" disabled>
-                            </td>
+                        <tbody>
+                        <tr>
+                            <td>{{ paymentsPaid.products.name }}</td>
+                            <td>{{ paymentsPaid.products.model }}</td>
+                            <td>{{ paymentsPaid.qtty }}</td>
+                            <td>{{ paymentsPaid.price }} BGN</td>
+                            <td>{{ paymentsPaid.discount }}%</td>
+                            <td>{{ paymentsPaid.payment }} BGN</td>
+                            <td>&#35 {{ paymentsPaid.documents.id }},
+                                {{ paymentsPaid.documents.dateEvent|date('d.m.Y \\ H:i:s') }}</td>
                         </tr>
+                        </tbody>
                 {% endfor %}
 
-                <td class="col-sm-1">
-                <td class="col-sm-1 ">
-                    <input class="form-control" id="user_lastName"
-                           name="payment[price]" value="{{ paymentsSum }} BGN" disabled>
-                </td>
-                    <div class="col-sm-1 col-sm-offset-1">
-                        <a type="submit" class="btn btn-primary" href="{{ path('shop_index') }}">Shopping</a>
-                    </div>
-                </td>
-
             </table>
-
         </div>
     </div>
 

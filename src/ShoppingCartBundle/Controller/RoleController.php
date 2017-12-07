@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class RoleController extends Controller
 {
     /**
-     * @Route("/admin/role/change/{id}", name="role_change")
+     * @Route("/role/change/{id}", name="role_change")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param $id
@@ -36,11 +36,19 @@ class RoleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $isBan = boolval($request->request->get('ban')['ban']);
+
             $roleRepository = $this->getDoctrine()->getRepository(Role::class);
             $userRole = $roleRepository->findOneBy(['name' => $role->getName()]);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository(Role::class)->changeRole($userRole->getId(), $id);
+            if (trim(strtoupper($user->getRoles()[0])) !== trim(strtoupper($userRole->getName()))) {
+                $em = $this->getDoctrine()->getManager();
+                $em->getRepository(Role::class)->changeRole($userRole->getId(), $id);
+            }
+
+            if ($user->isBan() !== $isBan) {
+                $this->getDoctrine()->getRepository(User::class)->banUserBool($isBan, $id);
+            }
 
             return $this->redirectToRoute('users_view');
         }
@@ -49,7 +57,7 @@ class RoleController extends Controller
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart( $currentUser->getId());
 
-        return $this->render("admin/role/change.html.twig",
+        return $this->render("role/change.html.twig",
             array('form' => $form->createView(), 'user' => $user,
                 'roles' => $roles, 'payments' => $payments)
         );

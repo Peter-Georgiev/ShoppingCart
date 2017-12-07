@@ -3,6 +3,15 @@
 {% block body_id 'login' %}
 
 {% block main %}
+    {% block banuser %}
+        {# •	Count add to carts product #}
+        {# defined works with variable names #}
+
+        {% if banuser is defined %}
+            <h1 class="text-danger">Your name {{ banuser }} Ban</h1>
+        {% endif %}
+
+    {% endblock %}
 
     <div class="container body-content span=8 offset=2">
         <div class="well">

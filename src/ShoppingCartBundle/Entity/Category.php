@@ -31,6 +31,8 @@ class Category
     private $name;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Product", mappedBy="category")
      */
     private $products;

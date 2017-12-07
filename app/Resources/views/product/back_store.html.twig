@@ -1,19 +1,35 @@
 {% extends 'base.html.twig' %}
 
+{% block countInCart %}
+    {# •	Count add to carts product #}
+    {# defined works with variable names #}
+
+    {% if payments is defined %}
+        <span class="badge">{{ payments|length }}</span>
+    {% endif %}
+
+{% endblock %}
+
 {% block main %}
+
+    {% if danger is defined %}
+        <div class="container body-content">
+            <h1 class="text-danger text-center">{{ danger }}</h1>
+        </div>
+    {% endif %}
+
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" action="{{ path('product_create') }}" method="POST">
+            <form class="form-horizontal" action="{{ path('product_save_store') }}" method="POST">
                 <fieldset>
-                    <legend>New Product</legend>
+                    <legend>Back the Store</legend>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="category_name">Product Category</label>
                         <div class="col-sm-4 ">
-                            <select type="text" class="form-control" id="category_name" placeholder="Product Category"
-                                   name="category[name]">
+                            <select class="form-control" id="category_name" name="category[name]">
                                 {% for category in categories %}
-                                <option  value="{{ category.name }}" >{{ category.name }}</option>
+                                    <option  value="{{ category.name }}" >{{ category.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -23,7 +39,7 @@
                         <label class="col-sm-4 control-label" for="product_name">Product Name</label>
                         <div class="col-sm-4 ">
                             <input type="text" class="form-control" id="product_name" placeholder="Product Name"
-                                   name="product[name]">
+                                   name="product[name]" value="{{ product.name }}" disabled>
                         </div>
                     </div>
 
@@ -31,15 +47,15 @@
                         <label class="col-sm-4 control-label" for="product_model">Model</label>
                         <div class="col-sm-4 ">
                             <input type="text" class="form-control" id="product_model" placeholder="Model"
-                            name="product[model]">
+                                   name="product[model]" value="{{ product.model }}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="product_qtty">Quantity</label>
                         <div class="col-sm-4 ">
-                            <input type="number" step="any" class="form-control" id="product_qtty" placeholder="Quantity"
-                                   name="product[qtty]">
+                            <input type="number" class="form-control" id="product_qtty" placeholder="Quantity"
+                                   name="product[qtty]" value="{{ product.qtty }}" disabled>
                         </div>
                     </div>
 
@@ -47,11 +63,10 @@
                         <label class="col-sm-4 control-label" for="product_price">Price</label>
                         <div class="col-sm-4 ">
                             <input type="number" step="any" class="form-control" id="product_price" placeholder="Price"
-                                   name="product[price]">
+                                   name="product[price]" value="{{ product.price }}">
                         </div>
                     </div>
 
-                    {{ form_row(form._token) }}
 
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
@@ -59,8 +74,11 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
+
                 </fieldset>
+                {{ form_row(form._token) }}
             </form>
         </div>
     </div>
+
 {% endblock %}

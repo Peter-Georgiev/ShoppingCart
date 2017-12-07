@@ -102,12 +102,23 @@ class Product
     private $payments;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Review", inversedBy="products")
+     * @ORM\JoinTable(name="products_reviews",
+     *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="review_id", referencedColumnName="id")})
+     */
+    private $reviews;
+
+    /**
      * Product constructor.
      */
     public function __construct()
     {
         $this->dateAdded = new \DateTime('now');
         $this->payments = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
         $this->isDelete = false;
     }
 
@@ -200,9 +211,9 @@ class Product
      *
      * @return Product
      */
-    public function setPrice(float $price)
+    public function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = floatval($price);
 
         return $this;
     }
@@ -322,5 +333,58 @@ class Product
         $this->isDelete = true;
 
         return $this;
+    }
+
+    /**
+     * @return Payment
+     */
+    public function getPayments(): Payment
+    {
+        return $this->payments;
+    }
+
+    /**
+     * @param Payment $payments
+     * @return Product
+     */
+    public function setPayments(Payment $payments)
+    {
+        $this->payments = $payments;
+
+        return $this;
+    }
+
+    /**
+     * @param Review $review
+     * @return Product
+     */
+    public function addReview(Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReviews()
+    {
+        $stringReviews = [];
+        foreach ($this->reviews as $review) {
+            /** @var $role Role */
+            $stringReviews[] = $review;
+        }
+
+        return $this->reviews;
+    }
+
+    /**
+     * @param ArrayCollection $reviews
+     * @return Product
+     */
+    public function setReviews(ArrayCollection $reviews)
+    {
+        $this->reviews = $reviews;
     }
 }

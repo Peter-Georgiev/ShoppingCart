@@ -14,23 +14,30 @@
 
     <div class="container body-content">
         <div class="row">
-            <div class="col-md-12">
+            < class="col-md-12"
+
+            >
                 <article>
+
                     <header>
                         <h2>{#{ category.name }#}</h2>
                     </header>
+
                     <legend>Category</legend>
+
                     <ul class="list-group">
                         {% for category in categories %}
-                            <li>
+
+                        <table class="table table-bordered small">
                                 <a class="btn btn-default btn-xs"
                                    href="{{ path('category_edit', {'id' : category.id}) }}">Edit &raquo;</a>
                                 &#160&#160&#160
-                                <a class="btn btn-default btn-xs"
+                                <a class="btn btn-danger btn-xs"
                                    href="{{ path('category_delete', {'id' : category.id}) }}">Delete &raquo;</a>
                                 &#160&#160&#160
                                 {{ category.name }}
-                            </li>
+                        </table>
+
                         {% endfor %}
                     </ul>
                 </article>

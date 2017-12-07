@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class UserController extends Controller
 {
@@ -80,7 +81,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/admin/user/view", name="users_view")
+     * @Route("/user/view", name="users_view")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
@@ -104,8 +105,7 @@ class UserController extends Controller
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart( $currentUser->getId());
 
-
-        return $this->render("admin/user/view.html.twig",
+        return $this->render("user/view.html.twig",
             array('form' => $form->createView(), 'users' => $users,
                 'roles' => $roles, 'payments' => $payments)
         );

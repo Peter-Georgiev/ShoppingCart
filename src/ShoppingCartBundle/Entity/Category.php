@@ -45,11 +45,22 @@ class Category
     private $isDelete;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Discount", inversedBy="categories")
+     * @ORM\JoinTable(name="categories_discounts",
+     *     joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="discount_id", referencedColumnName="id")})
+     */
+    private $discounts;
+
+    /**
      * Category constructor.
      */
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->discounts = new ArrayCollection();
         $this->isDelete = false;
     }
 
@@ -111,5 +122,37 @@ class Category
         $this->isDelete = true;
 
         return $this;
+    }
+
+    /**
+     * @param Discount $discount
+     * @return Category
+     */
+    public function addDiscount(Discount $discount)
+    {
+        $this->discounts[] = $discount;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDiscounts()
+    {
+        $stringDiscount = [];
+        foreach ($this->discounts as $discount) {
+            $stringDiscount[] = $discount;
+        }
+
+        return $stringDiscount;
+    }
+
+    /**
+     * @param ArrayCollection $discounts
+     */
+    public function setDiscounts(ArrayCollection $discounts)
+    {
+        $this->discounts = $discounts;
     }
 }

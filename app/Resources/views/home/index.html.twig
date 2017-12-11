@@ -42,6 +42,11 @@
                             Model: {{ product.model }},
                             Quantity: {{ product.qtty }},
                             Price: {{ product.price }}
+
+                            {% if product.id in arrDiscount|keys  and arrDiscount[product.id]['percent'] > 0 %}
+                                (Discount: {{ arrDiscount[product.id]['percent'] }}%,
+                            {{ arrDiscount[product.id]['newPrice'] }})
+                            {% endif %}
                         </p>
 
                         <small class="owner">

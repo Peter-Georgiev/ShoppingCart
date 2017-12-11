@@ -4,7 +4,7 @@ namespace ShoppingCartBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use ShoppingCartBundle\Entity\Category;
+use ShoppingCartBundle\Entity\Discount;
 use ShoppingCartBundle\Entity\Document;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
@@ -25,13 +25,18 @@ class PaymentController extends Controller
      */
     public function addInCartAction($id, Request $request)
     {
+        /** @var Product $product */
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
 
         $payment = new Payment();
-
         $payment->setUsers($this->getUser());
         $payment->setProducts($product);
         $payment->setQtty(1);
+
+        if (count($product->getDiscounts()) > 0) {
+            $percent = $this->biggestPeriodDiscount($id);
+            $payment->setDiscount($percent);
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($payment);
@@ -170,16 +175,18 @@ class PaymentController extends Controller
 
                     $product->setQtty($quantity);
                     $em->persist($product);
-                    $em->flush();
+                    //$em->flush();
 
                     // Percent ????????????????????????
-                    $percent = 10;
+                    /*$percent = 10;
                     if ($percent > 0) {
                         $payment->setDiscount(10);
                     } else {
                         $payment->setPayment($payment->getPrice());
-                    }
+                    }*/
+
                     //pay
+                    $payment->setPayment($payment->getPrice());
                     $pay = $payment->getUsers()->getCash() - $payment->getPrice();
                     $payment->getUsers()->setCash($pay);
 
@@ -223,5 +230,43 @@ class PaymentController extends Controller
             array('paymentsPaids' => $paymentsPaids,
                 'payments' => $payments, 'paymentsSum' => $paymentsSum[0]['totalPrice'])
         );
+    }
+
+    private function biggestPeriodDiscount($productId)
+    {
+        /** @var Product $product */
+        $product = $this->getDoctrine()->getRepository(Product::class)->find($productId);
+
+        if ($product === null) {
+            return 0;
+        }
+
+        $dateDiscProduct = new \DateTime('2000-01-01 00:00:00');
+        $percent = 0;
+
+        foreach ($product->getDiscounts() as $discount) {
+
+            if ($discount->getEndDate() >= ((new \DateTime('now'))
+                    ->modify("1 hour")
+                    ->format('Y-m-d H:m:s')) &&
+                $discount->getEndDate() > $dateDiscProduct) {
+
+                $percent = $discount->getPercent();
+                $dateDiscProduct = $discount->getEndDate();
+            }
+        }
+
+        /** @var Discount $discount */
+        foreach ($product->getCategory()->getDiscounts() as $discount) {
+            if ($discount->getEndDate() >= ((new \DateTime('now'))
+                    ->modify("1 hour")
+                    ->format('Y-m-d H:m:s')) &&
+                $discount->getEndDate() > $dateDiscProduct) {
+                $percent = $discount->getPercent();
+                $dateDiscProduct = $discount->getEndDate();
+            }
+        }
+
+        return $percent;
     }
 }

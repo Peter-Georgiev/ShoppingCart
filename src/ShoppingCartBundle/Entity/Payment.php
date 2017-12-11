@@ -189,8 +189,8 @@ class Payment
         $this->discount = $discount;
 
         if ($discount > 0) {
-            $discount = ($discount / $this->price) * 100;
-            $this->payment = $this->price - $discount;
+            $discount = ($discount / 100) * $this->price;
+            $this->price = $this->price - $discount;
             return $this;
         }
 

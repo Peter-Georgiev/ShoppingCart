@@ -46,11 +46,11 @@
                             {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
                                 <a class="btn btn-default btn-xs"
                                    href="{{ path('product_edit', {'id' : product.id}) }}">Edit &raquo;</a>
-                                <a class="btn btn-default btn-xs"
+                                <a class="btn btn-danger btn-xs"
                                    href="{{ path('product_delete', {'id' : product.id}) }}">Delete &raquo;</a>
                             {% endif %}
                             <a class="btn btn-default btn-xs"
-                               href="{{ path('shop_index') }}">back &raquo;</a>
+                               href="{{ path('shop_index') }}">Home &raquo;</a>
                         </div>
                     </footer>
                 </article>

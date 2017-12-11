@@ -3,6 +3,7 @@
 namespace ShoppingCartBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use ShoppingCartBundle\Entity\Discount;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\Review;
@@ -32,13 +33,15 @@ class ReviewController extends Controller
             ->findYourCart($currentUser->getId());
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
 
-        return $this->render("review/view.html.twig",
-            array('product' => $product, 'payments' => $payments)
+        $arrDiscount = $this->biggestPeriodDiscounts(array($product));
+
+        return $this->render("review/view.html.twig", array('product' => $product,
+                'payments' => $payments, 'arrDiscount' => $arrDiscount)
         );
     }
 
     /**
-     * @Route("/review/save/{id}", name="review_save")
+     * @Route("/review/create/{id}", name="review_create")
      *
      * @param $id
      * @param Request $request
@@ -62,7 +65,9 @@ class ReviewController extends Controller
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        $arrDiscount = $this->biggestPeriodDiscounts(array($product));
+
+        if ($form->isSubmitted() && strlen($review->getMessage()) > 0) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($review);
@@ -71,10 +76,128 @@ class ReviewController extends Controller
             $product->addReview($review);
             $em->persist($product);
             $em->flush();
+
+            return $this->redirectToRoute('review_view', array('id' => $id));
         }
 
-        return $this->render("review/view.html.twig",
-            array('product' => $product, 'payments' => $payments)
+        return $this->render("review/view.html.twig", array('product' => $product,
+                'payments' => $payments, 'arrDiscount' => $arrDiscount)
         );
+    }
+
+    /**
+     * @param $products
+     * @return array
+     */
+    private function OLDbiggestPeriodDiscounts($products)
+    {
+        $arrDiscount = [];
+
+        /** @var Product $p */
+        foreach ($products as $p) {
+
+            if (count($p->getDiscounts()) === 0) {
+                continue;
+            }
+
+            /** @var Product $product */
+            $product = $this->getDoctrine()->getRepository(Product::class)->find($p->getId());
+
+            if ($product === null) {
+                continue;
+            }
+
+            $dateDiscProduct = new \DateTime('2000-01-01 00:00:00');
+            $percent = 0;
+
+            foreach ($product->getDiscounts() as $discount) {
+
+                if ($discount->getEndDate() >= ((new \DateTime('now'))
+                        ->modify("1 hour")
+                        ->format('Y-m-d H:m:s')) &&
+                    $discount->getEndDate() > $dateDiscProduct) {
+
+                    $percent = $discount->getPercent();
+                    $dateDiscProduct = $discount->getEndDate();
+                }
+            }
+
+            /** @var Discount $discount */
+            foreach ($product->getCategory()->getDiscounts() as $discount) {
+                if ($discount->getEndDate() >= ((new \DateTime('now'))
+                        ->modify("1 hour")
+                        ->format('Y-m-d H:m:s')) &&
+                    $discount->getEndDate() > $dateDiscProduct) {
+                    $percent = $discount->getPercent();
+                    $dateDiscProduct = $discount->getEndDate();
+                }
+            }
+
+            if ($percent > 0) {
+                $newPrice = round($product->getPrice() - (($percent / $product->getPrice()) * 100), 2);
+
+                $arrDiscount[$product->getId()] = array('percent' => floatval($percent), 'newPrice' => $newPrice);
+            }
+        }
+
+        return $arrDiscount;
+    }
+
+    /**
+     * @param $products
+     * @return array
+     */
+    private function biggestPeriodDiscounts($products)
+    {
+        $arrDiscount = [];
+
+        /** @var Product $p */
+        foreach ($products as $p) {
+
+            if (count($p->getDiscounts()) === 0) {
+                continue;
+            }
+
+            /** @var Product $product */
+            $product = $this->getDoctrine()->getRepository(Product::class)->find($p->getId());
+
+            if ($product === null) {
+                continue;
+            }
+
+            $dateDiscProduct = new \DateTime('2000-01-01 00:00:00');
+            $percent = 0;
+
+            foreach ($product->getDiscounts() as $discount) {
+
+                if ($discount->getEndDate() >= ((new \DateTime('now'))
+                        ->modify("1 hour")
+                        ->format('Y-m-d H:m:s')) &&
+                    $discount->getEndDate() > $dateDiscProduct) {
+
+                    $percent = $discount->getPercent();
+                    $dateDiscProduct = $discount->getEndDate();
+                }
+            }
+
+            /** @var Discount $discount */
+            foreach ($product->getCategory()->getDiscounts() as $discount) {
+                if ($discount->getEndDate() >= ((new \DateTime('now'))
+                        ->modify("1 hour")
+                        ->format('Y-m-d H:m:s')) &&
+                    $discount->getEndDate() > $dateDiscProduct) {
+
+                    $percent = $discount->getPercent();
+                    $dateDiscProduct = $discount->getEndDate();
+                }
+            }
+
+            if ($percent > 0) {
+                $newPrice = round($product->getPrice() - (($percent / $product->getPrice()) * 100), 2);
+
+                $arrDiscount[$product->getId()] = array('percent' => floatval($percent), 'newPrice' => $newPrice);
+            }
+        }
+        return $arrDiscount;
     }
 }

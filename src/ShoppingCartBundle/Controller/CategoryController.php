@@ -106,13 +106,13 @@ class CategoryController extends Controller
                 $em->remove($category);
                 $em->flush();
             } catch (\Exception $e) {
-                $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+                $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
                 $payments = $this->getDoctrine()->getRepository(Payment::class)
                     ->findYourCart( $currentUser->getId());
 
-                return $this->render('category/category.html.twig',
-                    array('categories' => $categories, 'payments' => $payments,
-                        'danger' => 'КАТЕГОРИЯТА се използва!'));
+                return $this->render('category/delete.html.twig',
+                    array('category' => $category, 'form' => $form->createView(),
+                        'payments' => $payments, 'danger' => 'КАТЕГОРИЯТА се използва!'));
             }
 
             return $this->redirectToRoute('category_create',

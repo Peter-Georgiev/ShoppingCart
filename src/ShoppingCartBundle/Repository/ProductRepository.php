@@ -1,7 +1,11 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Query\Expr\Select;
+use ShoppingCartBundle\Entity\Product;
 
 /**
  * ProductRepository
@@ -25,12 +29,30 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function findUserByProducts($userId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andWhere('p.isDelete = :isDelete')
+            ->andWhere('o.id = :userId')
+            ->orderBy('p.id', 'DESC')
+            ->orderBy('p.qtty')
+            ->orderBy('p.name')
+            ->setParameter('isDelete', false)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findAllProductsInCategories($categoryId)
     {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
             ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
-            ->where('c.id = :categoryId')
+            ->where('p.qtty > 0')
+            ->andwhere('c.id = :categoryId')
             ->andWhere("p.isDelete = :isDelete")
             ->orderBy('p.name')
             ->orderBy('p.id')
@@ -62,5 +84,55 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter(2, $productId)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function findAllDateDisc()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.discounts', 'd')
+            ->innerJoin('p.category', 'c')
+            ->innerJoin('p.owner', 'o')
+            ->orderBy('d.endDate', 'DESC')
+            ->orderBy('d.percent', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllNowDisc()
+    {
+        $date = (new \DateTime())->modify("1 hour");
+
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.discounts', 'd')
+            ->innerJoin('p.category', 'c')
+            ->innerJoin('p.owner', 'o')
+            ->where('d.endDate >= ?1')
+            ->setParameter(1, $date)
+            ->orderBy('d.endDate', 'DESC')
+            ->orderBy('d.percent', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPaymentProduct($productId)
+    {
+        $date = (new \DateTime('now'))
+            ->modify("1 hour")
+            ->format('Y-m-d H:m:s');
+
+        return $this->createQueryBuilder('p')
+            ->select(array('p', 'd', 'c'))
+            ->innerJoin('p.discounts', 'd')
+            ->innerJoin('p.category', 'c')
+            ->where('p.qtty > 0')
+            ->andwhere('p.id = ?1')
+            ->andWhere('d.startDate <= ?2')
+            ->andWhere('d.endDate >= ?3')
+            ->setParameter(1, $productId)
+            ->setParameter(2, $date)
+            ->setParameter(3, $date)
+            ->orderBy('d.endDate', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

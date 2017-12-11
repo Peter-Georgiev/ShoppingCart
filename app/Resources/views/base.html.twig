@@ -47,11 +47,39 @@
                         {% endblock %}
 
                         {% block create %}
-                            <li>
-                                <a href="{{ path('product_create') }}">
-                                    Create Product
-                                </a>
+
+                        {% if app.getUser() %}
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Store
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('product_create') }}">
+                                            Create Product
+                                        </a>
+                                    </li>
+                                    {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
+                                        <li>
+                                            <a href="{{ path('discount_category') }}">
+                                                Diacount Category
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ path('discount_allproducts') }}">
+                                                Diacount All Products
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    <li>
+                                        <a href="{{ path('discount_product') }}">
+                                            Diacount Product
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </li>
+                        {% endif %}
 
                             {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
 
@@ -89,7 +117,8 @@
                             </li>
 
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ app.getUser().getUsername() }}
+                                <a class="dropdown-toggle" data-toggle="dropdown"
+                                   href="#">{{ app.getUser().getUsername() }}
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
 

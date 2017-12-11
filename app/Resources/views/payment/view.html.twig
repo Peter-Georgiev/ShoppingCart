@@ -20,11 +20,11 @@
                 <tr>
                     <th class="col-lg-1 small ">Product Name</th>
                     <th class="col-lg-1 small">Model</th>
-                    <th class="col-lg-1 small">Quantity</th>
-                    <th class="col-lg-1 small">Price</th>
-                    <th class="col-lg-1 small">Discount</th>
+                    <th class="col-sm-1 small">Quantity</th>
+                    <th class="col-sm-1 small">Discount</th>
                     <th class="col-lg-1 small">Payment</th>
-                    <th class="col-lg-2 small">Invoice/Date Paid</th>
+                    <th class="col-sm-1 small">Pay Number</th>
+                    <th class="col-lg-2 small">Date Paid</th>
                     <th class="col-lg-1 small"></th>
                 </tr>
                 </thead>
@@ -35,11 +35,10 @@
                             <td>{{ paymentsPaid.products.name }}</td>
                             <td>{{ paymentsPaid.products.model }}</td>
                             <td>{{ paymentsPaid.qtty }}</td>
-                            <td>{{ paymentsPaid.price }} BGN</td>
                             <td>{{ paymentsPaid.discount }}%</td>
                             <td>{{ paymentsPaid.payment }} BGN</td>
-                            <td>&#35 {{ paymentsPaid.documents.id }},
-                                {{ paymentsPaid.documents.dateEvent|date('d.m.Y \\ H:i:s') }}</td>
+                            <td>&#35 {{ paymentsPaid.documents.id }} </td>
+                            <td>{{ paymentsPaid.documents.dateEvent|date('d.m.Y \\ H:i:s') }}</td>
                         </tr>
                         </tbody>
                 {% endfor %}

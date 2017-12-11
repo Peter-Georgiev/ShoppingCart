@@ -34,6 +34,12 @@
                         Model: {{ product.model }},
                         Quantity: {{ product.qtty }},
                         Price: {{ product.price }}
+
+                        {% if product.id in arrDiscount|keys  and arrDiscount[product.id]['percent'] > 0 %}
+                            (Discount: {{ arrDiscount[product.id]['percent'] }}%,
+                            {{ arrDiscount[product.id]['newPrice'] }})
+                        {% endif %}
+
                     </p>
 
                     <small class="owner">
@@ -42,7 +48,7 @@
 
                     <div class="container body-content span=8 offset=2">
                         <div class="well">
-                            <form class="form-group" action="{{ path('review_save', {id: product.id}) }}" method="POST">
+                            <form class="form-group" action="{{ path('review_create', {id: product.id}) }}" method="POST">
                                 <label for="message">Message</label>
                                 <textarea name="review[message]" id="review_message" class="table small" rows="3" required>
                                 </textarea>
@@ -67,10 +73,6 @@
                             {% if app.getUser() and (app.getUser().isAdmin()) %}
                                 {#    ADD edit    #}
                             {% endif %}
-
-
-
-
 
                             <a class="btn btn-default btn-xs"
                                href="{{ path('shop_index') }}">back &raquo;</a>

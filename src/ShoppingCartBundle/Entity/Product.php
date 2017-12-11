@@ -112,13 +112,22 @@ class Product
     private $reviews;
 
     /**
-     * Product constructor.
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="ShoppingCartBundle\Entity\Discount", inversedBy="products")
+     * @ORM\JoinTable(name="products_discounts",
+     *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="discount_id", referencedColumnName="id")})
      */
+    private $discounts;
+
+
     public function __construct()
     {
         $this->dateAdded = new \DateTime('now');
         $this->payments = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->discounts = new ArrayCollection();
         $this->isDelete = false;
     }
 
@@ -372,7 +381,6 @@ class Product
     {
         $stringReviews = [];
         foreach ($this->reviews as $review) {
-            /** @var $role Role */
             $stringReviews[] = $review;
         }
 
@@ -381,10 +389,41 @@ class Product
 
     /**
      * @param ArrayCollection $reviews
-     * @return Product
      */
     public function setReviews(ArrayCollection $reviews)
     {
-        $this->reviews = $reviews;
+        $this->reviews[] = $reviews;
+    }
+
+    /**
+     * @param Discount $discount
+     * @return Product
+     */
+    public function addDiscount(Discount $discount)
+    {
+        $this->discounts[] = $discount;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDiscounts()
+    {
+        $stringDiscount = [];
+        foreach ($this->discounts as $discount) {
+            $stringDiscount[] = $discount;
+        }
+
+        return $stringDiscount;
+    }
+
+    /**
+     * @param ArrayCollection $discounts
+     */
+    public function setDiscounts(ArrayCollection $discounts)
+    {
+        $this->discounts = $discounts;
     }
 }

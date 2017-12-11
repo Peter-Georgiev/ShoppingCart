@@ -56,6 +56,9 @@
 
                                 <p>
                                     Price: {{ payment.price }}
+                                    {% if payment.discount > 0 %}
+                                         (Discount: {{ payment.discount }}%)
+                                    {% endif %}
                                     <button type="submit" class="btn btn-default btn-xs pull-right">
                                         Remove
                                     </button>

@@ -38,6 +38,10 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     # exception_controller: ShoppingCartBundle:Exception:showException
+    date:
+      format: d.m.Y, H:i:s
+      interval_format: '%%d days'
+      timezone: Europe/Sofia
 
 # Doctrine Configuration
 doctrine:
@@ -55,6 +59,8 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #path: '%database_path%'
+        options:
+            1002: "SET NAMES 'UTF8' COLLATE 'utf8_unicode_ci'"
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

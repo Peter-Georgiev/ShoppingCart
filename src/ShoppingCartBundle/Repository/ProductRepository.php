@@ -1,11 +1,7 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\Query\Expr\Select;
-use ShoppingCartBundle\Entity\Product;
 
 /**
  * ProductRepository
@@ -15,6 +11,12 @@ use ShoppingCartBundle\Entity\Product;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    private static function DateNow()
+    {
+        return (new \DateTime())->format('Y-m-d H:i:s');
+    }
+
     public function findAllProducts()
     {
         return $this->createQueryBuilder('p')
@@ -62,6 +64,22 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function findAllAsPriceProductsInCategories($categoryId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            //->innerJoin('p.discounts', 'd')
+            ->where('p.qtty > 0')
+            ->andwhere('c.id = :categoryId')
+            ->andWhere("p.isDelete = :isDelete")
+            ->setParameter('categoryId', $categoryId)
+            ->setParameter('isDelete', false)
+            ->orderBy('p.price')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function deleteProduct($productId)
     {
         return $this->createQueryBuilder('p')
@@ -100,14 +118,14 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 
     public function findAllNowDisc()
     {
-        $date = (new \DateTime())->modify("1 hour");
+        //$date = (new \DateTime())->modify("1 hour");
 
         return $this->createQueryBuilder('p')
             ->innerJoin('p.discounts', 'd')
             ->innerJoin('p.category', 'c')
             ->innerJoin('p.owner', 'o')
             ->where('d.endDate >= ?1')
-            ->setParameter(1, $date)
+            ->setParameter(1, self::DateNow())
             ->orderBy('d.endDate', 'DESC')
             ->orderBy('d.percent', 'DESC')
             ->getQuery()
@@ -116,9 +134,9 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 
     public function findPaymentProduct($productId)
     {
-        $date = (new \DateTime('now'))
-            ->modify("1 hour")
-            ->format('Y-m-d H:m:s');
+        //$date = (new \DateTime('now'))
+            //->modify("1 hour")
+            //->format('Y-m-d H:i:s');
 
         return $this->createQueryBuilder('p')
             ->select(array('p', 'd', 'c'))
@@ -129,8 +147,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('d.startDate <= ?2')
             ->andWhere('d.endDate >= ?3')
             ->setParameter(1, $productId)
-            ->setParameter(2, $date)
-            ->setParameter(3, $date)
+            ->setParameter(2, self::DateNow())
+            ->setParameter(3, self::DateNow())
             ->orderBy('d.endDate', 'DESC')
             ->getQuery()
             ->getResult();

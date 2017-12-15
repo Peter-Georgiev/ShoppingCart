@@ -22,10 +22,14 @@
                     <th class="col-lg-1 small">Model</th>
                     <th class="col-sm-1 small">Quantity</th>
                     <th class="col-sm-1 small">Discount</th>
-                    <th class="col-lg-1 small">Payment</th>
+                    <th class="col-lg-2 small">Payment</th>
                     <th class="col-sm-1 small">Pay Number</th>
                     <th class="col-lg-2 small">Date Paid</th>
-                    <th class="col-lg-1 small"></th>
+                    <th class="col-lg-1 small">Paid</th>
+                    <th class="col-lg-2 small">Owner</th>
+                    <th class="col-sm-1 small"></th>
+                    <th class="col-sm-1 small"></th>
+                    <th class="col-sm-1 small"></th>
                 </tr>
                 </thead>
 
@@ -36,11 +40,24 @@
                         <td>{{ paymentsPaid.products.model }}</td>
                         <td>{{ paymentsPaid.qtty }}</td>
                         <td>{{ paymentsPaid.discount }}%</td>
-                        <td>{{ paymentsPaid.payment }} BGN</td>
-                        <td>&#35 {{ paymentsPaid.documents.id }} </td>
-                        <td>{{ paymentsPaid.documents.dateEvent|date('d.m.Y \\ H:i:s') }}</td>
+                        {% if paymentsPaid.paid == 1 %}
+                            <td>{{ paymentsPaid.payment }} BGN</td>
+                            <td>&#35 {{ paymentsPaid.documents.id }} </td>
+                            <td>{{ paymentsPaid.documents.dateEvent|date('d.m.Y \\ H:i:s') }}</td>
+                            <td>'YES'</td>
+                        {% else %}
+                            <td>{{ paymentsPaid.price }} BGN</td>
+                            <td>&#35</td>
+                            <td>'Не преключеня'</td>
+                            <td>'NO'</td>
+                        {% endif %}
+                        <td>{{ paymentsPaid.users.username }}</td>
                         <td><a type="submit" class="btn btn-sm btn-primary"
-                        href="{{ path('product_copy', {'id' : paymentsPaid.id}) }}">Продажба</a></td>
+                               href="{{ path('product_copy', {'id' : paymentsPaid.id}) }}">Продажба</a></td>
+                    {% if paymentsPaid.paid == 0 %}
+                        <td><a type="submit" class="btn btn-sm btn-danger"
+                               href="{{ path('payment_remove_product', {id: paymentsPaid.id}) }}">Remove</a></td>
+                    {% endif %}
                     </tr>
                     </tbody>
 

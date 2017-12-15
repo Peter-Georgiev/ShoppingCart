@@ -50,20 +50,20 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-2 ">Category Name</th>
+                    <th class="col-lg-5 ">Category Name</th>
                 </tr>
                 <tbody>
-                </thead>
 
                 {% for category in categories %}
                     <form class="form-horizontal" action="{{ path('category_view', {id: category.id}) }}" method="POST">
                         <tr>
                             <td class="col-sm-2 ">
+                                <label for="user_username"></label>
                                 <input class="form-control" id="user_username"
                                        name="user[username]" value="{{ category.name }}" disabled>
                             </td>
 
-                            <td class="col-sm-1">
+                            <td class="col-sm-2">
                                 <div class="col-sm-1 col-sm-offset-1">
                                     <button type="submit" class="btn btn-primary">Modified</button>
                                 </div>
@@ -73,7 +73,7 @@
                     </form>
                 {% endfor %}
 
-                {{ form_row(form._token) }}
+
 
                 </tbody>
             </table>

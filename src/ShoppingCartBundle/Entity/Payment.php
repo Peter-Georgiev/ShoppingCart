@@ -134,7 +134,7 @@ class Payment
     /**
      * @return float
      */
-    public function getQtty(): string
+    public function getQtty()
     {
         return $this->qtty;
     }
@@ -154,7 +154,7 @@ class Payment
     /**
      * @return float
      */
-    public function getPrice(): float
+    public function getPrice()
     {
         return $this->price;
     }
@@ -174,7 +174,7 @@ class Payment
     /**
      * @return float
      */
-    public function getDiscount(): float
+    public function getDiscount()
     {
         return $this->discount;
     }
@@ -200,7 +200,7 @@ class Payment
     /**
      * @return float
      */
-    public function getPayment(): float
+    public function getPayment()
     {
         return $this->payment;
     }
@@ -220,7 +220,7 @@ class Payment
     /**
      * @return bool
      */
-    public function isPaid(): bool
+    public function isPaid()
     {
         return $this->isPaid;
     }
@@ -228,9 +228,13 @@ class Payment
     /**
      * @return Payment
      */
-    public function setIsPaid()
+    public function setIsPaid($isPaid = 1)
     {
-        $this->isPaid = true;
+        if (intval($isPaid) === 1) {
+            $this->isPaid = true;
+        } else {
+            $this->isPaid = false;
+        }
 
         return $this;
     }
@@ -329,7 +333,7 @@ class Payment
     /**
      * @return int
      */
-    public function getDocumentId(): int
+    public function getDocumentId()
     {
         return $this->documentId;
     }

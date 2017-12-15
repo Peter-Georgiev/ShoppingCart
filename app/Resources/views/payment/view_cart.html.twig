@@ -27,7 +27,7 @@
                                 ({{ payments|length }} product)
                             {% endif %}
                             </span>
-                            <button type="submit" class="btn btn-default btn-xs">Remove ALL</button>
+                            <button type="submit" class="btn btn-danger btn-xs">Remove ALL</button>
                         {% else %}
                             Your cart is empty!
                         {% endif %}
@@ -59,7 +59,7 @@
                                     {% if payment.discount > 0 %}
                                          (Discount: {{ payment.discount }}%)
                                     {% endif %}
-                                    <button type="submit" class="btn btn-default btn-xs pull-right">
+                                    <button type="submit" class="btn btn-danger btn-xs pull-right">
                                         Remove
                                     </button>
                                 </p>
@@ -104,7 +104,7 @@
 
                                 {% if hasCheckout %}
                                     <form id="cartForm" method="post" action="{{ path('payment_checkout') }}">
-                                        <button type="submit" class="btn btn-blue-nd big">Checkout</button>
+                                        <button type="submit" class="btn btn-success big">Checkout</button>
                                     </form>
                                 {% else %}
                                     <p class="text-danger text-uppercase">Невъзможно плащане</p>

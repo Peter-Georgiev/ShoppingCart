@@ -67,7 +67,7 @@
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
                             <a class="btn btn-default" href="{{ path('shop_index') }}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
                         </div>
                     </div>
 
@@ -91,21 +91,45 @@
 
                 {% for category in categories|sort('endDate')|reverse %}
                     {% for discount in category.discounts %}
-                        {% if category.discounts != null and
-                            ((discount.endDate|date('d.m.Y \\ H:i:s')) >= date|date('d.m.Y \\ H:i:s')) %}
+                        {% if ((discount.startDate|date('d.m.Y \\ H:i:s')) <= date|date('d.m.Y \\ H:i:s')) and
+                            ((date|date('d.m.Y \\ H:i:s') <= discount.endDate|date('d.m.Y \\ H:i:s'))) %}
                             <tr>
-                                <td class="col-sm-2 ">
-                                    {{ category.name }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.startDate|date('d.m.Y \\ H:i:s') }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.endDate|date('d.m.Y \\ H:i:s') }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.percent }}%
-                                </td>
+                                <td>{{ category.name }}</td>
+                                <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.percent }}%</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                {{ form_row(form._token) }}
+            </table>
+
+        </div>
+    </div>
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <label class="text-center">Бъдещи промоции</label>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-sm-2 ">Category Name</th>
+                    <th class="col-sm-2 ">Start Date Discount</th>
+                    <th class="col-sm-2 ">End Date Discount</th>
+                    <th class="col-sm-2 ">Percent</th>
+                </tr>
+                </thead>
+
+                {% for category in categories|sort('endDate')|reverse %}
+                    {% for discount in category.discounts %}
+                        {% if (discount.startDate|date('d.m.Y \\ H:i:s')) > date|date('d.m.Y \\ H:i:s') %}
+                            <tr>
+                                <td>{{ category.name }}</td>
+                                <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.percent }}%</td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -132,21 +156,12 @@
 
                 {% for category in categories|sort('endDate')|reverse %}
                     {% for discount in category.discounts %}
-                        {% if category.discounts != null and
-                            ((discount.endDate|date('d.m.Y \\ H:i:s')) < date|date('d.m.Y \\ H:i:s')) %}
+                        {% if (discount.endDate|date('d.m.Y \\ H:i:s')) < date|date('d.m.Y \\ H:i:s') %}
                             <tr>
-                                <td class="col-sm-2 ">
-                                    {{ category.name }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.startDate|date('d.m.Y \\ H:i:s') }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.endDate|date('d.m.Y \\ H:i:s') }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.percent }}%
-                                </td>
+                                <td>{{ category.name }}</td>
+                                <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.percent }}%</td>
                             </tr>
                         {% endif %}
                     {% endfor %}

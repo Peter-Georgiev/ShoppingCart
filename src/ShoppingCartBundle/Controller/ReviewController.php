@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ReviewController extends Controller
 {
+    protected static $DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @Route("/review/{id}", name="review_view")
      *
@@ -32,7 +34,6 @@ class ReviewController extends Controller
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart($currentUser->getId());
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
-
         $arrDiscount = $this->biggestPeriodDiscounts(array($product));
 
         return $this->render("review/view.html.twig", array('product' => $product,
@@ -89,115 +90,56 @@ class ReviewController extends Controller
      * @param $products
      * @return array
      */
-    private function OLDbiggestPeriodDiscounts($products)
-    {
-        $arrDiscount = [];
-
-        /** @var Product $p */
-        foreach ($products as $p) {
-
-            if (count($p->getDiscounts()) === 0) {
-                continue;
-            }
-
-            /** @var Product $product */
-            $product = $this->getDoctrine()->getRepository(Product::class)->find($p->getId());
-
-            if ($product === null) {
-                continue;
-            }
-
-            $dateDiscProduct = new \DateTime('2000-01-01 00:00:00');
-            $percent = 0;
-
-            foreach ($product->getDiscounts() as $discount) {
-
-                if ($discount->getEndDate() >= ((new \DateTime('now'))
-                        ->modify("1 hour")
-                        ->format('Y-m-d H:m:s')) &&
-                    $discount->getEndDate() > $dateDiscProduct) {
-
-                    $percent = $discount->getPercent();
-                    $dateDiscProduct = $discount->getEndDate();
-                }
-            }
-
-            /** @var Discount $discount */
-            foreach ($product->getCategory()->getDiscounts() as $discount) {
-                if ($discount->getEndDate() >= ((new \DateTime('now'))
-                        ->modify("1 hour")
-                        ->format('Y-m-d H:m:s')) &&
-                    $discount->getEndDate() > $dateDiscProduct) {
-                    $percent = $discount->getPercent();
-                    $dateDiscProduct = $discount->getEndDate();
-                }
-            }
-
-            if ($percent > 0) {
-                $newPrice = round($product->getPrice() - (($percent / $product->getPrice()) * 100), 2);
-
-                $arrDiscount[$product->getId()] = array('percent' => floatval($percent), 'newPrice' => $newPrice);
-            }
-        }
-
-        return $arrDiscount;
-    }
-
-    /**
-     * @param $products
-     * @return array
-     */
     private function biggestPeriodDiscounts($products)
     {
         $arrDiscount = [];
 
+        /** @var Discount $discountUser */
+        $discountUser = null;
+        if ($this->getUser() !== null) {
+            $discountUser = $this->getDoctrine()->getRepository(Discount::class)
+                ->findUserDiscount($this->getUser())[0];
+        }
+
         /** @var Product $p */
         foreach ($products as $p) {
 
-            if (count($p->getDiscounts()) === 0) {
-                continue;
-            }
-
-            /** @var Product $product */
-            $product = $this->getDoctrine()->getRepository(Product::class)->find($p->getId());
-
-            if ($product === null) {
-                continue;
-            }
-
-            $dateDiscProduct = new \DateTime('2000-01-01 00:00:00');
+            $currentData = ((new \DateTime('now'))->format(self::$DATE_FORMAT));
             $percent = 0;
 
-            foreach ($product->getDiscounts() as $discount) {
+            /** @var Discount $discount */
+            foreach ($p->getDiscounts() as $discount) {
+                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
+                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
+                    continue;
+                }
 
-                if ($discount->getEndDate() >= ((new \DateTime('now'))
-                        ->modify("1 hour")
-                        ->format('Y-m-d H:m:s')) &&
-                    $discount->getEndDate() > $dateDiscProduct) {
-
-                    $percent = $discount->getPercent();
-                    $dateDiscProduct = $discount->getEndDate();
+                if ($discount->getPercent() > $percent) {
+                    $percent = floatval($discount->getPercent());
                 }
             }
 
-            /** @var Discount $discount */
-            foreach ($product->getCategory()->getDiscounts() as $discount) {
-                if ($discount->getEndDate() >= ((new \DateTime('now'))
-                        ->modify("1 hour")
-                        ->format('Y-m-d H:m:s')) &&
-                    $discount->getEndDate() > $dateDiscProduct) {
-
-                    $percent = $discount->getPercent();
-                    $dateDiscProduct = $discount->getEndDate();
+            foreach ($p->getCategory()->getDiscounts() as $discount) {
+                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
+                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
+                    continue;
                 }
+
+                if ($discount->getPercent() > $percent) {
+                    $percent = floatval($discount->getPercent());
+                }
+            }
+
+            if ($discountUser !== null && $discountUser->getPercent() > $percent) {
+                $percent = floatval($discountUser->getPercent());
             }
 
             if ($percent > 0) {
-                $newPrice = round($product->getPrice() - (($percent / $product->getPrice()) * 100), 2);
-
-                $arrDiscount[$product->getId()] = array('percent' => floatval($percent), 'newPrice' => $newPrice);
+                $newPrice = round($p->getPrice() - (($percent / 100) * $p->getPrice()), 2);
+                $arrDiscount[$p->getId()] = array('percent' => $percent, 'newPrice' => $newPrice);
             }
         }
+
         return $arrDiscount;
     }
 }

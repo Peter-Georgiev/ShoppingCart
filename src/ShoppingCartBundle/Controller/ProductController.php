@@ -7,7 +7,6 @@ use ShoppingCartBundle\Entity\Category;
 use ShoppingCartBundle\Entity\Discount;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
-use ShoppingCartBundle\Entity\Review;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Form\CategoryType;
 use ShoppingCartBundle\Form\ProductType;
@@ -19,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
+    protected static $DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @param Request $request
      *
@@ -31,8 +32,8 @@ class ProductController extends Controller
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
-        if ($currentUser === null) {
-            return $this->redirectToRoute("security_login");
+        if (!$currentUser->isAdmin() && !$currentUser->isEdit()) {
+            return $this->redirectToRoute("shop_index");
         }
 
         $category = new Category();
@@ -50,7 +51,6 @@ class ProductController extends Controller
             $product->setOwner($this->getUser());
             $product->setCategory($categoryRole);
 
-            // 5) save the Product!
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -82,9 +82,7 @@ class ProductController extends Controller
             return $this->redirectToRoute("shop_index");
         }
 
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)->find($id);
-
+        $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart($this->getUser()->getId());
 
@@ -105,7 +103,6 @@ class ProductController extends Controller
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
         if ($product === null) {
-
             return $this->redirectToRoute("shop_index");
         }
 
@@ -127,7 +124,6 @@ class ProductController extends Controller
             /** @var ArrayCollection|Category $categories */
             $categories = $category = $this->getDoctrine()->getRepository(Category::class)
                 ->findCategoryIdByName($category->getName());
-
             $this->getDoctrine()->getRepository(Product::class)
                 ->updateCatIdInProduct($product->getId(), $categories[0]->getId());
 
@@ -161,7 +157,6 @@ class ProductController extends Controller
     public function deleteProduct($id, Request $request)
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
-
         if ($product === null) {
             return $this->redirectToRoute("shop_index");
         }
@@ -191,7 +186,6 @@ class ProductController extends Controller
                         'danger' => 'Продукта се използва!')
                 );
             }
-
             //$this->getDoctrine()->getRepository(Product::class)->deleteProduct($id);
             return $this->redirectToRoute('shop_index',
                 array('id' => $product->getId())
@@ -212,18 +206,13 @@ class ProductController extends Controller
      */
     public function listingProductsInCategories($id, Request $request)
     {
-        $products = $this->getDoctrine()->getManager()
-            ->getRepository(Product::class)->findAllProductsInCategories($id);
-
+        $products = $this->getDoctrine()->getManager()->getRepository(Product::class)
+            ->findAllProductsInCategories($id);
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
+        $arrDiscount = $this->biggestPeriodDiscounts($products);
 
         /** @var User $currentUser */
         $currentUser = $this->getUser();
-
-        $arrDiscount = $this->biggestPeriodDiscounts(
-            $this->getDoctrine()->getManager()->getRepository(Product::class)->findAll()
-        );
-
         if ($currentUser !== null) {
             $payments = $this->getDoctrine()->getRepository(Payment::class)
                 ->findYourCart($currentUser->getId());
@@ -237,6 +226,68 @@ class ProductController extends Controller
     }
 
     /**
+     * @Route("/product/copy/{id}", name="product_copy")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     *@param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function copyUserByProduct($id, Request $request)
+    {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if ($currentUser === null) {
+            return $this->redirectToRoute("security_login");
+        }
+
+        $payments = $this->getDoctrine()->getRepository(Payment::class)->find($id);
+
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $product->setOwner($this->getUser());
+            $product->setCategory($payments->getProducts()->getCategory());
+            $product->setName($payments->getProducts()->getName());
+            $product->setModel($payments->getProducts()->getModel());
+            if (intval($product->getQtty()) <= 0 || $payments->getQtty() < intval($product->getQtty())) {
+                $product->setQtty($payments->getQtty());
+            }
+            if (intval($product->getPrice()) <= 0) {
+                $product->setPrice($payments->getPayment());
+            }
+            $qtty =  $payments->getQtty() - $product->getQtty();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
+
+            if ($qtty <= 0) {
+                $em->remove($payments);
+                $em->flush();
+            } else {
+                $this->getDoctrine()->getRepository(Payment::class)
+                    ->updateQttyPayment($payments->getId(), $qtty);
+            }
+            return $this->redirectToRoute('shop_index');
+        }
+
+        $products = $this->getDoctrine()->getRepository(Product::class)
+            ->findUserByProducts($currentUser->getId());
+
+        return $this->render('product/copy.html.twig', array('form' => $form->createView(),
+                'products' => $products, 'payments' => $payments)
+        );
+    }
+
+    /**
      * @param $products
      * @return array
      */
@@ -244,52 +295,52 @@ class ProductController extends Controller
     {
         $arrDiscount = [];
 
+        /** @var Discount $discountUser */
+        $discountUser = null;
+        if ($this->getUser() !== null) {
+            $discountUser = $this->getDoctrine()->getRepository(Discount::class)
+                ->findUserDiscount($this->getUser())[0];
+        }
+
         /** @var Product $p */
         foreach ($products as $p) {
 
-            if (count($p->getDiscounts()) === 0) {
-                continue;
-            }
-
-            /** @var Product $product */
-            $product = $this->getDoctrine()->getRepository(Product::class)->find($p->getId());
-
-            if ($product === null) {
-                continue;
-            }
-
-            $dateDiscProduct = new \DateTime('2000-01-01 00:00:00');
+            $currentData = ((new \DateTime('now'))->format(self::$DATE_FORMAT));
             $percent = 0;
 
-            foreach ($product->getDiscounts() as $discount) {
+            /** @var Discount $discount */
+            foreach ($p->getDiscounts() as $discount) {
+                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
+                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
+                    continue;
+                }
 
-                if ($discount->getEndDate() >= ((new \DateTime('now'))
-                        ->modify("1 hour")
-                        ->format('Y-m-d H:m:s')) &&
-                    $discount->getEndDate() > $dateDiscProduct) {
-
-                    $percent = $discount->getPercent();
-                    $dateDiscProduct = $discount->getEndDate();
+                if ($discount->getPercent() > $percent) {
+                    $percent = floatval($discount->getPercent());
                 }
             }
 
-            /** @var Discount $discount */
-            foreach ($product->getCategory()->getDiscounts() as $discount) {
-                if ($discount->getEndDate() >= ((new \DateTime('now'))
-                        ->modify("1 hour")
-                        ->format('Y-m-d H:m:s')) &&
-                    $discount->getEndDate() > $dateDiscProduct) {
-                    $percent = $discount->getPercent();
-                    $dateDiscProduct = $discount->getEndDate();
+            foreach ($p->getCategory()->getDiscounts() as $discount) {
+                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
+                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
+                    continue;
                 }
+
+                if ($discount->getPercent() > $percent) {
+                    $percent = floatval($discount->getPercent());
+                }
+            }
+
+            if ($discountUser !== null && $discountUser->getPercent() > $percent) {
+                $percent = floatval($discountUser->getPercent());
             }
 
             if ($percent > 0) {
-                $newPrice = round($product->getPrice() - (($percent / $product->getPrice()) * 100), 2);
-
-                $arrDiscount[$product->getId()] = array('percent' => floatval($percent), 'newPrice' => $newPrice);
+                $newPrice = round($p->getPrice() - (($percent / 100) * $p->getPrice()), 2);
+                $arrDiscount[$p->getId()] = array('percent' => $percent, 'newPrice' => $newPrice);
             }
         }
+
         return $arrDiscount;
     }
 }

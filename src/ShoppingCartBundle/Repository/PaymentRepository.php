@@ -117,4 +117,16 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function updateQttyPayment($paymentId, $qtyy)
+    {
+        return $this->createQueryBuilder('p')
+            ->update()
+            ->set('p.qtty', '?1')
+            ->setParameter(1, $qtyy)
+            ->where('p.id = ?2')
+            ->setParameter(2, $paymentId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

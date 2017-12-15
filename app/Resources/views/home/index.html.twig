@@ -14,6 +14,11 @@
     </li>
 {% endblock %}
 
+{% block products %}
+    {# •	Listing products #}
+
+{% endblock %}
+
 {% block countInCart %}
     {# •	Count add to carts product #}
     {# defined works with variable names #}
@@ -56,19 +61,19 @@
                         <footer>
                             <div class="pull-right">
 
-                                <a class="btn btn-default btn-xs"
+                                <a class="btn btn-info btn-xs"
                                    href="{{ path('review_view', {'id' : product.id}) }}">Reviews &raquo;</a>
 
                                 {% if app.getUser() and app.getUser().isAdmin() %}
 
-                                    <a class="btn btn-default btn-xs"
+                                    <a class="btn btn-success btn-xs"
                                        href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
                                     <a class="btn btn-default btn-xs"
                                        href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
 
                                 {% elseif  app.getUser() and (app.getUser().isEdit()) and (app.getUser().isOwner(product) == null) %}
 
-                                    <a class="btn btn-default btn-xs"
+                                    <a class="btn btn-success btn-xs"
                                        href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
                                     <a class="btn btn-default btn-xs"
                                         href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
@@ -80,7 +85,7 @@
 
                                 {% elseif app.getUser() and (app.getUser().isOwner(product) == null) %}
 
-                                    <a class="btn btn-default btn-xs"
+                                    <a class="btn btn-success btn-xs"
                                        href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
 
                                 {% elseif app.getUser() and (app.getUser().isOwner(product) != null) %}
@@ -88,7 +93,7 @@
 
                                 {% else %}
 
-                                    <a class="btn btn-default btn-xs"
+                                    <a class="btn btn-success btn-xs"
                                        href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
 
                                 {% endif %}

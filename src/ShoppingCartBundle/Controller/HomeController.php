@@ -14,33 +14,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
 {
+    protected static $DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @Route("/", name="shop_index")
      * @Method("GET")
      */
     public function indexAction()
     {
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
-
-        if ($currentUser !== null && $currentUser->isBan()){
-            // ban USER -> isBan
-            return $this->redirectToRoute('security_logout');
-        }
-
         $products = $this->getDoctrine()->getRepository(Product::class)->findAllProducts();
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
-
         $reviews = $this->getDoctrine()->getRepository(Review::class)->findAll();
-
-        //var_dump($products[1]->getReviews()[0]);
-        //var_dump($products[1]->getReviews()[0]->getOwner());
-
-
         $arrDiscount = $this->biggestPeriodDiscounts($products);
 
-        //var_dump($arrDiscount); exit();
-
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
         if ($currentUser !== null) {
             $payments = $this->getDoctrine()->getRepository(Payment::class)
                 ->findYourCart($currentUser->getId());
@@ -48,7 +36,6 @@ class HomeController extends Controller
             return $this->render('home/index.html.twig', array('products' => $products,
                 'categories' => $categories, 'payments' => $payments, 'arrDiscount' => $arrDiscount));
         }
-
 
         return $this->render('home/index.html.twig', array('products' => $products,
             'categories' => $categories, 'reviews' => $reviews, 'arrDiscount' => $arrDiscount));
@@ -76,53 +63,52 @@ class HomeController extends Controller
     {
         $arrDiscount = [];
 
+        /** @var Discount $discountUser */
+        $discountUser = null;
+        if ($this->getUser() !== null) {
+            $discountUser = $this->getDoctrine()->getRepository(Discount::class)
+                ->findUserDiscount($this->getUser())[0];
+        }
+
         /** @var Product $p */
         foreach ($products as $p) {
 
-            if (count($p->getDiscounts()) === 0) {
-                continue;
-            }
-
-            /** @var Product $product */
-            $product = $this->getDoctrine()->getRepository(Product::class)->find($p->getId());
-
-            if ($product === null) {
-                continue;
-            }
-
-            $dateDiscProduct = new \DateTime('2000-01-01 00:00:00');
+            $currentData = ((new \DateTime('now'))->format(self::$DATE_FORMAT));
             $percent = 0;
 
-            foreach ($product->getDiscounts() as $discount) {
+            /** @var Discount $discount */
+            foreach ($p->getDiscounts() as $discount) {
+                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
+                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
+                    continue;
+                }
 
-                if ($discount->getEndDate() >= ((new \DateTime('now'))
-                        ->modify("1 hour")
-                        ->format('Y-m-d H:m:s')) &&
-                    $discount->getEndDate() > $dateDiscProduct) {
-
-                    $percent = $discount->getPercent();
-                    $dateDiscProduct = $discount->getEndDate();
+                if ($discount->getPercent() > $percent) {
+                    $percent = floatval($discount->getPercent());
                 }
             }
 
-            /** @var Discount $discount */
-            foreach ($product->getCategory()->getDiscounts() as $discount) {
-                if ($discount->getEndDate() >= ((new \DateTime('now'))
-                        ->modify("1 hour")
-                        ->format('Y-m-d H:m:s')) &&
-                    $discount->getEndDate() > $dateDiscProduct) {
-
-                    $percent = $discount->getPercent();
-                    $dateDiscProduct = $discount->getEndDate();
+            foreach ($p->getCategory()->getDiscounts() as $discount) {
+                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
+                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
+                    continue;
                 }
+
+                if ($discount->getPercent() > $percent) {
+                    $percent = floatval($discount->getPercent());
+                }
+            }
+
+            if ($discountUser !== null && $discountUser->getPercent() > $percent) {
+                $percent = floatval($discountUser->getPercent());
             }
 
             if ($percent > 0) {
-                $newPrice = round($product->getPrice() - (($percent / $product->getPrice()) * 100), 2);
-
-                $arrDiscount[$product->getId()] = array('percent' => floatval($percent), 'newPrice' => $newPrice);
+                $newPrice = round($p->getPrice() - (($percent / 100) * $p->getPrice()), 2);
+                $arrDiscount[$p->getId()] = array('percent' => $percent, 'newPrice' => $newPrice);
             }
         }
+
         return $arrDiscount;
     }
 }

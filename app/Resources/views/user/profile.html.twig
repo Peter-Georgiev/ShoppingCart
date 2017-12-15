@@ -28,8 +28,8 @@
     </div>
     {% if app.getUser() and app.getUser().isAdmin() %}
         <div>
-            <a class="btn btn-default btn-xs"
-               href="{{ path('users_view', {'users' : app.getUser()}) }}">EDIT ROLES USERS &raquo;</a>
+            <a class="btn btn-danger btn-xs"
+               href="{{ path('users_view', {'users' : app.getUser()}) }}">EDIT USERS &raquo;</a>
         </div>
     {% endif %}
 {% endblock %}

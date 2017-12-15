@@ -38,27 +38,36 @@
                             {# •	Listing products in categories #}
                         {% endblock %}
 
-                        {% block banip %}
-                            {# •Ban IP’s  #}
-                        {% endblock %}
-
-                        {% block banuser %}
-                            {# •	Ban users  #}
+                        {% block products %}
+                            {# •	Listing products #}
                         {% endblock %}
 
                         {% block create %}
-
                         {% if app.getUser() %}
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Store
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Операции
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ path('product_create') }}">
-                                            Create Product
-                                        </a>
-                                    </li>
                                     {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
+
+                                        <li>
+                                            <a href="{{ path('category_create') }}">
+                                                Create/Edit/Delete Category
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ path('product_create') }}">
+                                                Create/Edit/Delete Product
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ path('discount_user') }}">
+                                                Diacount User Criteria
+                                            </a>
+                                        </li>
+
                                         <li>
                                             <a href="{{ path('discount_category') }}">
                                                 Diacount Category
@@ -70,39 +79,17 @@
                                                 Diacount All Products
                                             </a>
                                         </li>
+
                                     {% endif %}
+
                                     <li>
                                         <a href="{{ path('discount_product') }}">
                                             Diacount Product
                                         </a>
                                     </li>
-
                                 </ul>
                             </li>
                         {% endif %}
-
-                            {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
-
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Create/Edit
-                                        <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="{{ path('category_create') }}">
-                                                Create Category
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="{{ path('product_create') }}">
-                                                Create Product
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                            {% endif %}
-
                         {% endblock %}
 
                         {% if app.getUser() %}
@@ -128,20 +115,24 @@
                                         </a>
                                     </li>
 
-                                    <li>
-                                        <a href="{{ path('payment_view') }}">
-                                            Show Payment
-                                        </a>
-                                    </li>
-
                                     {% if app.getUser() and app.getUser().isAdmin() %}
+                                        <li>
+                                            <a href="{{ path('payment_view_admin') }}">
+                                                Payments
+                                            </a>
+                                        </li>
 
                                         <li>
                                             <a href="{{ path('users_view') }}">
                                                 All Users
                                             </a>
                                         </li>
-
+                                    {% else %}
+                                        <li>
+                                            <a href="{{ path('payment_view') }}">
+                                                Payment's show
+                                            </a>
+                                        </li>
                                     {% endif %}
 
                                     <li>

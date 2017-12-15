@@ -20,9 +20,9 @@
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" action="{{ path('discount_allproducts') }}" method="POST">
+            <form class="form-horizontal" action="{{ path('discount_user') }}" method="POST">
                 <fieldset>
-                    <legend>New Discount All Products</legend>
+                    <legend>New Discount User</legend>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="discount_startDate">Start Date Time</label>
@@ -49,10 +49,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="products">All Product</label>
+                        <label class="col-sm-4 control-label" for="discount_userDays">Day's User</label>
                         <div class="col-sm-4 ">
-                            <input type="number" step="any" class="form-control" id="products"
-                                   placeholder="All Product" name="products" disabled>
+                            <input type="number" class="form-control" id="discount_userDays"
+                                   placeholder="Day's User" name="discount[userDays]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="discount_userDays">Cash's User</label>
+                        <div class="col-sm-4 ">
+                            <input type="number" step="any" class="form-control" id="discount_userCash"
+                                   placeholder="Cash's User" name="discount[userCash]">
                         </div>
                     </div>
 
@@ -76,34 +84,34 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-2 ">Product Name</th>
-                    <th class="col-sm-2 ">Product Model</th>
-                    <th class="col-sm-1 ">Product Quantity</th>
                     <th class="col-sm-2 ">Start Date Discount</th>
                     <th class="col-sm-2 ">End Date Discount</th>
                     <th class="col-sm-1 ">Percent</th>
-                    <th class="col-sm-2 ">Owner</th>
+                    <th class="col-sm-1 ">Days</th>
+                    <th class="col-sm-1 ">Cash</th>
                 </tr>
                 </thead>
 
-                {% for product in products %}
-                    {% for discount in product.discounts %}
+                {% for discount in discountUser %}
                         {% if ((discount.startDate|date('d.m.Y \\ H:i:s')) <= date|date('d.m.Y \\ H:i:s')) and
                             ((date|date('d.m.Y \\ H:i:s') <= discount.endDate|date('d.m.Y \\ H:i:s'))) %}
                             <tr>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.model }}</td>
-                                <td>{{ product.qtty }}</td>
                                 <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
                                 <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
                                 <td>{{ discount.percent }}%</td>
-                                <td>{{ product.owner.username }}</td>
+                                {% if discount.userDays != null %}
+                                    <td>{{ discount.userDays }}</td>
+                                {% else %}
+                                    <td>Don't Days</td>
+                                {% endif %}
+                                {% if discount.userCash != null %}
+                                    <td>{{ discount.userCash }}</td>
+                                {% else %}
+                                    <td>Don't Cash</td>
+                                {% endif %}
                             </tr>
                         {% endif %}
-                    {% endfor %}
                 {% endfor %}
-
-                {{ form_row(form._token) }}
             </table>
         </div>
     </div>
@@ -114,38 +122,36 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-2 ">Product Name</th>
-                    <th class="col-sm-2 ">Product Model</th>
-                    <th class="col-sm-1 ">Product Quantity</th>
                     <th class="col-sm-2 ">Start Date Discount</th>
                     <th class="col-sm-2 ">End Date Discount</th>
                     <th class="col-sm-1 ">Percent</th>
-                    <th class="col-sm-2 ">Owner</th>
+                    <th class="col-sm-1 ">Days</th>
+                    <th class="col-sm-1 ">Cash</th>
                 </tr>
                 </thead>
 
-                {% for product in products %}
-                    {% for discount in product.discounts %}
-                        {% if (discount.startDate|date('d.m.Y \\ H:i:s')) > date|date('d.m.Y \\ H:i:s') %}
+                {% for discount in discountUser %}
+                    {% if (discount.startDate|date('d.m.Y \\ H:i:s')) > date|date('d.m.Y \\ H:i:s') %}
                             <tr>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.model }}</td>
-                                <td>{{ product.qtty }}</td>
                                 <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
                                 <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
                                 <td>{{ discount.percent }}%</td>
-                                <td>{{ product.owner.username }}</td>
+                                {% if discount.userDays != null %}
+                                    <td>{{ discount.userDays }}</td>
+                                {% else %}
+                                    <td>Don't Days</td>
+                                {% endif %}
+                                {% if discount.userCash != null %}
+                                    <td>{{ discount.userCash }}</td>
+                                {% else %}
+                                    <td>Don't Cash</td>
+                                {% endif %}
                             </tr>
                         {% endif %}
-                    {% endfor %}
                 {% endfor %}
-
-                {{ form_row(form._token) }}
             </table>
-
         </div>
     </div>
-
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
@@ -153,35 +159,34 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-2 ">Product Name</th>
-                    <th class="col-sm-2 ">Product Model</th>
-                    <th class="col-sm-1 ">Product Quantity</th>
                     <th class="col-sm-2 ">Start Date Discount</th>
                     <th class="col-sm-2 ">End Date Discount</th>
                     <th class="col-sm-1 ">Percent</th>
-                    <th class="col-sm-2 ">Owner</th>
+                    <th class="col-sm-1 ">Days</th>
+                    <th class="col-sm-1 ">Cash</th>
                 </tr>
                 </thead>
 
-                {% for product in products %}
-                    {% for discount in product.discounts %}
+                {% for discount in discountUser %}
                         {% if (discount.endDate|date('d.m.Y \\ H:i:s')) < date|date('d.m.Y \\ H:i:s') %}
                             <tr>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.model }}</td>
-                                <td>{{ product.qtty }}</td>
                                 <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
                                 <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
                                 <td>{{ discount.percent }}%</td>
-                                <td>{{ product.owner.username }}</td>
+                                {% if discount.userDays != null %}
+                                    <td>{{ discount.userDays }}</td>
+                                {% else %}
+                                    <td>Don't Days</td>
+                                {% endif %}
+                                {% if discount.userCash != null %}
+                                    <td>{{ discount.userCash }}</td>
+                                {% else %}
+                                    <td>Don't Cash</td>
+                                {% endif %}
                             </tr>
                         {% endif %}
-                    {% endfor %}
                 {% endfor %}
-
-                {{ form_row(form._token) }}
             </table>
-
         </div>
     </div>
 

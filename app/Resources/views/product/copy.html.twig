@@ -3,10 +3,7 @@
 {% block countInCart %}
     {# •	Count add to carts product #}
     {# defined works with variable names #}
-
-    {% if payments is defined %}
-        <span class="badge">{{ payments|length }}</span>
-    {% endif %}
+    <span class="badge">0</span>
 
 {% endblock %}
 
@@ -20,50 +17,47 @@
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" action="{{ path('product_create') }}" method="POST">
+            <form class="form-horizontal" action="{{ path('product_copy', {id: payments.id}) }}" method="POST">
                 <fieldset>
                     <legend>New Product</legend>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="category_name">Product Category</label>
                         <div class="col-sm-4 ">
-                            <select class="form-control" id="category_name" name="category[name]">
-                                {% for category in categories %}
-                                    <option value="{{ category.name }}">{{ category.name }}</option>
-                                {% endfor %}
-                            </select>
+                            <input type="text" class="form-control" id="category_name"
+                                   placeholder="{{ payments.products.category.name }}" name="category[name]" disabled>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="product_name">Product Name</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="product_name" placeholder="Product Name"
-                                   name="product[name]">
+                            <input type="text" class="form-control" id="product_name"
+                                   placeholder="{{ payments.products.name }}" name="product[name]" disabled>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="product_model">Model</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="product_model" placeholder="Model"
-                                   name="product[model]">
+                            <input type="text" class="form-control" id="product_model"
+                                   placeholder="{{ payments.products.model }}" name="product[model]" disabled>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="product_qtty">Quantity</label>
                         <div class="col-sm-4 ">
-                            <input type="number" class="form-control" id="product_qtty" placeholder="Quantity"
-                                   name="product[qtty]">
+                            <input type="number" class="form-control" id="product_qtty"
+                                   placeholder="{{ payments.qtty }}" name="product[qtty]">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="product_price">Price</label>
                         <div class="col-sm-4 ">
-                            <input type="number" step="any" class="form-control" id="product_price" placeholder="Price"
-                                   name="product[price]">
+                            <input type="number" step="any" class="form-control" id="product_price"
+                                   placeholder="Old Price: {{ payments.payment }}" name="product[price]">
                         </div>
                     </div>
 
@@ -72,7 +66,7 @@
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
                             <a class="btn btn-default" href="{{ path('shop_index') }}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-danger">Submit</button>
                         </div>
                     </div>
 
@@ -86,26 +80,37 @@
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
-
+            <legend>В Продажба</legend>
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th class="col-sm-2 ">Product Name</th>
                     <th class="col-sm-2 ">Model</th>
-                    <th class="col-sm-1 ">Quantity</th>
+                    <th class="col-sm-2 ">Quantity</th>
                     <th class="col-sm-2 ">Price</th>
-                    <th class="col-sm-2 ">Owner</th>
                 </tr>
                 </thead>
 
                 {% for product in products %}
                     <form class="form-horizontal" action="{{ path('product_view', {id: product.id}) }}" method="POST">
                         <tr>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.model }}</td>
-                            <td>{{ product.qtty }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>({{ product.owner.username }}) {{ product.owner.firstName }} {{ product.owner.lastName }}</td>
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_username"
+                                       name="user[username]" value="{{ product.name }}" disabled>
+                            </td>
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_firstName"
+                                       name="user[firstName]" value="{{ product.model }}" disabled>
+                            </td>
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_lastName"
+                                       name="user[lastName]" value="{{ product.qtty }}" disabled>
+                            </td>
+                            <td class="col-sm-2 ">
+                                <input class="form-control" id="user_lastName"
+                                       name="user[lastName]" value="{{ product.price }}" disabled>
+                            </td>
+
 
                             {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isEdit()) %}
                                 <td class="col-sm-1">

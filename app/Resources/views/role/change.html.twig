@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="user_username">Username</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="user_username" placeholder="Username"
+                            <input type="text" class="form-control" id="user_username"
                                    name="user[username]" value="{{ user.username }}" disabled>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="user_firstName">First Name</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="user_firstName" placeholder="First Name"
+                            <input type="text" class="form-control" id="user_firstName"
                                    name="user[firstName]" value="{{ user.firstName }}" disabled>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="user_lastName">Last Name</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="user_lastName" placeholder="Last Name"
+                            <input type="text" class="form-control" id="user_lastName"
                                    name="user[lastName]" value="{{ user.lastName }}" disabled>
                         </div>
                     </div>
@@ -46,8 +46,8 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="user_lastName">Cash</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="user_lastName" placeholder="Last Name"
-                                   name="user[lastName]" value="{{ user.cash }} BGN" disabled>
+                            <input type="number" step="any" class="form-control" id="user_lastName"
+                                   name="user[cash]" value="{{ user.cash }} BGN" disabled>
                         </div>
                     </div>
 

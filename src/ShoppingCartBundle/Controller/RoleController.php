@@ -57,8 +57,7 @@ class RoleController extends Controller
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart( $currentUser->getId());
 
-        return $this->render("role/change.html.twig",
-            array('form' => $form->createView(), 'user' => $user,
+        return $this->render("role/change.html.twig", array('form' => $form->createView(), 'user' => $user,
                 'roles' => $roles, 'payments' => $payments)
         );
     }

@@ -38,11 +38,32 @@ class Discount
     private $endDate;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="percent", type="decimal", precision=10, scale=2)
      */
     private $percent;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_user", type="boolean")
+     */
+    private $isUser;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="user_days", type="integer", nullable=true)
+     */
+    private $userDays;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="user_cash", type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $userCash;
 
     /**
      * @var ArrayCollection
@@ -62,11 +83,10 @@ class Discount
     {
         $this->products = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->isUser = false;
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -75,10 +95,7 @@ class Discount
     }
 
     /**
-     * Set startDate
-     *
-     * @param \DateTime $startDate
-     *
+     * @param $startDate
      * @return Discount
      */
     public function setStartDate($startDate)
@@ -89,8 +106,6 @@ class Discount
     }
 
     /**
-     * Get startDate
-     *
      * @return \DateTime
      */
     public function getStartDate()
@@ -99,10 +114,7 @@ class Discount
     }
 
     /**
-     * Set endDate
-     *
-     * @param \DateTime $endDate
-     *
+     * @param $endDate
      * @return Discount
      */
     public function setEndDate($endDate)
@@ -113,8 +125,6 @@ class Discount
     }
 
     /**
-     * Get endDate
-     *
      * @return \DateTime
      */
     public function getEndDate()
@@ -123,10 +133,7 @@ class Discount
     }
 
     /**
-     * Set percent
-     *
-     * @param string $percent
-     *
+     * @param $percent
      * @return Discount
      */
     public function setPercent($percent)
@@ -137,9 +144,7 @@ class Discount
     }
 
     /**
-     * Get percent
-     *
-     * @return string
+     * @return float
      */
     public function getPercent()
     {
@@ -180,6 +185,56 @@ class Discount
     public function setCategories(ArrayCollection $categories)
     {
         $this->categories = $categories;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUser(): bool
+    {
+        return $this->isUser;
+    }
+
+    /**
+     * @return Discount
+     */
+    public function setIsUser()
+    {
+        $this->isUser = true;
+
+        return $this;
+    }
+
+    public function getUserDays()
+    {
+        return $this->userDays;
+    }
+
+    /**
+     * @param int $userDays
+     * @return Discount
+     */
+    public function setUserDays(int $userDays)
+    {
+        $this->userDays = $userDays;
+
+        return $this;
+    }
+
+    public function getUserCash()
+    {
+        return $this->userCash;
+    }
+
+    /**
+     * @param float $userCash
+     * @return Discount
+     */
+    public function setUserCash(float $userCash)
+    {
+        $this->userCash = $userCash;
 
         return $this;
     }

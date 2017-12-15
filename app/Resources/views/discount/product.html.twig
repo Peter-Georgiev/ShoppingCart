@@ -70,7 +70,7 @@
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
                             <a class="btn btn-default" href="{{ path('shop_index') }}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
                         </div>
                     </div>
 
@@ -87,31 +87,64 @@
                 <tr>
                     <th class="col-sm-2 ">Product Name</th>
                     <th class="col-sm-2 ">Product Model</th>
+                    <th class="col-sm-1 ">Product Quantity</th>
                     <th class="col-sm-2 ">Start Date Discount</th>
                     <th class="col-sm-2 ">End Date Discount</th>
-                    <th class="col-sm-2 ">Percent</th>
+                    <th class="col-sm-1 ">Percent</th>
+                    <th class="col-sm-2 ">Owner</th>
                 </tr>
                 </thead>
 
                 {% for product in productsDateDisc %}
                     {% for discount in product.discounts %}
-                        {% if (discount.endDate|date('d.m.Y \\ H:i:s')) >= date|date('d.m.Y \\ H:i:s') %}
+                        {% if ((discount.startDate|date('d.m.Y \\ H:i:s')) <= date|date('d.m.Y \\ H:i:s')) and
+                            ((date|date('d.m.Y \\ H:i:s') <= discount.endDate|date('d.m.Y \\ H:i:s'))) %}
                             <tr>
-                                <td class="col-sm-2 ">
-                                    {{ product.name }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ product.model }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.startDate|date('d.m.Y \\ H:i:s') }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.endDate|date('d.m.Y \\ H:i:s') }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.percent }}%
-                                </td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.model }}</td>
+                                <td>{{ product.qtty }}</td>
+                                <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.percent }}%</td>
+                                <td>{{ product.owner.username }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                {{ form_row(form._token) }}
+            </table>
+
+        </div>
+    </div>
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <label class="text-center">Бъдещи промоции</label>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-sm-2 ">Product Name</th>
+                    <th class="col-sm-2 ">Product Model</th>
+                    <th class="col-sm-1 ">Product Quantity</th>
+                    <th class="col-sm-2 ">Start Date Discount</th>
+                    <th class="col-sm-2 ">End Date Discount</th>
+                    <th class="col-sm-1 ">Percent</th>
+                    <th class="col-sm-2 ">Owner</th>
+                </tr>
+                </thead>
+
+                {% for product in productsDateDisc %}
+                    {% for discount in product.discounts %}
+                        {% if (discount.startDate|date('d.m.Y \\ H:i:s')) > date|date('d.m.Y \\ H:i:s') %}
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.model }}</td>
+                                <td>{{ product.qtty }}</td>
+                                <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.percent }}%</td>
+                                <td>{{ product.owner.username }}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -131,9 +164,11 @@
                 <tr>
                     <th class="col-sm-2 ">Product Name</th>
                     <th class="col-sm-2 ">Product Model</th>
+                    <th class="col-sm-1 ">Product Quantity</th>
                     <th class="col-sm-2 ">Start Date Discount</th>
                     <th class="col-sm-2 ">End Date Discount</th>
-                    <th class="col-sm-2 ">Percent</th>
+                    <th class="col-sm-1 ">Percent</th>
+                    <th class="col-sm-2 ">Owner</th>
                 </tr>
                 </thead>
 
@@ -141,21 +176,13 @@
                     {% for discount in product.discounts %}
                         {% if (discount.endDate|date('d.m.Y \\ H:i:s')) < date|date('d.m.Y \\ H:i:s') %}
                             <tr>
-                                <td class="col-sm-2 ">
-                                    {{ product.name }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ product.model }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.startDate|date('d.m.Y \\ H:i:s') }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.endDate|date('d.m.Y \\ H:i:s') }}
-                                </td>
-                                <td class="col-sm-2 ">
-                                    {{ discount.percent }}%
-                                </td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.model }}</td>
+                                <td>{{ product.qtty }}</td>
+                                <td>{{ discount.startDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.endDate|date('d.m.Y \\ H:i:s') }}</td>
+                                <td>{{ discount.percent }}%</td>
+                                <td>{{ product.owner.username }}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}

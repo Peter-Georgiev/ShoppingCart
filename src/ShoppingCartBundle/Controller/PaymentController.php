@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PaymentController extends Controller
 {
+    protected static $DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @Route("/payment/cart/{id}", name="payment_cart")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
@@ -34,7 +36,7 @@ class PaymentController extends Controller
         $payment->setQtty(1);
 
         if (count($product->getDiscounts()) > 0) {
-            $percent = $this->biggestPeriodDiscount($id);
+            $percent = $this->biggestPeriodDiscounts(array($product))[$id]['percent'];
             $payment->setDiscount($percent);
         }
 
@@ -74,11 +76,8 @@ class PaymentController extends Controller
             $hasCheckout = false;
         }
 
-        return $this->render('payment/view_cart.html.twig',
-            array('payments' => $payments,
-                'totalPrice' => $totalPrice[0]['totalPrice'],
-                'hasCheckout' => $hasCheckout));
-
+        return $this->render('payment/view_cart.html.twig', array('payments' => $payments,
+                'totalPrice' => $totalPrice[0]['totalPrice'], 'hasCheckout' => $hasCheckout));
     }
 
 
@@ -99,7 +98,7 @@ class PaymentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $payments = $em->getRepository(Payment::class)->findYourCart($currentUser->getId());
-        //var_dump($payment); exit();
+
         foreach ($payments as $payment) {
             $em->remove($payment);
             $em->flush();
@@ -128,6 +127,10 @@ class PaymentController extends Controller
         $payment = $em->getRepository(Payment::class)->find($id);
         $em->remove($payment);
         $em->flush();
+
+        if ($currentUser->isAdmin()) {
+            return $this->redirectToRoute('payment_view_admin');
+        }
 
         return $this->redirectToRoute('payment_view_cart');
     }
@@ -175,21 +178,10 @@ class PaymentController extends Controller
 
                     $product->setQtty($quantity);
                     $em->persist($product);
-                    //$em->flush();
-
-                    // Percent ????????????????????????
-                    /*$percent = 10;
-                    if ($percent > 0) {
-                        $payment->setDiscount(10);
-                    } else {
-                        $payment->setPayment($payment->getPrice());
-                    }*/
-
                     //pay
                     $payment->setPayment($payment->getPrice());
                     $pay = $payment->getUsers()->getCash() - $payment->getPrice();
                     $payment->getUsers()->setCash($pay);
-
                     $payment->setDocumentId($documentId);
 
                     $payment->setIsPaid();
@@ -217,56 +209,102 @@ class PaymentController extends Controller
         if (!$currentUser) {
             return $this->redirectToRoute("security_login");
         }
+
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart($currentUser->getId());
-
         $paymentsPaids = $this->getDoctrine()->getRepository(Payment::class)
             ->findAllBuy($currentUser->getId());
         $paymentsSum = $this->getDoctrine()->getRepository(Payment::class)
             ->findSumPayments($currentUser->getId());
-        //var_dump($paymentsSum); exit();
 
-        return $this->render('payment/view.html.twig',
-            array('paymentsPaids' => $paymentsPaids,
+        return $this->render('payment/view.html.twig', array('paymentsPaids' => $paymentsPaids,
                 'payments' => $payments, 'paymentsSum' => $paymentsSum[0]['totalPrice'])
         );
     }
 
-    private function biggestPeriodDiscount($productId)
+    /**
+     * @Route("/payment/viewadm", name="payment_view_admin")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function viewAdminAction()
     {
-        /** @var Product $product */
-        $product = $this->getDoctrine()->getRepository(Product::class)->find($productId);
-
-        if ($product === null) {
-            return 0;
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute("security_login");
         }
 
-        $dateDiscProduct = new \DateTime('2000-01-01 00:00:00');
-        $percent = 0;
+        if (!$currentUser->isAdmin()) {
+            return $this->redirectToRoute('payment_view');
+        }
 
-        foreach ($product->getDiscounts() as $discount) {
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
+        $paymentsPaids = $this->getDoctrine()->getRepository(Payment::class)->findAll();
+        //$paymentsSum = $this->getDoctrine()->getRepository(Payment::class)->findAll();
 
-            if ($discount->getEndDate() >= ((new \DateTime('now'))
-                    ->modify("1 hour")
-                    ->format('Y-m-d H:m:s')) &&
-                $discount->getEndDate() > $dateDiscProduct) {
+        return $this->render('payment/view_admin.html.twig', array('paymentsPaids' => $paymentsPaids,
+                'payments' => $payments
+        ));
+    }
 
-                $percent = $discount->getPercent();
-                $dateDiscProduct = $discount->getEndDate();
+    /**
+     * @param $products
+     * @return array
+     */
+    private function biggestPeriodDiscounts($products)
+    {
+        $arrDiscount = [];
+
+        /** @var Discount $discountUser */
+        $discountUser = null;
+        if ($this->getUser() !== null) {
+            $discountUser = $this->getDoctrine()->getRepository(Discount::class)
+                ->findUserDiscount($this->getUser())[0];
+        }
+
+        /** @var Product $p */
+        foreach ($products as $p) {
+
+            $currentData = ((new \DateTime('now'))->format(self::$DATE_FORMAT));
+            $percent = 0;
+
+            /** @var Discount $discount */
+            foreach ($p->getDiscounts() as $discount) {
+                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
+                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
+                    continue;
+                }
+
+                if ($discount->getPercent() > $percent) {
+                    $percent = floatval($discount->getPercent());
+                }
+            }
+
+            foreach ($p->getCategory()->getDiscounts() as $discount) {
+                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
+                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
+                    continue;
+                }
+
+                if ($discount->getPercent() > $percent) {
+                    $percent = floatval($discount->getPercent());
+                }
+            }
+
+            if ($discountUser !== null && $discountUser->getPercent() > $percent) {
+                $percent = floatval($discountUser->getPercent());
+            }
+
+            if ($percent > 0) {
+                $newPrice = round($p->getPrice() - (($percent / 100) * $p->getPrice()), 2);
+                $arrDiscount[$p->getId()] = array('percent' => $percent, 'newPrice' => $newPrice);
             }
         }
 
-        /** @var Discount $discount */
-        foreach ($product->getCategory()->getDiscounts() as $discount) {
-            if ($discount->getEndDate() >= ((new \DateTime('now'))
-                    ->modify("1 hour")
-                    ->format('Y-m-d H:m:s')) &&
-                $discount->getEndDate() > $dateDiscProduct) {
-                $percent = $discount->getPercent();
-                $dateDiscProduct = $discount->getEndDate();
-            }
-        }
-
-        return $percent;
+        return $arrDiscount;
     }
 }

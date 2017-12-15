@@ -18,9 +18,7 @@
         {# •	Count add to carts product #}
         {# defined works with variable names #}
 
-        {% if banuser is defined %}
-            <h1 class="text-danger">Your name {{ banuser }} Ban</h1>
-        {% endif %}
+        <h1 class="text-danger">{{ error.message }} (Username: {{ currentUser }})</h1>
 
     {% endblock %}
 

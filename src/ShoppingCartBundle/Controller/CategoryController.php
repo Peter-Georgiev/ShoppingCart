@@ -11,8 +11,6 @@ use ShoppingCartBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CategoryController extends Controller
 {
@@ -52,27 +50,30 @@ class CategoryController extends Controller
     }
 
     /**
+     * @Route("/category/views/{id}", name="category_view")
+     *
+     * @param $id
      * @param Request $request
-     *
-     * @Route("/category/views", name="category_view")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     *
      * @return Response
      */
-    public function viewCategory(Request $request)
+    public function viewCategory($id, Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
+        if ($currentUser === null) {
+            return $this->redirectToRoute('security_logout');
+        }
+
         if (!$currentUser->isAdmin() && !$currentUser->isEdit()) {
             return $this->redirectToRoute('shop_index');
         }
 
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart( $currentUser->getId());
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(Category::class)->find($id);
 
         return $this->render('category/category.html.twig',
-            array('categories' => $categories, 'payments' => $payments));
+            array('categories' => array($categories), 'payments' => $payments));
     }
 
     /**
@@ -163,8 +164,11 @@ class CategoryController extends Controller
             );
         }
 
-        return $this->render('category/edit.html.twig',
-            array('category' => $category, 'form' => $form->createView())
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart( $currentUser->getId());
+
+        return $this->render('category/edit.html.twig', array('category' => $category,
+                'form' => $form->createView(), 'payments' => $payments)
         );
     }
 }

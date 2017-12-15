@@ -1,7 +1,6 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
-use ShoppingCartBundle\Entity\Category;
 
 /**
  * CategoryRepository

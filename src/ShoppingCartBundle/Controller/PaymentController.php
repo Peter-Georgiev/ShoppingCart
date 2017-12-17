@@ -9,6 +9,7 @@ use ShoppingCartBundle\Entity\Document;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\User;
+use ShoppingCartBundle\Service\DiscountServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,18 @@ use Symfony\Component\HttpFoundation\Response;
 class PaymentController extends Controller
 {
     protected static $DATE_FORMAT = 'Y-m-d H:i:s';
+
+    /** @var DiscountServiceInterface */
+    private $discountService;
+
+    /**
+     * PaymentController constructor.
+     * @param DiscountServiceInterface $discountService
+     */
+    public function __construct(DiscountServiceInterface $discountService)
+    {
+        $this->discountService = $discountService;
+    }
 
     /**
      * @Route("/payment/cart/{id}", name="payment_cart")
@@ -36,8 +49,8 @@ class PaymentController extends Controller
         $payment->setQtty(1);
 
         if (count($product->getDiscounts()) > 0) {
-            $percent = $this->biggestPeriodDiscounts(array($product))[$id]['percent'];
-            $payment->setDiscount($percent);
+            $percent = $this->discountService->biggestPeriodDiscounts(array($product), $this->getUser());
+            $payment->setDiscount($percent[$id]['percent']);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -249,62 +262,5 @@ class PaymentController extends Controller
         return $this->render('payment/view_admin.html.twig', array('paymentsPaids' => $paymentsPaids,
                 'payments' => $payments
         ));
-    }
-
-    /**
-     * @param $products
-     * @return array
-     */
-    private function biggestPeriodDiscounts($products)
-    {
-        $arrDiscount = [];
-
-        /** @var Discount $discountUser */
-        $discountUser = null;
-        if ($this->getUser() !== null) {
-            $discountUser = $this->getDoctrine()->getRepository(Discount::class)
-                ->findUserDiscount($this->getUser())[0];
-        }
-
-        /** @var Product $p */
-        foreach ($products as $p) {
-
-            $currentData = ((new \DateTime('now'))->format(self::$DATE_FORMAT));
-            $percent = 0;
-
-            /** @var Discount $discount */
-            foreach ($p->getDiscounts() as $discount) {
-                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
-                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
-                    continue;
-                }
-
-                if ($discount->getPercent() > $percent) {
-                    $percent = floatval($discount->getPercent());
-                }
-            }
-
-            foreach ($p->getCategory()->getDiscounts() as $discount) {
-                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
-                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
-                    continue;
-                }
-
-                if ($discount->getPercent() > $percent) {
-                    $percent = floatval($discount->getPercent());
-                }
-            }
-
-            if ($discountUser !== null && $discountUser->getPercent() > $percent) {
-                $percent = floatval($discountUser->getPercent());
-            }
-
-            if ($percent > 0) {
-                $newPrice = round($p->getPrice() - (($percent / 100) * $p->getPrice()), 2);
-                $arrDiscount[$p->getId()] = array('percent' => $percent, 'newPrice' => $newPrice);
-            }
-        }
-
-        return $arrDiscount;
     }
 }

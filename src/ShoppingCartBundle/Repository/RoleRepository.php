@@ -1,6 +1,9 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping;
+use ShoppingCartBundle\Entity\Role;
 
 /**
  * RoleRepository
@@ -10,6 +13,13 @@ namespace ShoppingCartBundle\Repository;
  */
 class RoleRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function __construct(EntityManager $em, Mapping\ClassMetadata $class = null)
+    {
+        parent::__construct($em,
+            $class == null ? new Mapping\ClassMetadata(Role::class) : $class
+        );
+    }
+
     public function changeRole($roleId, $userId)
     {
         $query = 'UPDATE users_roles SET role_id = :roleId WHERE user_id = :userId';

@@ -1,7 +1,10 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping;
 use Doctrine\ORM\Query\Expr\Join;
+use ShoppingCartBundle\Entity\Discount;
 use ShoppingCartBundle\Entity\User;
 
 /**
@@ -12,6 +15,13 @@ use ShoppingCartBundle\Entity\User;
  */
 class DiscountRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function __construct(EntityManager $em, Mapping\ClassMetadata $class = null)
+    {
+        parent::__construct($em,
+            $class == null ? new Mapping\ClassMetadata(Discount::class) :$class
+        );
+    }
+
     protected static function DateNowStr()
     {
         return (new  \DateTime)->format('Y-m-d H:i:s');

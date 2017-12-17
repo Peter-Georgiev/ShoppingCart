@@ -1,7 +1,10 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping;
 use Doctrine\ORM\Query\Expr\Join;
+use ShoppingCartBundle\Entity\Product;
 
 /**
  * ProductRepository
@@ -11,6 +14,12 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function __construct(EntityManager $em, Mapping\ClassMetadata $class = null)
+    {
+        parent::__construct($em,
+            $class == null ? new Mapping\ClassMetadata(Product::class) :$class
+        );
+    }
 
     private static function DateNow()
     {
@@ -64,18 +73,122 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function findAllAsPriceProductsInCategories($categoryId)
+    public function findAllPriceAscProductInCategories($categoryId)
     {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
             ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
-            //->innerJoin('p.discounts', 'd')
             ->where('p.qtty > 0')
             ->andwhere('c.id = :categoryId')
             ->andWhere("p.isDelete = :isDelete")
             ->setParameter('categoryId', $categoryId)
             ->setParameter('isDelete', false)
             ->orderBy('p.price')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPriceAscProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andWhere('p.isDelete = :isDelete')
+            ->orderBy('p.name')
+            ->orderBy('p.id')
+            ->setParameter('isDelete', false)
+            ->orderBy('p.price')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPriceDescProductInCategories($categoryId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andwhere('c.id = :categoryId')
+            ->andWhere("p.isDelete = :isDelete")
+            ->setParameter('categoryId', $categoryId)
+            ->setParameter('isDelete', false)
+            ->orderBy('p.price', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPriceDescProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andWhere('p.isDelete = :isDelete')
+            ->orderBy('p.name')
+            ->orderBy('p.id')
+            ->setParameter('isDelete', false)
+            ->orderBy('p.price', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllDateAscProductInCategories($categoryId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andwhere('c.id = :categoryId')
+            ->andWhere("p.isDelete = :isDelete")
+            ->setParameter('categoryId', $categoryId)
+            ->setParameter('isDelete', false)
+            ->orderBy('p.dateAdded')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllDateAscProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andWhere('p.isDelete = :isDelete')
+            ->orderBy('p.name')
+            ->orderBy('p.id')
+            ->setParameter('isDelete', false)
+            ->orderBy('p.dateAdded')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllDateDescProductInCategories($categoryId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andwhere('c.id = :categoryId')
+            ->andWhere("p.isDelete = :isDelete")
+            ->setParameter('categoryId', $categoryId)
+            ->setParameter('isDelete', false)
+            ->orderBy('p.dateAdded', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllDateDescProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andWhere('p.isDelete = :isDelete')
+            ->orderBy('p.name')
+            ->orderBy('p.id')
+            ->setParameter('isDelete', false)
+            ->orderBy('p.dateAdded', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -134,10 +247,6 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 
     public function findPaymentProduct($productId)
     {
-        //$date = (new \DateTime('now'))
-            //->modify("1 hour")
-            //->format('Y-m-d H:i:s');
-
         return $this->createQueryBuilder('p')
             ->select(array('p', 'd', 'c'))
             ->innerJoin('p.discounts', 'd')

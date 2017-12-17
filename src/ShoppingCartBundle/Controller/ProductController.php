@@ -3,6 +3,7 @@
 namespace ShoppingCartBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use ShoppingCartBundle\Entity\Category;
 use ShoppingCartBundle\Entity\Discount;
 use ShoppingCartBundle\Entity\Payment;
@@ -12,6 +13,9 @@ use ShoppingCartBundle\Form\CategoryType;
 use ShoppingCartBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use ShoppingCartBundle\Repository\ProductRepository;
+use ShoppingCartBundle\Service\DiscountServiceInterface;
+use ShoppingCartBundle\Service\ProductServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +23,23 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductController extends Controller
 {
     protected static $DATE_FORMAT = 'Y-m-d H:i:s';
+
+    /** @var DiscountServiceInterface */
+    private $discountService;
+
+    /** @var ProductServiceInterface */
+    private $productService;
+
+    /**
+     * ProductController constructor.
+     * @param DiscountServiceInterface $discountService
+     * @param ProductServiceInterface $productService
+     */
+    public function __construct(DiscountServiceInterface $discountService, ProductServiceInterface $productService)
+    {
+        $this->discountService = $discountService;
+        $this->productService = $productService;
+    }
 
     /**
      * @param Request $request
@@ -28,7 +49,7 @@ class ProductController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createProduct(Request $request)
+    public function createAction(Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -61,34 +82,12 @@ class ProductController extends Controller
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         $products = $this->getDoctrine()->getRepository(Product::class)->findAllProducts();
         $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $currentUser->getId());
+            ->findYourCart($currentUser->getId());
 
         return $this->render('product/create.html.twig',
             array('form' => $form->createView(), 'categories' => $categories,
                 'products' => $products, 'payments' => $payments)
         );
-    }
-
-    /**
-     * @Route("/product/{id}", name="product_view")
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function viewProduct($id)
-    {
-        /** @var User $user */
-        $currentUser = $this->getUser();
-        if (!$currentUser) {
-            return $this->redirectToRoute("shop_index");
-        }
-
-        $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
-        $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart($this->getUser()->getId());
-
-        return $this->render('product/product.html.twig',
-            array('product' => $product, 'payments' => $payments)
-    );
     }
 
     /**
@@ -99,7 +98,7 @@ class ProductController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function editProduct($id, Request $request)
+    public function editAction($id, Request $request)
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
         if ($product === null) {
@@ -138,7 +137,7 @@ class ProductController extends Controller
 
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $currentUser->getId());
+            ->findYourCart($currentUser->getId());
 
         return $this->render('product/edit.html.twig',
             array('product' => $product, 'form' => $form->createView(),
@@ -154,7 +153,7 @@ class ProductController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function deleteProduct($id, Request $request)
+    public function deleteAction($id, Request $request)
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
         if ($product === null) {
@@ -198,18 +197,25 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/product/listingCategory/{id}", name="product_listing_category")
+     * @Route("/product/category/{id}", name="product_category")
      *
      * @param $id
      * @param Request $request
      * @return Response
      */
-    public function listingProductsInCategories($id, Request $request)
+    public function categoryAction($id, Request $request)
     {
-        $products = $this->getDoctrine()->getManager()->getRepository(Product::class)
-            ->findAllProductsInCategories($id);
+        preg_match('/sort=\w+/', $request->getRequestUri(), $url);
+        $sort = '';
+        if (count($url) > 0) {
+            $arrUrl = explode('sort=', $url[0]);
+            $sort = trim(end($arrUrl));
+        }
+
+        $products = $this->productService->sortedProductsInCategory($sort, $id);
+
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
-        $arrDiscount = $this->biggestPeriodDiscounts($products);
+        $arrDiscount = $this->discountService->biggestPeriodDiscounts($products, $this->getUser());
 
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -226,14 +232,96 @@ class ProductController extends Controller
     }
 
     /**
+     * @Route("/product/prasc", name="product_price_asc")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sortPriceAscAction(Request $request)
+    {
+        preg_match('/product\/category\/\d+/', $request->server->get('HTTP_REFERER'), $url);
+
+        if (count($url) > 0) {
+            $arrUrl = explode('/', $url[0]);
+            $catecoryId = intval(end($arrUrl));
+
+            return $this->redirectToRoute('product_category',
+                array('id' => $catecoryId, 'sort' => 'price_asc'));
+        }
+
+        return $this->redirectToRoute('shop_index', array('sort' => 'price_asc'));
+    }
+
+    /**
+     * @Route("/product/prdesc", name="product_price_desc")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sortPriceDescAction(Request $request)
+    {
+        preg_match('/product\/category\/\d+/', $request->server->get('HTTP_REFERER'), $url);
+
+        if (count($url) > 0) {
+            $arrUrl = explode('/', $url[0]);
+            $catecoryId = intval(end($arrUrl));
+
+            return $this->redirectToRoute('product_category',
+                array('id' => $catecoryId, 'sort' => 'price_desc'));
+        }
+
+        return $this->redirectToRoute('shop_index', array('sort' => 'price_desc'));
+    }
+
+    /**
+     * @Route("/product/dtasc", name="product_date_asc")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sortDateAscAction(Request $request)
+    {
+        preg_match('/product\/category\/\d+/', $request->server->get('HTTP_REFERER'), $url);
+
+        if (count($url) > 0) {
+            $arrUrl = explode('/', $url[0]);
+            $catecoryId = intval(end($arrUrl));
+
+            return $this->redirectToRoute('product_category',
+                array('id' => $catecoryId, 'sort' => 'date_asc'));
+        }
+        return $this->redirectToRoute('shop_index', array('sort' => 'date_asc'));
+    }
+
+    /**
+     * @Route("/product/dtdesc", name="product_date_desc")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sortDateDescAction(Request $request)
+    {
+        preg_match('/product\/category\/\d+/', $request->server->get('HTTP_REFERER'), $url);
+
+        if (count($url) > 0) {
+            $arrUrl = explode('/', $url[0]);
+            $catecoryId = intval(end($arrUrl));
+
+            return $this->redirectToRoute('product_category',
+                array('id' => $catecoryId, 'sort' => 'date_desc'));
+        }
+        return $this->redirectToRoute('shop_index', array('sort' => 'date_desc'));
+    }
+
+    /**
      * @Route("/product/copy/{id}", name="product_copy")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
-     *@param $id
+     * @param $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function copyUserByProduct($id, Request $request)
+    public function copyUserAction($id, Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -263,7 +351,7 @@ class ProductController extends Controller
             if (intval($product->getPrice()) <= 0) {
                 $product->setPrice($payments->getPayment());
             }
-            $qtty =  $payments->getQtty() - $product->getQtty();
+            $qtty = $payments->getQtty() - $product->getQtty();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
@@ -288,59 +376,24 @@ class ProductController extends Controller
     }
 
     /**
-     * @param $products
-     * @return array
+     * @Route("/product/{id}", name="product_view")
+     * @param $id
+     * @return Response
      */
-    private function biggestPeriodDiscounts($products)
+    public function viewAction($id)
     {
-        $arrDiscount = [];
-
-        /** @var Discount $discountUser */
-        $discountUser = null;
-        if ($this->getUser() !== null) {
-            $discountUser = $this->getDoctrine()->getRepository(Discount::class)
-                ->findUserDiscount($this->getUser())[0];
+        /** @var User $user */
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute("shop_index");
         }
 
-        /** @var Product $p */
-        foreach ($products as $p) {
+        $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($this->getUser()->getId());
 
-            $currentData = ((new \DateTime('now'))->format(self::$DATE_FORMAT));
-            $percent = 0;
-
-            /** @var Discount $discount */
-            foreach ($p->getDiscounts() as $discount) {
-                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
-                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
-                    continue;
-                }
-
-                if ($discount->getPercent() > $percent) {
-                    $percent = floatval($discount->getPercent());
-                }
-            }
-
-            foreach ($p->getCategory()->getDiscounts() as $discount) {
-                if (!($discount->getStartDate()->format(self::$DATE_FORMAT) <= $currentData &&
-                    $currentData <= $discount->getEndDate()->format(self::$DATE_FORMAT))) {
-                    continue;
-                }
-
-                if ($discount->getPercent() > $percent) {
-                    $percent = floatval($discount->getPercent());
-                }
-            }
-
-            if ($discountUser !== null && $discountUser->getPercent() > $percent) {
-                $percent = floatval($discountUser->getPercent());
-            }
-
-            if ($percent > 0) {
-                $newPrice = round($p->getPrice() - (($percent / 100) * $p->getPrice()), 2);
-                $arrDiscount[$p->getId()] = array('percent' => $percent, 'newPrice' => $newPrice);
-            }
-        }
-
-        return $arrDiscount;
+        return $this->render('product/product.html.twig',
+            array('product' => $product, 'payments' => $payments)
+        );
     }
 }

@@ -26,19 +26,24 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
 
             $roleRepository = $this->getDoctrine()->getRepository(Role::class);
             $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
-
             $user->addRole($userRole);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
-            $em->flush();
 
+            try {
+                $em->flush();
+            } catch (\Exception $e) {
+                $error = 'Duplicate user (' . $user->getUsername() . ')';
+                return $this->render('user/register.html.twig',
+                    array('form' => $form->createView(), 'error' => $error));
+            }
+            //$this->userService->register($user);
             return $this->redirectToRoute('security_login');
         }
 

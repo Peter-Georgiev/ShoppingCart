@@ -22,7 +22,7 @@ class CategoryController extends Controller
      *
      * @return Response
      */
-    public function createCategory(Request $request)
+    public function createAction(Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -56,7 +56,7 @@ class CategoryController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function viewCategory($id, Request $request)
+    public function viewAction($id, Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -84,7 +84,7 @@ class CategoryController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function deleteCategory($id, Request $request)
+    public function deleteAction($id, Request $request)
     {
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
 
@@ -137,7 +137,7 @@ class CategoryController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function editCategory($id, Request $request)
+    public function editAction($id, Request $request)
     {
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
 

@@ -314,6 +314,26 @@ class ProductController extends Controller
     }
 
     /**
+     * @Route("/product/promo", name="product_promo_asc")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sortPromoAscAction(Request $request)
+    {
+        preg_match('/product\/category\/\d+/', $request->server->get('HTTP_REFERER'), $url);
+
+        if (count($url) > 0) {
+            $arrUrl = explode('/', $url[0]);
+            $catecoryId = intval(end($arrUrl));
+
+            return $this->redirectToRoute('product_category',
+                array('id' => $catecoryId, 'sort' => 'promo'));
+        }
+        return $this->redirectToRoute('shop_index', array('sort' => 'promo'));
+    }
+
+    /**
      * @Route("/product/copy/{id}", name="product_copy")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *

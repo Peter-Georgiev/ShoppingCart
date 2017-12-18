@@ -6,9 +6,9 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
             <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('shop_index')}}">All Categories</a></li>
+            <li><a href="{{ path('shop_index') }}">All Categories</a></li>
             {% for category in categories %}
-            <li><a href="{{ path('product_category', {'id' : category.id}) }}">{{ category.name }}</a></li>
+                <li><a href="{{ path('product_category', {'id' : category.id}) }}">{{ category.name }}</a></li>
             {% endfor %}
         </ul>
     </li>
@@ -20,10 +20,11 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sort
             <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('product_price_asc')}}">Price Asc</a></li>
-            <li><a href="{{ path('product_price_desc')}}">Price Desc</a></li>
-            <li><a href="{{ path('product_date_asc')}}">Date Asc</a></li>
-            <li><a href="{{ path('product_date_desc')}}">Date Desc</a></li>
+            <li><a href="{{ path('product_price_asc') }}">Price Asc</a></li>
+            <li><a href="{{ path('product_price_desc') }}">Price Desc</a></li>
+            <li><a href="{{ path('product_date_asc') }}">Date Asc</a></li>
+            <li><a href="{{ path('product_date_desc') }}">Date Desc</a></li>
+            <li><a href="{{ path('product_promo_asc') }}">Promo</a></li>
         </ul>
     </li>
 {% endblock %}
@@ -55,11 +56,16 @@
                         <p>
                             Model: {{ product.model }},
                             Quantity: {{ product.qtty }},
-                            Price: {{ product.price }}
 
+                            Price:
                             {% if product.id in arrDiscount|keys  and arrDiscount[product.id]['percent'] > 0 %}
-                                (Discount: {{ arrDiscount[product.id]['percent'] }}%,
-                            {{ arrDiscount[product.id]['newPrice'] }})
+                                <del>{{ product.price }}</del>
+                                <label class="text-warning">
+                                    (Discount: {{ arrDiscount[product.id]['percent'] }}%,
+                                    {{ arrDiscount[product.id]['newPrice'] }})
+                                </label>
+                            {% else %}
+                                {{ product.price }}
                             {% endif %}
                         </p>
 
@@ -85,7 +91,7 @@
                                     <a class="btn btn-success btn-xs"
                                        href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
                                     <a class="btn btn-default btn-xs"
-                                        href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
+                                       href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
 
                                 {% elseif  app.getUser() and (app.getUser().isEdit()) and (app.getUser().isOwner(product) != null) %}
 

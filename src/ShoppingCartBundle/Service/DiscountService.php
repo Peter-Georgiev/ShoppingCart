@@ -96,6 +96,6 @@ class DiscountService implements DiscountServiceInterface
             }
         }
 
-        return $arrDiscount;
+        return  $arrDiscount;
     }
 }

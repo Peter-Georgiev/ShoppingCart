@@ -44,14 +44,14 @@
                     <footer>
                         <div class="pull-right">
                             {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
-                                <a class="btn btn-default"
+                                <a class="btn-sm btn-success"
                                    href="{{ path('product_edit', {'id' : product.id}) }}">Edit &raquo;</a>
-                                <a class="btn btn-danger"
+                                <a class="btn-sm btn-danger"
                                    href="{{ path('product_delete', {'id' : product.id}) }}">Delete &raquo;</a>
-                                <a class="btn btn-default"
-                                   href="{{ path('product_create') }}">Back &raquo;</a>
+                                <a class="btn-sm btn-info"
+                                   href="{{ path('product_create') }}">Products &raquo;</a>
                             {% endif %}
-                            <a class="btn btn-default"
+                            <a class="btn-sm btn-default"
                                href="{{ path('shop_index') }}">Home &raquo;</a>
                         </div>
                     </footer>

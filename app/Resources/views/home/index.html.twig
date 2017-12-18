@@ -20,11 +20,12 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sort
             <span class="caret"></span></a>
         <ul class="dropdown-menu">
+            <li><a href="{{ path('product_top') }}">Top Product Rating</a></li>
+            <li><a href="{{ path('product_promo_asc') }}">Promo</a></li>
             <li><a href="{{ path('product_price_asc') }}">Price Asc</a></li>
             <li><a href="{{ path('product_price_desc') }}">Price Desc</a></li>
             <li><a href="{{ path('product_date_asc') }}">Date Asc</a></li>
             <li><a href="{{ path('product_date_desc') }}">Date Desc</a></li>
-            <li><a href="{{ path('product_promo_asc') }}">Promo</a></li>
         </ul>
     </li>
 {% endblock %}

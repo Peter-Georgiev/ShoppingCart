@@ -34,7 +34,7 @@ class CategoryController extends Controller
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && strlen($category->getName()) > 0) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
@@ -154,7 +154,7 @@ class CategoryController extends Controller
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && strlen($category->getName()) > 0) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();

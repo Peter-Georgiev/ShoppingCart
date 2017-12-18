@@ -40,6 +40,7 @@ class UserController extends Controller
                 $em->flush();
             } catch (\Exception $e) {
                 $error = 'Duplicate user (' . $user->getUsername() . ')';
+
                 return $this->render('user/register.html.twig',
                     array('form' => $form->createView(), 'error' => $error));
             }

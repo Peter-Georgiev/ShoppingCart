@@ -33,9 +33,9 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
             ->where('p.qtty > 0')
             ->andWhere('p.isDelete = :isDelete')
-            ->orderBy('p.name')
-            ->orderBy('p.id')
             ->setParameter('isDelete', false)
+            ->orderBy('p.id', 'DESC')
+            ->addOrderBy('p.name')
             ->getQuery()
             ->getResult();
     }
@@ -48,11 +48,11 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->where('p.qtty > 0')
             ->andWhere('p.isDelete = :isDelete')
             ->andWhere('o.id = :userId')
-            ->orderBy('p.id', 'DESC')
-            ->orderBy('p.qtty')
-            ->orderBy('p.name')
             ->setParameter('isDelete', false)
             ->setParameter('userId', $userId)
+            ->orderBy('p.id', 'DESC')
+            ->addOrderBy('p.qtty')
+            ->addOrderBy('p.name')
             ->getQuery()
             ->getResult();
     }
@@ -65,10 +65,10 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->where('p.qtty > 0')
             ->andwhere('c.id = :categoryId')
             ->andWhere("p.isDelete = :isDelete")
-            ->orderBy('p.name')
-            ->orderBy('p.id')
             ->setParameter('categoryId', $categoryId)
             ->setParameter('isDelete', false)
+            ->orderBy('p.id', 'DESC')
+            ->addOrderBy('p.name')
             ->getQuery()
             ->getResult();
     }
@@ -84,6 +84,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('categoryId', $categoryId)
             ->setParameter('isDelete', false)
             ->orderBy('p.price')
+            ->addOrderBy('p.name')
+            ->addOrderBy('p.id')
             ->getQuery()
             ->getResult();
     }
@@ -95,10 +97,10 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
             ->where('p.qtty > 0')
             ->andWhere('p.isDelete = :isDelete')
-            ->orderBy('p.name')
-            ->orderBy('p.id')
             ->setParameter('isDelete', false)
             ->orderBy('p.price')
+            ->addOrderBy('p.name')
+            ->addOrderBy('p.id')
             ->getQuery()
             ->getResult();
     }
@@ -114,6 +116,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('categoryId', $categoryId)
             ->setParameter('isDelete', false)
             ->orderBy('p.price', 'DESC')
+            ->addOrderBy('p.name')
+            ->addOrderBy('p.id')
             ->getQuery()
             ->getResult();
     }
@@ -125,10 +129,10 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
             ->where('p.qtty > 0')
             ->andWhere('p.isDelete = :isDelete')
-            ->orderBy('p.name')
-            ->orderBy('p.id')
             ->setParameter('isDelete', false)
             ->orderBy('p.price', 'DESC')
+            ->addOrderBy('p.name')
+            ->addOrderBy('p.id')
             ->getQuery()
             ->getResult();
     }
@@ -144,6 +148,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('categoryId', $categoryId)
             ->setParameter('isDelete', false)
             ->orderBy('p.dateAdded')
+            ->addOrderBy('p.name')
+            ->addOrderBy('p.id')
             ->getQuery()
             ->getResult();
     }
@@ -155,10 +161,10 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
             ->where('p.qtty > 0')
             ->andWhere('p.isDelete = :isDelete')
-            ->orderBy('p.name')
-            ->orderBy('p.id')
             ->setParameter('isDelete', false)
             ->orderBy('p.dateAdded')
+            ->addOrderBy('p.name')
+            ->addOrderBy('p.id')
             ->getQuery()
             ->getResult();
     }
@@ -174,6 +180,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('categoryId', $categoryId)
             ->setParameter('isDelete', false)
             ->orderBy('p.dateAdded', 'DESC')
+            ->addOrderBy('p.name')
+            ->addOrderBy('p.id')
             ->getQuery()
             ->getResult();
     }
@@ -189,6 +197,38 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('p.id')
             ->setParameter('isDelete', false)
             ->orderBy('p.dateAdded', 'DESC')
+            ->addOrderBy('p.name')
+            ->addOrderBy('p.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllMostWantedProductsInCategories($categoryId)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andwhere('c.id = :categoryId')
+            ->andWhere("p.isDelete = :isDelete")
+            ->setParameter('categoryId', $categoryId)
+            ->setParameter('isDelete', false)
+            ->orderBy('p.mostWanted')
+            ->addOrderBy('p.price')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllMostWantedProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c', Join::WITH, 'c.id = p.categoryId')
+            ->innerJoin('p.owner', 'o', Join::WITH, 'o.id = p.ownerId')
+            ->where('p.qtty > 0')
+            ->andWhere('p.isDelete = :isDelete')
+            ->setParameter('isDelete', false)
+            ->orderBy('p.mostWanted')
+            ->addOrderBy('p.price')
             ->getQuery()
             ->getResult();
     }
@@ -224,15 +264,13 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('p.category', 'c')
             ->innerJoin('p.owner', 'o')
             ->orderBy('d.endDate', 'DESC')
-            ->orderBy('d.percent', 'DESC')
+            ->addOrderBy('d.percent', 'DESC')
             ->getQuery()
             ->getResult();
     }
 
     public function findAllNowDisc()
     {
-        //$date = (new \DateTime())->modify("1 hour");
-
         return $this->createQueryBuilder('p')
             ->innerJoin('p.discounts', 'd')
             ->innerJoin('p.category', 'c')
@@ -240,7 +278,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->where('d.endDate >= ?1')
             ->setParameter(1, self::DateNow())
             ->orderBy('d.endDate', 'DESC')
-            ->orderBy('d.percent', 'DESC')
+            ->addOrderBy('d.percent', 'DESC')
             ->getQuery()
             ->getResult();
     }

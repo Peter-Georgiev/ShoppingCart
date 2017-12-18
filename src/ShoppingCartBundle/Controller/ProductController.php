@@ -3,9 +3,7 @@
 namespace ShoppingCartBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
 use ShoppingCartBundle\Entity\Category;
-use ShoppingCartBundle\Entity\Discount;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\User;
@@ -13,7 +11,6 @@ use ShoppingCartBundle\Form\CategoryType;
 use ShoppingCartBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use ShoppingCartBundle\Repository\ProductRepository;
 use ShoppingCartBundle\Service\DiscountServiceInterface;
 use ShoppingCartBundle\Service\ProductServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -68,6 +65,7 @@ class ProductController extends Controller
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
+        var_dump($form->getViewData());// exit();
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setOwner($this->getUser());
             $product->setCategory($categoryRole);
@@ -123,9 +121,10 @@ class ProductController extends Controller
             /** @var ArrayCollection|Category $categories */
             $categories = $category = $this->getDoctrine()->getRepository(Category::class)
                 ->findCategoryIdByName($category->getName());
+            $product->setMostWanted(intval($request->get('topProduct')['mostWanted']));
+
             $this->getDoctrine()->getRepository(Product::class)
                 ->updateCatIdInProduct($product->getId(), $categories[0]->getId());
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -211,14 +210,13 @@ class ProductController extends Controller
             $arrUrl = explode('sort=', $url[0]);
             $sort = trim(end($arrUrl));
         }
-
-        $products = $this->productService->sortedProductsInCategory($sort, $id);
-
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
-        $arrDiscount = $this->discountService->biggestPeriodDiscounts($products, $this->getUser());
-
         /** @var User $currentUser */
         $currentUser = $this->getUser();
+
+        $products = $this->productService->sortedProductsInCategory($sort, $id);
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
+        $arrDiscount = $this->discountService->biggestPeriodDiscounts($products, $currentUser);
+
         if ($currentUser !== null) {
             $payments = $this->getDoctrine()->getRepository(Payment::class)
                 ->findYourCart($currentUser->getId());
@@ -331,6 +329,26 @@ class ProductController extends Controller
                 array('id' => $catecoryId, 'sort' => 'promo'));
         }
         return $this->redirectToRoute('shop_index', array('sort' => 'promo'));
+    }
+
+    /**
+     * @Route("/product/top", name="product_top")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sortMostWantedAction(Request $request)
+    {
+        preg_match('/product\/category\/\d+/', $request->server->get('HTTP_REFERER'), $url);
+
+        if (count($url) > 0) {
+            $arrUrl = explode('/', $url[0]);
+            $catecoryId = intval(end($arrUrl));
+
+            return $this->redirectToRoute('product_category',
+                array('id' => $catecoryId, 'sort' => 'most_anted'));
+        }
+        return $this->redirectToRoute('shop_index', array('sort' => 'most_anted'));
     }
 
     /**

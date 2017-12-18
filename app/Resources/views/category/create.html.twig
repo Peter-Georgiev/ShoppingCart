@@ -15,8 +15,6 @@
     <div class="container body-content span=8 offset=2">
         <div class="well">
             <form class="form-horizontal" action="{{ path('category_create') }}" method="POST">
-
-
                 <fieldset>
                     <legend>New Category</legend>
 
@@ -28,8 +26,6 @@
                         </div>
                     </div>
 
-                    {{ form_row(form._token) }}
-
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
                             <a class="btn btn-default" href="{{ path('shop_index') }}">Cancel</a>
@@ -37,12 +33,10 @@
                         </div>
                     </div>
                 </fieldset>
+                {{ form_row(form._token) }}
             </form>
         </div>
     </div>
-
-
-
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
@@ -73,13 +67,10 @@
                     </form>
                 {% endfor %}
 
-
-
                 </tbody>
             </table>
 
         </div>
     </div>
-
 
 {% endblock %}

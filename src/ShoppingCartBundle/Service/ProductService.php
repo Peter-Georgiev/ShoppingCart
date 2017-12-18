@@ -3,7 +3,6 @@
 namespace ShoppingCartBundle\Service;
 
 
-
 use Doctrine\ORM\EntityManager;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Repository\ProductRepository;
@@ -58,12 +57,17 @@ class ProductService implements ProductServiceInterface
             $products = $this->productRepository->findAllDateDescProduct();
         } elseif ($sort == 'promo') {
             $productsTemp = $this->productRepository->findAllProducts();
-            if (count($productsTemp) === 0) {
-                return $productsTemp;
+            $currentUser = $this->tokenStorage->getToken()->getUser();
+
+            if (count($productsTemp) == 0) {
+                return $products;
             }
 
-            $arrDiscount= $this->discountService->biggestPeriodDiscounts($productsTemp,
-                $this->tokenStorage->getToken()->getUser());
+            if (!is_object($currentUser) || $currentUser == null) {
+                $currentUser = null;
+            }
+
+            $arrDiscount = $this->discountService->biggestPeriodDiscounts($productsTemp, $currentUser);
 
             /** @var Product $p */
             foreach ($productsTemp as $p) {
@@ -72,6 +76,9 @@ class ProductService implements ProductServiceInterface
                 }
                 $products[] = $p;
             }
+
+        } elseif ($sort == 'most_anted') {
+            $products = $this->productRepository->findAllMostWantedProducts();
         } else {
             $products = $this->productRepository->findAllProducts();
         }
@@ -98,11 +105,17 @@ class ProductService implements ProductServiceInterface
             $products = $this->productRepository->findAllDateDescProductInCategories($productId);
         } elseif ($sort == 'promo') {
             $productsTemp = $this->productRepository->findAllProductsInCategories($productId);
+            $currentUser = $this->tokenStorage->getToken()->getUser();
+
             if (count($productsTemp) == 0) {
-                return $productsTemp;
+                return $products;
             }
-            $arrDiscount= $this->discountService->biggestPeriodDiscounts($productsTemp,
-                $this->tokenStorage->getToken()->getUser());
+
+            if (!is_object($currentUser) || $currentUser == null) {
+                $currentUser = null;
+            }
+
+            $arrDiscount = $this->discountService->biggestPeriodDiscounts($productsTemp, $currentUser);
 
             /** @var Product $p */
             foreach ($productsTemp as $p) {
@@ -111,6 +124,8 @@ class ProductService implements ProductServiceInterface
                 }
                 $products[] = $p;
             }
+        } elseif ($sort == 'most_anted') {
+            $products = $this->productRepository->findAllMostWantedProductsInCategories($productId);
         } else {
             $products = $this->productRepository->findAllProductsInCategories($productId);
         }

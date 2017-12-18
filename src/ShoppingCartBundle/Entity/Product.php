@@ -95,6 +95,13 @@ class Product
      private $isDelete;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="most_wanted", type="integer")
+     */
+     private $mostWanted;
+
+    /**
      * @var Payment
      *
      * @ORM\OneToMany(targetEntity="ShoppingCartBundle\Entity\Payment", mappedBy="products")
@@ -129,6 +136,7 @@ class Product
         $this->reviews = new ArrayCollection();
         $this->discounts = new ArrayCollection();
         $this->isDelete = false;
+        $this->mostWanted = 1000;
     }
 
     /**
@@ -340,6 +348,25 @@ class Product
     public function setIsDelete()
     {
         $this->isDelete = true;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMostWanted(): int
+    {
+        return $this->mostWanted;
+    }
+
+    /**
+     * @param int $mostWanted
+     * @return Product
+     */
+    public function setMostWanted(int $mostWanted)
+    {
+        $this->mostWanted = $mostWanted;
 
         return $this;
     }

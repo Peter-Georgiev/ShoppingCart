@@ -18,23 +18,21 @@
                 <article>
 
                     <header>
-                        <h2>{#{ category.name }#}</h2>
+                        <h3>Category</h3>
                     </header>
 
-                    <h2>Category</h2>
 
                     <ul class="list-group">
                         {% for category in categories %}
+                            <h2 class="text-warning">{{ category.name }}</h2>
 
                         <table class="table table-bordered small">
-                                <a class="btn btn-default"
+                                <a class="btn btn-success"
                                    href="{{ path('category_edit', {'id' : category.id}) }}">Edit &raquo;</a>
                                 &#160&#160&#160
                                 <a class="btn btn-danger"
                                    href="{{ path('category_delete', {'id' : category.id}) }}">Delete &raquo;</a>
                                 &#160&#160&#160
-                            <thead>{{ category.name }}</thead>
-
                         </table>
 
                         {% endfor %}

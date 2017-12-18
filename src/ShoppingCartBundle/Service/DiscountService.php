@@ -46,10 +46,10 @@ class DiscountService implements DiscountServiceInterface
      */
     public function biggestPeriodDiscounts($products, $currentUser)
     {
-        $arrDiscount = [];
-
         /** @var Discount $discountUser */
         $discountUser = null;
+        $arrDiscount = [];
+
         if ($currentUser !== null) {
             $discounts = $this->discountRepository->findUserDiscount($currentUser);
             if (count($discounts) > 0) {
@@ -96,6 +96,6 @@ class DiscountService implements DiscountServiceInterface
             }
         }
 
-        return  $arrDiscount;
+        return $arrDiscount;
     }
 }

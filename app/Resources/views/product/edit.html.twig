@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="product_name">Product Name</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="product_name" placeholder="Product Name"
+                            <input type="text" class="form-control" id="product_name"
                                    name="product[name]" value="{{ product.name }}">
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="product_model">Model</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="product_model" placeholder="Model"
+                            <input type="text" class="form-control" id="product_model"
                                    name="product[model]" value="{{ product.model }}">
                         </div>
                     </div>
@@ -49,16 +49,25 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="product_qtty">Quantity</label>
                         <div class="col-sm-4 ">
-                            <input type="number" step="any" class="form-control" id="product_qtty" placeholder="Quantity"
+                            <input type="number" step="any" class="form-control" id="product_qtty"
                                    name="product[qtty]" value="{{ product.qtty }}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="product_price">Price</label>
+                            <label class="col-sm-4 control-label" for="product_price">Price</label>
                         <div class="col-sm-4 ">
-                            <input type="number" step="any" class="form-control" id="product_price" placeholder="Price"
+                            <input type="number" step="any" class="form-control" id="product_price"
                                    name="product[price]" value="{{ product.price }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="topProduct_mostWanted">
+                            Top Product Rating (from 0)</label>
+                        <div class="col-sm-4 ">
+                            <input type="number" step="any" class="form-control" id="topProduct_mostWanted"
+                                   name="topProduct[mostWanted]" value="{{ product.mostWanted }}">
                         </div>
                     </div>
 

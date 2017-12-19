@@ -22,10 +22,10 @@
         <div class="well">
             <form class="form-horizontal" action="{{ path('discount_user') }}" method="POST">
                 <fieldset>
-                    <legend>New Discount User</legend>
+                    <legend>Create user discounts</legend>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="discount_startDate">Start Date Time</label>
+                        <label class="col-sm-4 control-label" for="discount_startDate">Discount starting time</label>
                         <div class="col-sm-4 ">
                             <input type="datetime-local" class="form-control" id="discount_startDate"
                                    name="discount[startDate]">
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="discount_endDate">End Date Time</label>
+                        <label class="col-sm-4 control-label" for="discount_endDate">Discount ending time</label>
                         <div class="col-sm-4 ">
                             <input type="datetime-local" class="form-control" id="discount_endDate"
                                    name="discount[endDate]">
@@ -41,26 +41,26 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="discount_percent">Percent Discount</label>
+                        <label class="col-sm-4 control-label" for="discount_percent">Discount in percentage</label>
                         <div class="col-sm-4 ">
                             <input type="number" step="any" class="form-control" id="discount_percent"
-                                   placeholder="Percent Discount - %" name="discount[percent]">
+                                   placeholder="Discount in percentage - %" name="discount[percent]">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="discount_userDays">Day's User</label>
+                        <label class="col-sm-4 control-label" for="discount_userDays">User registered more than X days</label>
                         <div class="col-sm-4 ">
                             <input type="number" class="form-control" id="discount_userDays"
-                                   placeholder="Day's User" name="discount[userDays]">
+                                   placeholder="Number of days" name="discount[userDays]">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="discount_userDays">Cash's User</label>
+                        <label class="col-sm-4 control-label" for="discount_userDays">User having more than X cash</label>
                         <div class="col-sm-4 ">
                             <input type="number" step="any" class="form-control" id="discount_userCash"
-                                   placeholder="Cash's User" name="discount[userCash]">
+                                   placeholder="Amount of cash" name="discount[userCash]">
                         </div>
                     </div>
 
@@ -80,12 +80,12 @@
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <label class="text-center">Текущи промоции</label>
+            <label class="text-center">Current promotions</label>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-2 ">Start Date Discount</th>
-                    <th class="col-sm-2 ">End Date Discount</th>
+                    <th class="col-sm-2 ">Discount starting time</th>
+                    <th class="col-sm-2 ">Discount ending time</th>
                     <th class="col-sm-1 ">Percent</th>
                     <th class="col-sm-1 ">Days</th>
                     <th class="col-sm-1 ">Cash</th>
@@ -118,12 +118,12 @@
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <label class="text-center">Бъдещи промоции</label>
+            <label class="text-center">Future promotions</label>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-2 ">Start Date Discount</th>
-                    <th class="col-sm-2 ">End Date Discount</th>
+                    <th class="col-sm-2 ">Discount starting time</th>
+                    <th class="col-sm-2 ">Discount ending time</th>
                     <th class="col-sm-1 ">Percent</th>
                     <th class="col-sm-1 ">Days</th>
                     <th class="col-sm-1 ">Cash</th>
@@ -155,12 +155,12 @@
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <label class="text-center">Стари промоции</label>
+            <label class="text-center">Old promotions</label>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-2 ">Start Date Discount</th>
-                    <th class="col-sm-2 ">End Date Discount</th>
+                    <th class="col-sm-2 ">Discount starting time</th>
+                    <th class="col-sm-2 ">Discount ending time</th>
                     <th class="col-sm-1 ">Percent</th>
                     <th class="col-sm-1 ">Days</th>
                     <th class="col-sm-1 ">Cash</th>

@@ -57,6 +57,9 @@ class DiscountService implements DiscountServiceInterface
             }
         }
 
+        //var_dump($currentUser);
+        //var_dump($discountUser); exit();
+
         /** @var Product $p */
         foreach ($products as $p) {
 

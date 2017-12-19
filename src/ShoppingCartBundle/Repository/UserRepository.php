@@ -20,18 +20,27 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         );
     }
 
-    public function banUserBool($isBan, $userId)
+    public function updateBanUser(int $userId, bool $isBan)
     {
-        $query = 'UPDATE users SET is_ban = :isBan WHERE id = :userId';
-        $params = array('isBan' => $isBan, 'userId' => $userId);
-
-        return $this->getEntityManager()
-            ->getConnection()
-            ->executeQuery($query, $params)
-            ->execute();
+        return $this->createQueryBuilder('u')
+            ->update()
+            ->set('u.isBan', '?1')
+            ->setParameter(1, $isBan)
+            ->where('u.id = ?2')
+            ->setParameter(2, $userId)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
-    public function setEntityManager()
+    public function updateCash(int $userId, float $cash)
     {
+        return $this->createQueryBuilder('u')
+            ->update()
+            ->set('u.cash', '?1')
+            ->setParameter(1, $cash)
+            ->where('u.id = ?2')
+            ->setParameter(2, $userId)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

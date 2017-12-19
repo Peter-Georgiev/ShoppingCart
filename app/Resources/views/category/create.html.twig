@@ -12,17 +12,23 @@
 
 {% block main %}
 
+    {% if danger is defined %}
+        <div class="container body-content">
+            <h3 class="text-danger text-center">{{ danger }}</h3>
+        </div>
+    {% endif %}
+
     <div class="container body-content span=8 offset=2">
         <div class="well">
             <form class="form-horizontal" action="{{ path('category_create') }}" method="POST">
                 <fieldset>
-                    <legend>New Category</legend>
+                    <legend>Create category</legend>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="category_name">Product Category</label>
+                        <label class="col-sm-4 control-label" for="category_name">Category name</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="category_name" placeholder="Product Category"
-                                   name="category[name]">
+                            <input type="text" class="form-control" id="category_name"
+                                   placeholder="Product Category" name="category[name]">
                         </div>
                     </div>
 
@@ -42,9 +48,11 @@
         <div class="well">
 
             <table class="table table-bordered">
+                <h4 class="text-center">Category name</h4>
+
                 <thead>
                 <tr>
-                    <th class="col-lg-5 ">Category Name</th>
+                    <th class="col-lg-10 "></th>
                 </tr>
                 <tbody>
 
@@ -59,7 +67,7 @@
 
                             <td class="col-sm-2">
                                 <div class="col-sm-1 col-sm-offset-1">
-                                    <button type="submit" class="btn btn-primary">Modified</button>
+                                    <button type="submit" class="btn btn-primary">Modify</button>
                                 </div>
                             </td>
 

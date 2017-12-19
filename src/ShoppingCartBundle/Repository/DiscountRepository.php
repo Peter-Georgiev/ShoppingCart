@@ -57,7 +57,7 @@ class DiscountRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('d.startDate <= ?1')
             ->andWhere('d.endDate >= ?2')
             ->andWhere('d.userDays <= ?3')
-            ->orWhere('d.userCash <= ?4')
+            ->andWhere('d.userCash <= ?4')
             ->setParameter(1, self::DateNowStr())
             ->setParameter(2, self::DateNowStr())
             ->setParameter(3, ($user->getRegTime()->diff(new \DateTime(self::DateNowStr())))->days)

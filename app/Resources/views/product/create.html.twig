@@ -22,7 +22,7 @@
         <div class="well">
             <form class="form-horizontal" action="{{ path('product_create') }}" method="POST">
                 <fieldset>
-                    <legend>New Product</legend>
+                    <legend>Create product</legend>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="category_name">Product Category</label>
@@ -67,6 +67,7 @@
                         </div>
                     </div>
 
+                    {{ form_row(form._token) }}
 
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
@@ -75,11 +76,8 @@
                         </div>
                     </div>
 
-
                 </fieldset>
 
-                {{ form_start(form) }}
-                {{ form_row(form._token) }}
             </form>
         </div>
     </div>
@@ -90,13 +88,16 @@
         <div class="well">
 
             <table class="table table-bordered">
+                <h4 class="text-center">Product name</h4>
+
                 <thead>
                 <tr>
+                    <th class="col-sm-1 ">Category</th>
                     <th class="col-sm-2 ">Product Name</th>
                     <th class="col-sm-2 ">Model</th>
-                    <th class="col-sm-1 ">Quantity</th>
-                    <th class="col-sm-2 ">Price</th>
-                    <th class="col-sm-2 ">Top Product Rating</th>
+                    <th class="col-sm-1 ">Qtty</th>
+                    <th class="col-sm-1 ">Price</th>
+                    <th class="col-sm-1 ">Top Rating</th>
                     <th class="col-sm-2 ">Owner</th>
                 </tr>
                 </thead>
@@ -104,6 +105,7 @@
                 {% for product in products %}
                     <form class="form-horizontal" action="{{ path('product_view', {id: product.id}) }}" method="POST">
                         <tr>
+                            <td>{{ product.category.name }}</td>
                             <td>{{ product.name }}</td>
                             <td>{{ product.model }}</td>
                             <td>{{ product.qtty }}</td>
@@ -114,7 +116,7 @@
                             {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isEdit()) %}
                                 <td class="col-sm-1">
                                     <div class="col-sm-1 col-sm-offset-1">
-                                        <button type="submit" class="btn btn-primary">Modified</button>
+                                        <button type="submit" class="btn btn-primary">Modify</button>
                                     </div>
                                 </td>
                             {% endif %}

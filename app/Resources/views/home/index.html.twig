@@ -3,13 +3,13 @@
 {% block categories %}
     {#•	Listing products in categories #}
     <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categories
             <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('shop_index') }}">All Categories</a></li>
             {% for category in categories %}
                 <li><a href="{{ path('product_category', {'id' : category.id}) }}">{{ category.name }}</a></li>
             {% endfor %}
+            <li><a href="{{ path('shop_index') }}">All Categories</a></li>
         </ul>
     </li>
 {% endblock %}
@@ -20,12 +20,12 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sort
             <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('product_top') }}">Top Product Rating</a></li>
-            <li><a href="{{ path('product_promo_asc') }}">Promo</a></li>
-            <li><a href="{{ path('product_price_asc') }}">Price Asc</a></li>
-            <li><a href="{{ path('product_price_desc') }}">Price Desc</a></li>
-            <li><a href="{{ path('product_date_asc') }}">Date Asc</a></li>
-            <li><a href="{{ path('product_date_desc') }}">Date Desc</a></li>
+            <li><a href="{{ path('product_top') }}">Top product rating</a></li>
+            <li><a href="{{ path('product_promo_asc') }}">Promo products</a></li>
+            <li><a href="{{ path('product_price_asc') }}">Price: lowest first</a></li>
+            <li><a href="{{ path('product_price_desc') }}">Price: highest first</a></li>
+            <li><a href="{{ path('product_date_desc') }}">Time: newly listed</a></li>
+            <li><a href="{{ path('product_date_asc') }}">Time: oldest listed</a></li>
         </ul>
     </li>
 {% endblock %}
@@ -41,8 +41,13 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container body-content">
-        <div class="row">
+
+<div class="container body-content">
+    <div class="row">
+        {% if products|length == 0 %}
+            <h3 class="text-info">Няма продукти в избраната категория</h3>
+        {% else %}
+
             {% for product in products %}
                 <div class="col-md-6">
                     <article>
@@ -118,6 +123,7 @@
                     </article>
                 </div>
             {% endfor %}
+        {% endif %}
         </div>
     </div>
 {% endblock %}

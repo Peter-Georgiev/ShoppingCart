@@ -54,14 +54,14 @@ class Discount
     /**
      * @var int
      *
-     * @ORM\Column(name="user_days", type="integer", nullable=true)
+     * @ORM\Column(name="user_days", type="integer")
      */
     private $userDays;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="user_cash", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="user_cash", type="decimal", precision=10, scale=2)
      */
     private $userCash;
 
@@ -84,6 +84,8 @@ class Discount
         $this->products = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->isUser = false;
+        $this->userDays = 0;
+        $this->userCash = 0;
     }
 
     /**

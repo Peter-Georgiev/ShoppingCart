@@ -34,19 +34,28 @@ class CategoryController extends Controller
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
+
         if ($form->isSubmitted() && $form->isValid() && strlen($category->getName()) > 0) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->flush();
+            try {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($category);
+                $em->flush();
+            } catch (\Exception $e) {
+
+                return $this->render('category/create.html.twig', array('form' => $form->createView(),
+                    'categories' => $categories, 'payments' => $payments, 'danger' => 'Category is existing!'
+                ));
+            }
 
             return $this->redirectToRoute('category_create');
         }
 
-        $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart($currentUser->getId());
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAllCategories();
-        return $this->render('category/create.html.twig',
-            array('form' => $form->createView(), 'categories' => $categories, 'payments' => $payments));
+        return $this->render('category/create.html.twig', array('form' => $form->createView(),
+            'categories' => $categories, 'payments' => $payments
+        ));
     }
 
     /**
@@ -113,7 +122,7 @@ class CategoryController extends Controller
 
                 return $this->render('category/delete.html.twig',
                     array('category' => $category, 'form' => $form->createView(),
-                        'payments' => $payments, 'danger' => 'КАТЕГОРИЯТА се използва!'));
+                        'payments' => $payments, 'danger' => 'Category is used!'));
             }
 
             return $this->redirectToRoute('category_create',

@@ -45,38 +45,38 @@
                         {% block create %}
                         {% if app.getUser() %}
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Операции
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Operations
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     {% if app.getUser() and (app.getUser().isEdit() or app.getUser().isAdmin()) %}
 
                                         <li>
                                             <a href="{{ path('category_create') }}">
-                                                Create/Edit/Delete Category
+                                                By category
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="{{ path('product_create') }}">
-                                                Create/Edit/Delete Product
+                                                By product
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="{{ path('discount_user') }}">
-                                                Diacount User Criteria
+                                                Discount by user
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="{{ path('discount_category') }}">
-                                                Diacount Category
+                                                Discount by category
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="{{ path('discount_allproducts') }}">
-                                                Diacount All Products
+                                                Discount all products
                                             </a>
                                         </li>
 
@@ -84,7 +84,7 @@
 
                                     <li>
                                         <a href="{{ path('discount_product') }}">
-                                            Diacount Product
+                                            Discount by product
                                         </a>
                                     </li>
                                 </ul>

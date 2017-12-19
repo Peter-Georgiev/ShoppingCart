@@ -36,18 +36,23 @@ class RoleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $isBan = boolval($request->request->get('ban')['ban']);
 
             $roleRepository = $this->getDoctrine()->getRepository(Role::class);
-            $userRole = $roleRepository->findOneBy(['name' => $role->getName()]);
+            $formUserRole = $roleRepository->findOneBy(['name' => $role->getName()]);
+            $formIsBan = boolval($request->request->get('ban')['ban']);
+            $formCash = floatval($request->get('user')['cash']);
 
-            if (trim(strtoupper($user->getRoles()[0])) !== trim(strtoupper($userRole->getName()))) {
+            if (trim(strtoupper($user->getRoles()[0])) !== trim(strtoupper($formUserRole->getName()))) {
                 $em = $this->getDoctrine()->getManager();
-                $em->getRepository(Role::class)->changeRole($userRole->getId(), $id);
+                $em->getRepository(Role::class)->changeRole($formUserRole->getId(), $id);
             }
 
-            if ($user->isBan() !== $isBan) {
-                $this->getDoctrine()->getRepository(User::class)->banUserBool($isBan, $id);
+            if ($user->getCash() !== $formCash) {
+                $this->getDoctrine()->getRepository(User::class)->updateCash($id, $formCash);
+            }
+
+            if ($user->isBan() !== $formIsBan) {
+                $this->getDoctrine()->getRepository(User::class)->updateBanUser($id, $formIsBan);
             }
 
             return $this->redirectToRoute('users_view');
@@ -58,7 +63,7 @@ class RoleController extends Controller
             ->findYourCart( $currentUser->getId());
 
         return $this->render("role/change.html.twig", array('form' => $form->createView(), 'user' => $user,
-                'roles' => $roles, 'payments' => $payments)
-        );
+                'roles' => $roles, 'payments' => $payments
+        ));
     }
 }

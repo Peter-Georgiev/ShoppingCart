@@ -55,9 +55,7 @@ class ProductController extends Controller
         }
 
         $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
-
+        $category->setName($request->get('category')['name']);
         $categories = $this->getDoctrine()->getRepository(Category::class);
         $categoryRole = $categories->findOneBy(['name' => $category->getName()]);
 
@@ -65,16 +63,19 @@ class ProductController extends Controller
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
-        var_dump($form->getViewData());// exit();
         if ($form->isSubmitted() && $form->isValid()) {
-            $product->setOwner($this->getUser());
-            $product->setCategory($categoryRole);
+            $isProduct = strlen($product->getName()) > 0 && strlen($product->getModel()) > 0 &&
+                floatval($product->getQtty()) > 0 && floatval($product->getPrice()) >= 0;
+            if ($isProduct) {
+                $product->setOwner($this->getUser());
+                $product->setCategory($categoryRole);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($product);
+                $em->flush();
 
-            return $this->redirectToRoute('shop_index');
+                return $this->redirectToRoute('shop_index');
+            }
         }
 
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();

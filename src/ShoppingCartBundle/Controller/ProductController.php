@@ -353,14 +353,14 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/product/copy/{id}", name="product_copy")
+     * @Route("/product/sell/{id}", name="product_sale")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function copyUserAction($id, Request $request)
+    public function sellAction($id, Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -384,6 +384,7 @@ class ProductController extends Controller
             $product->setCategory($payments->getProducts()->getCategory());
             $product->setName($payments->getProducts()->getName());
             $product->setModel($payments->getProducts()->getModel());
+
             if (intval($product->getQtty()) <= 0 || $payments->getQtty() < intval($product->getQtty())) {
                 $product->setQtty($payments->getQtty());
             }
@@ -409,7 +410,7 @@ class ProductController extends Controller
         $products = $this->getDoctrine()->getRepository(Product::class)
             ->findUserByProducts($currentUser->getId());
 
-        return $this->render('product/copy.html.twig', array('form' => $form->createView(),
+        return $this->render('product/sell.html.twig', array('form' => $form->createView(),
                 'products' => $products, 'payments' => $payments)
         );
     }

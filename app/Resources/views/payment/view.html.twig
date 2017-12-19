@@ -18,14 +18,14 @@
 
                 <thead>
                 <tr>
-                    <th class="col-lg-1 small ">Product Name</th>
-                    <th class="col-lg-1 small">Model</th>
+                    <th class="col-sm-1 small">Product name</th>
+                    <th class="col-sm-1 small">Model</th>
                     <th class="col-sm-1 small">Quantity</th>
                     <th class="col-sm-1 small">Discount</th>
-                    <th class="col-lg-1 small">Payment</th>
-                    <th class="col-sm-1 small">Pay Number</th>
-                    <th class="col-lg-2 small">Date Paid</th>
-                    <th class="col-lg-1 small"></th>
+                    <th class="col-sm-2 small">Amount paid</th>
+                    <th class="col-sm-1 small">Purchase number</th>
+                    <th class="col-sm-2 small">Purchase date</th>
+                    <th class="col-sm-1 small"></th>
                 </tr>
                 </thead>
 
@@ -37,15 +37,13 @@
                         <td>{{ paymentsPaid.qtty }}</td>
                         <td>{{ paymentsPaid.discount }}%</td>
                         <td>{{ paymentsPaid.payment }} BGN</td>
-                        <td>&#35 {{ paymentsPaid.documents.id }} </td>
+                        <td>&#35 {{ paymentsPaid.documents.id }}</td>
                         <td>{{ paymentsPaid.documents.dateEvent|date('d.m.Y \\ H:i:s') }}</td>
-                        <td><a type="submit" class="btn btn-sm btn-primary"
-                        href="{{ path('product_copy', {'id' : paymentsPaid.id}) }}">Продажба</a></td>
+                        <td><a type="submit" class="btn-sm btn-primary"
+                               href="{{ path('product_sale', {'id' : paymentsPaid.id}) }}">Sell</a></td>
                     </tr>
                     </tbody>
-
                 {% endfor %}
-
 
             </table>
         </div>

@@ -84,7 +84,7 @@ class UserController extends Controller
         /** @var User $currentUser */
         $currentUser = $this->getUser();
         if (!$currentUser->isAdmin()) {
-            return $this->redirectToRoute("shop_index");
+            return $this->redirectToRoute("user_profile");
         }
 
         $user = new User();

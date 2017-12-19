@@ -18,15 +18,15 @@
 
                 <thead>
                 <tr>
-                    <th class="col-lg-1 small ">Product Name</th>
-                    <th class="col-lg-1 small">Model</th>
+                    <th class="col-sm-1 small">Product name</th>
+                    <th class="col-sm-1 small">Model</th>
                     <th class="col-sm-1 small">Quantity</th>
                     <th class="col-sm-1 small">Discount</th>
-                    <th class="col-lg-2 small">Payment</th>
-                    <th class="col-sm-1 small">Pay Number</th>
-                    <th class="col-lg-2 small">Date Paid</th>
-                    <th class="col-lg-1 small">Paid</th>
-                    <th class="col-lg-2 small">Owner</th>
+                    <th class="col-sm-2 small">Amount to pay</th>
+                    <th class="col-sm-1 small">Purchase number</th>
+                    <th class="col-sm-2 small">Purchase date</th>
+                    <th class="col-sm-1 small">Paid</th>
+                    <th class="col-sm-2 small">User</th>
                     <th class="col-sm-1 small"></th>
                     <th class="col-sm-1 small"></th>
                     <th class="col-sm-1 small"></th>
@@ -42,27 +42,25 @@
                         <td>{{ paymentsPaid.discount }}%</td>
                         {% if paymentsPaid.paid == 1 %}
                             <td>{{ paymentsPaid.payment }} BGN</td>
-                            <td>&#35 {{ paymentsPaid.documents.id }} </td>
+                            <td>&#35 {{ paymentsPaid.documents.id }}</td>
                             <td>{{ paymentsPaid.documents.dateEvent|date('d.m.Y \\ H:i:s') }}</td>
-                            <td>'YES'</td>
+                            <td>YES</td>
                         {% else %}
                             <td>{{ paymentsPaid.price }} BGN</td>
                             <td>&#35</td>
-                            <td>'Не преключеня'</td>
-                            <td>'NO'</td>
+                            <td>Abandoned cart</td>
+                            <td>NO</td>
                         {% endif %}
                         <td>{{ paymentsPaid.users.username }}</td>
-                        <td><a type="submit" class="btn btn-sm btn-primary"
-                               href="{{ path('product_copy', {'id' : paymentsPaid.id}) }}">Продажба</a></td>
-                    {% if paymentsPaid.paid == 0 %}
-                        <td><a type="submit" class="btn btn-sm btn-danger"
-                               href="{{ path('payment_remove_product', {id: paymentsPaid.id}) }}">Remove</a></td>
-                    {% endif %}
+                        <td><a type="submit" class="btn-sm btn-primary"
+                               href="{{ path('product_sale', {'id' : paymentsPaid.id}) }}">Sell</a></td>
+                        {% if paymentsPaid.paid == 0 %}
+                            <td><a type="submit" class="btn-sm btn-danger"
+                                   href="{{ path('payment_remove_product', {id: paymentsPaid.id}) }}">Remove</a></td>
+                        {% endif %}
                     </tr>
                     </tbody>
-
                 {% endfor %}
-
 
             </table>
         </div>

@@ -28,25 +28,32 @@
                 </thead>
 
                 {% for payment in payments %}
-                        <tr>
-                            <td class="col-sm-2 "><input class="form-control" id="user_username"
-                                       name="payment[products.name]" value="{{ payment.products.name }}" disabled></td>
-                            <td class="col-sm-2 "><input class="form-control" id="user_firstName"
-                                       name="payment[products.name]" value="{{ payment.products.model }}" disabled></td>
-                            <td class="col-sm-1"><input class="form-control" id="user_lastName"
-                                       name="payment[qtty]" value="{{ payment.qtty }}" disabled></td>
-                            <td class="col-sm-1 "><input class="form-control" id="user_lastName"
-                                       name="payment[price]" value="{{ payment.price }} BGN" disabled></td>
-                            <td class="col-sm-1 "><input class="form-control" id="user_lastName"
-                                       name="payment[price]" value="{{ payment.discount }}%" disabled></td>
-                            <td class="col-sm-1 "><input class="form-control" id="user_lastName"
-                                       name="payment[price]" value="{{ payment.payment }} BGN" disabled></td>
-                        </tr>
+                    <tr>
+                        <td class="col-sm-2 "><input class="form-control" id="user_username"
+                                                     name="payment[products.name]" value="{{ payment.products.name }}"
+                                                     disabled></td>
+                        <td class="col-sm-2 "><input class="form-control" id="user_firstName"
+                                                     name="payment[products.name]" value="{{ payment.products.model }}"
+                                                     disabled></td>
+                        <td class="col-sm-1"><input class="form-control" id="user_lastName"
+                                                    name="payment[qtty]" value="{{ payment.qtty }}" disabled></td>
+                        <td class="col-sm-1 "><input class="form-control" id="user_lastName"
+                                                     name="payment[price]" value="{{ payment.price }} BGN" disabled>
+                        </td>
+                        <td class="col-sm-1 "><input class="form-control" id="user_lastName"
+                                                     name="payment[price]" value="{{ payment.discount }}%" disabled>
+                        </td>
+                        <td class="col-sm-1 "><input class="form-control" id="user_lastName"
+                                                     name="payment[price]" value="{{ payment.payment }} BGN" disabled>
+                        </td>
+                    </tr>
                 {% endfor %}
 
-                <td class="col-sm-1"><div class="col-sm-1 col-sm-offset-1">
+                <td class="col-sm-1">
+                    <div class="col-sm-1 col-sm-offset-1">
                         <a type="submit" class="btn btn-primary" href="{{ path('shop_index', {id: payment.id}) }}">Shopping</a>
-                    </div></td>
+                    </div>
+                </td>
 
             </table>
 

@@ -28,7 +28,7 @@
                         <label class="col-sm-4 control-label" for="discount_startDate">Discount starting time</label>
                         <div class="col-sm-4 ">
                             <input type="datetime-local" class="form-control" id="discount_startDate"
-                                   name="discount[startDate]">
+                                   placeholder="DD.MM.YYYY hh:mm" name="discount[startDate]">
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@
                         <label class="col-sm-4 control-label" for="discount_endDate">Discount ending time</label>
                         <div class="col-sm-4 ">
                             <input type="datetime-local" class="form-control" id="discount_endDate"
-                                   name="discount[endDate]">
+                                   placeholder="DD.MM.YYYY hh:mm" name="discount[endDate]">
                         </div>
                     </div>
 
@@ -102,10 +102,7 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
-
-                {{ form_row(form._token) }}
             </table>
-
         </div>
     </div>
 
@@ -134,10 +131,7 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
-
-                {{ form_row(form._token) }}
             </table>
-
         </div>
     </div>
 
@@ -166,10 +160,7 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
-
-                {{ form_row(form._token) }}
             </table>
-
         </div>
     </div>
 

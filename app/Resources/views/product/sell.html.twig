@@ -17,12 +17,12 @@
 
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" action="{{ path('product_copy', {id: payments.id}) }}" method="POST">
+            <form class="form-horizontal" action="{{ path('product_sale', {id: payments.id}) }}" method="POST">
                 <fieldset>
-                    <legend>New Product</legend>
+                    <legend>Sell a product</legend>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="category_name">Product Category</label>
+                        <label class="col-sm-4 control-label" for="category_name">Category name</label>
                         <div class="col-sm-4 ">
                             <input type="text" class="form-control" id="category_name"
                                    placeholder="{{ payments.products.category.name }}" name="category[name]" disabled>
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="product_name">Product Name</label>
+                        <label class="col-sm-4 control-label" for="product_name">Product name</label>
                         <div class="col-sm-4 ">
                             <input type="text" class="form-control" id="product_name"
                                    placeholder="{{ payments.products.name }}" name="product[name]" disabled>
@@ -76,11 +76,9 @@
         </div>
     </div>
 
-
-
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <legend>В Продажба</legend>
+            <legend>Products on sale by this user</legend>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -111,22 +109,19 @@
                                        name="user[lastName]" value="{{ product.price }}" disabled>
                             </td>
 
-
                             {% if app.getUser() and (app.getUser().isAdmin() or app.getUser().isEdit()) %}
                                 <td class="col-sm-1">
                                     <div class="col-sm-1 col-sm-offset-1">
-                                        <button type="submit" class="btn btn-primary">Modified</button>
+                                        <button type="submit" class="btn btn-primary">Modify</button>
                                     </div>
                                 </td>
                             {% endif %}
 
                         </tr>
+                        {{ form_row(form._token) }}
                     </form>
                 {% endfor %}
-
-                {{ form_row(form._token) }}
             </table>
-
         </div>
     </div>
 

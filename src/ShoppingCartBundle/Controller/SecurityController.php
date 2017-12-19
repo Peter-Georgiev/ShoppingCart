@@ -18,7 +18,6 @@ class SecurityController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $currentUser = $authenticationUtils->getLastUsername();
 
-
         if ($error !== null && $currentUser !== null) {
             return $this->render('security/ban.html.twig', array('currentUser' => $currentUser,
                 'error' => $error,

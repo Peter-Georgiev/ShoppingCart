@@ -46,7 +46,7 @@ class CategoryController extends Controller
             } catch (\Exception $e) {
 
                 return $this->render('category/create.html.twig', array('form' => $form->createView(),
-                    'categories' => $categories, 'payments' => $payments, 'danger' => 'Category is existing!'
+                    'categories' => $categories, 'payments' => $payments, 'danger' => 'The category already exists!'
                 ));
             }
 
@@ -122,7 +122,7 @@ class CategoryController extends Controller
 
                 return $this->render('category/delete.html.twig',
                     array('category' => $category, 'form' => $form->createView(),
-                        'payments' => $payments, 'danger' => 'Category is used!'));
+                        'payments' => $payments, 'danger' => 'The category is being used!'));
             }
 
             return $this->redirectToRoute('category_create',

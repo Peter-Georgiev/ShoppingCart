@@ -17,52 +17,41 @@
 
             <table class="table table-bordered">
                 <tr>
-                    <th class="col-sm-2 ">Username</th>
-                    <th>Full Name</th>
-                    <th>Cash</th>
-                    <th>ROLE</th>
-                    <th>Ban User</th>
-                    <th></th>
+                    <th class="col-sm-2 small">Username</th>
+                    <th class="col-sm-2 small">Full name</th>
+                    <th class="col-sm-2 small">Cash</th>
+                    <th class="col-sm-2 small">Role</th>
+                    <th class="col-sm-1 small">Ban user</th>
+                    <th class="col-sm-1 small"></th>
                 </tr>
                 <tbody>
 
                 {% for user in users %}
                     <form class="form-horizontal" action="{{ path('role_change', {id: user.id}) }}" method="POST">
                         <tr>
-
-                            <td class="col-sm-2 "><input class="form-control" id="user_username"
-                                       name="user[username]" value="{{ user.username }}" disabled></td>
-
-                            <td class="col-sm-2 "><input class="form-control" id="user_firstName"
-                                       name="user[firstName]" value="{{ user.firstName }} {{ user.lastName }}" disabled></td>
-
-                            <td class="col-sm-2 "><input class="form-control" id="user_lastName"
-                                       name="user[lastName]" value="{{ user.cash }} BGN" disabled></td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.firstName }} {{ user.lastName }}</td>
+                            <td>{{ user.cash }} BGN</td>
 
                             {% for role in user.roles %}
-                                <td class="col-sm-3 "><input class="form-control" id="user_lastName"
-                                           name="role[name]" value="{{ role }}" disabled></td>
+                                <td>{{ role }}</td>
                             {% endfor %}
 
-                            <td class="col-sm-2 ">
-                                {% if  user.ban == 0 %}
-                                    <input class="form-control" id="user_isBan"
-                                           name="user[isBan]" value="NO" disabled>
-                                {% else %}
-                                    <input class="form-control" id="user_isBan"
-                                           name="user[isBan]" value="YES" disabled>
-                                {% endif %}
+                            {% if  user.ban == 0 %}
+                                <td>NO</td>
+                            {% else %}
+                                <td>YES</td>
+                            {% endif %}
+
+                            <td class="col-sm-1">
+                                <div class="col-sm-1 col-sm-offset-1">
+                                    <button type="submit" class="btn-sm btn-success">Edit</button>
+                                </div>
                             </td>
-
-                            <td class="col-sm-1"><div class="col-sm-1 col-sm-offset-1">
-                                    <button type="submit" class="btn btn-success">Edit</button>
-                                </div></td>
-
                         </tr>
+                        {{ form_row(form._token) }}
                     </form>
                 {% endfor %}
-
-                {{ form_row(form._token) }}
 
                 </tbody>
             </table>

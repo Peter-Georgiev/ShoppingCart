@@ -40,17 +40,23 @@ class PaymentController extends Controller
      */
     public function addInCartAction($id, Request $request)
     {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute('security_login');
+        }
+
         /** @var Product $product */
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
+        $discount = $this->discountService->biggestPeriodDiscounts(array($product), $currentUser);
 
         $payment = new Payment();
         $payment->setUsers($this->getUser());
         $payment->setProducts($product);
         $payment->setQtty(1);
 
-        if (count($product->getDiscounts()) > 0) {
-            $percent = $this->discountService->biggestPeriodDiscounts(array($product), $this->getUser());
-            $payment->setDiscount($percent[$id]['percent']);
+        if (count($discount) > 0) {
+            $payment->setDiscount($discount[$id]['percent']);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -92,7 +98,6 @@ class PaymentController extends Controller
         return $this->render('payment/view_cart.html.twig', array('payments' => $payments,
                 'totalPrice' => $totalPrice[0]['totalPrice'], 'hasCheckout' => $hasCheckout));
     }
-
 
     /**
      * @Route("/payment/remall", name="payment_remove_products")
@@ -204,7 +209,6 @@ class PaymentController extends Controller
             }
             return $this->redirectToRoute('payment_view');
         }
-
         return $this->redirectToRoute('payment_view_cart');
     }
 
@@ -258,7 +262,6 @@ class PaymentController extends Controller
             ->findYourCart($currentUser->getId());
         $paymentsPaids = $this->getDoctrine()->getRepository(Payment::class)->findAll();
         //$paymentsSum = $this->getDoctrine()->getRepository(Payment::class)->findAll();
-
         return $this->render('payment/view_admin.html.twig', array('paymentsPaids' => $paymentsPaids,
                 'payments' => $payments
         ));

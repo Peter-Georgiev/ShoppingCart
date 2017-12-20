@@ -65,6 +65,7 @@ class HomeController extends Controller
                 'categories' => $categories, 'payments' => $payments, 'arrDiscount' => $arrDiscount));
         }
 
+        //var_dump($products); exit();
         return $this->render('home/index.html.twig', array('products' => $products,
             'categories' => $categories, 'reviews' => $reviews, 'arrDiscount' => $arrDiscount));
     }

@@ -23,7 +23,7 @@
             <div class="col-md-12">
                 <article>
                     <header>
-                        <h3>{{ product.name }}</h3>
+                        <h4>Product: {{ product.name }}</h4>
                     </header>
 
                     <p>
@@ -72,7 +72,8 @@
                             <table class="table table-bordered small">
                             Message: {{ review.message }}
                             </table>
-                            Written by {{ review.owner.username }}
+                            Written by {{ review.owner.username }},
+                            date of registration: {{ review.dateAdded|date('d.m.Y \\ H:i:s') }}
                         </div>
                     </div>
                     {% endfor %}

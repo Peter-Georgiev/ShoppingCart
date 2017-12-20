@@ -41,12 +41,12 @@
                         <div class="panel col-sm-8">
 
                                 <header>
-                                    <h4>Product name: {{ payment.products.name }}</h4>
+                                    <h4>Product: {{ payment.products.name }}</h4>
                                 </header>
 
                                 <p>
                                     Model: {{ payment.products.model }},
-                                    Quantity: {{ payment.qtty }},
+                                    Quantity: {{ payment.qtty }}
                                 </p>
 
                                 <p>
@@ -54,9 +54,14 @@
                                 </p>
 
                                 <p>
-                                    Price: {{ payment.price }}
+                                    Price:
+                                    <label class="text-info">
+                                        {{ payment.price }} BGN
+                                    </label>
                                     {% if payment.discount > 0 %}
-                                        (Discount: {{ payment.discount }}%)
+                                        <label class="text-warning">
+                                            (Discount: {{ payment.discount }}%)
+                                        </label>
                                     {% endif %}
                                     <a type="submit" class="btn btn-danger btn-xs pull-right"
                                        href="{{ path('payment_remove_product', {'id' : payment.id}) }}">
@@ -82,7 +87,7 @@
 
                             <div class="t-row">
                                 <span class="capt">Your balance:</span>
-                                <span class="amount">{{ app.getUser().getCash() }}
+                                <span class="amount text-info">{{ app.getUser().getCash() }}
                                     <span class="curr">BGN</span></span>
                                 <div class="cl">&nbsp;</div>
                             </div>
@@ -94,8 +99,7 @@
 
                                 <div class="total">
                                     <span class="capt">Total Price:</span>
-                                    <span class="amount total-amount">{{ totalPrice }}</span>
-                                    <span class="curr">BGN</span>
+                                    <span class="amount total-amount text-danger">{{ totalPrice }} BGN</span>
                                     <div class="cl">&nbsp;</div>
                                 </div>
 

@@ -18,8 +18,8 @@
 
                 <thead>
                 <tr>
-                    <th class="col-sm-1 small">Product name</th>
-                    <th class="col-sm-1 small">Model</th>
+                    <th class="col-sm-2 small">Product name</th>
+                    <th class="col-sm-2 small">Model</th>
                     <th class="col-sm-1 small">Quantity</th>
                     <th class="col-sm-1 small">Discount</th>
                     <th class="col-sm-2 small">Amount to pay</th>
@@ -39,7 +39,11 @@
                         <td>{{ paymentsPaid.products.name }}</td>
                         <td>{{ paymentsPaid.products.model }}</td>
                         <td>{{ paymentsPaid.qtty }}</td>
-                        <td>{{ paymentsPaid.discount }}%</td>
+                        <{% if paymentsPaid.discount > 0 %}
+                            <td>{{ paymentsPaid.discount }}%</td>
+                        {% else %}
+                            <td class="text-info">NO</td>
+                        {% endif %}
                         {% if paymentsPaid.paid == 1 %}
                             <td>{{ paymentsPaid.payment }} BGN</td>
                             <td>&#35 {{ paymentsPaid.documents.id }}</td>
@@ -48,8 +52,8 @@
                         {% else %}
                             <td>{{ paymentsPaid.price }} BGN</td>
                             <td>&#35</td>
-                            <td>Abandoned cart</td>
-                            <td>NO</td>
+                            <td class="text-danger">Abandoned cart</td>
+                            <td class="text-danger">NO</td>
                         {% endif %}
                         <td>{{ paymentsPaid.users.username }}</td>
                         <td><a type="submit" class="btn-sm btn-primary"

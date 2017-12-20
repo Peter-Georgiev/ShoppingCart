@@ -22,10 +22,10 @@
         <div class="well">
             <form class="form-horizontal" action="{{ path('product_delete', {id: product.id}) }}" method="POST">
                 <fieldset>
-                    <legend>Delete Product</legend>
+                    <legend>Delete product</legend>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="product_name">Product Name</label>
+                        <label class="col-sm-4 control-label" for="product_name">Product name</label>
                         <div class="col-sm-4 ">
                             <input type="text" class="form-control" id="product_name" placeholder="Product Name"
                                    name="product[name]" value="{{ product.name }}" disabled>

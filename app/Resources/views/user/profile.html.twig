@@ -19,11 +19,14 @@
         <label>Full name: </label>
         {{ user.firstName }} {{ user.lastName }}
         <br>
+        <label>Date of registration: </label>
+        {{ user.regTime|date('d.m.Y \\ H:i:s') }}
+        <br>
         <label>Your balance: </label>
-        {{ user.cash }}
+        <label class="text-info">{{ user.cash }} BGN</label>
         <br>
         <label>Role: </label>
-        {{ role }}
+        <label class="text-warning">{{ role }}</label>
     </div>
     {% if app.getUser() and app.getUser().isAdmin() %}
         <div>

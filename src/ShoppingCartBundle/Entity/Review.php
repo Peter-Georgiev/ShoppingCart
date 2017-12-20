@@ -4,7 +4,6 @@ namespace ShoppingCartBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\BrowserKit\Request;
 
 /**
  * Review
@@ -39,6 +38,13 @@ class Review
     private $ownerId;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_added", type="datetime")
+     */
+    private $dateAdded;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="ShoppingCartBundle\Entity\User", inversedBy="reviews")
@@ -56,6 +62,7 @@ class Review
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->dateAdded = new \DateTime();
     }
 
     /**
@@ -140,6 +147,25 @@ class Review
     public function setOwner(User $owner)
     {
         $this->owner = $owner;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateAdded(): \DateTime
+    {
+        return $this->dateAdded;
+    }
+
+    /**
+     * @param \DateTime $dateAdded
+     * @return Review
+     */
+    public function setDateAdded(\DateTime $dateAdded)
+    {
+        $this->dateAdded = $dateAdded;
+
         return $this;
     }
 }

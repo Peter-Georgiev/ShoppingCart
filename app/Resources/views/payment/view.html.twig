@@ -18,8 +18,8 @@
 
                 <thead>
                 <tr>
-                    <th class="col-sm-1 small">Product name</th>
-                    <th class="col-sm-1 small">Model</th>
+                    <th class="col-sm-2 small">Product name</th>
+                    <th class="col-sm-2 small">Model</th>
                     <th class="col-sm-1 small">Quantity</th>
                     <th class="col-sm-1 small">Discount</th>
                     <th class="col-sm-2 small">Amount paid</th>
@@ -35,7 +35,11 @@
                         <td>{{ paymentsPaid.products.name }}</td>
                         <td>{{ paymentsPaid.products.model }}</td>
                         <td>{{ paymentsPaid.qtty }}</td>
-                        <td>{{ paymentsPaid.discount }}%</td>
+                        {% if paymentsPaid.discount > 0 %}
+                            <td>{{ paymentsPaid.discount }}%</td>
+                        {% else %}
+                            <td class="text-warning">NO</td>
+                        {% endif %}
                         <td>{{ paymentsPaid.payment }} BGN</td>
                         <td>&#35 {{ paymentsPaid.documents.id }}</td>
                         <td>{{ paymentsPaid.documents.dateEvent|date('d.m.Y \\ H:i:s') }}</td>

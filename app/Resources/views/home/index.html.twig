@@ -44,85 +44,92 @@
     {% if products|length == 0 %}
         <h3 class="text-info">There are no products in the selected category.</h3>
     {% else %}
-
-    {% for product in products %}
+        
         <div class="container body-content">
             <div class="row">
-                <div class="col-md-4">
-                    <article>
-                        <header>
-                            <h3>{{ product.name }}</h3>
-                        </header>
+                {% for product in products %}
+                    <div class="col-md-4">
+                        <article>
+                            <header>
+                                <h3>{{ product.name }}</h3>
+                            </header>
 
-                        <p>
-                            Category: {{ product.category.name }}
-                        </p>
+                            <p>
+                                Category: {{ product.category.name }}
+                            </p>
 
-                        <p>
-                            Model: {{ product.model }},
-                            Quantity: {{ product.qtty }},
+                            <p>
+                                Model: {{ product.model }},
+                                Quantity: {{ product.qtty }}
+                            </p>
 
-                            Price:
-                            {% if product.id in arrDiscount|keys  and arrDiscount[product.id]['percent'] > 0 %}
-                                <del>{{ product.price }}</del>
-                                <label class="text-warning">
-                                    (Discount: {{ arrDiscount[product.id]['percent'] }}%,
-                                    {{ arrDiscount[product.id]['newPrice'] }})
-                                </label>
-                            {% else %}
-                                {{ product.price }}
-                            {% endif %}
-                        </p>
-
-                        <small class="owner">
-                            Owner: {{ product.owner }}
-                        </small>
-
-                        <footer>
-                            <div class="pull-right">
-
-                                <a class="btn btn-info btn-xs"
-                                   href="{{ path('review_view', {'id' : product.id}) }}">Reviews &raquo;</a>
-
-                                {% if app.getUser() and app.getUser().isAdmin() %}
-
-                                    <a class="btn btn-success btn-xs"
-                                       href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
-                                    <a class="btn btn-default btn-xs"
-                                       href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
-
-                                {% elseif  app.getUser() and (app.getUser().isEdit()) and (app.getUser().isOwner(product) == null) %}
-
-                                    <a class="btn btn-success btn-xs"
-                                       href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
-                                    <a class="btn btn-default btn-xs"
-                                       href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
-
-                                {% elseif  app.getUser() and (app.getUser().isEdit()) and (app.getUser().isOwner(product) != null) %}
-
-                                    <a class="btn btn-default btn-xs"
-                                       href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
-
-                                {% elseif app.getUser() and (app.getUser().isOwner(product) == null) %}
-
-                                    <a class="btn btn-success btn-xs"
-                                       href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
-
-                                {% elseif app.getUser() and (app.getUser().isOwner(product) != null) %}
-
-
+                            <p>
+                                {% if product.id in arrDiscount|keys  and arrDiscount[product.id]['percent'] > 0 %}
+                                    Price:
+                                    <label class="text-warning">
+                                        <del class="text-info">{{ product.price }}</del>
+                                        (Discount: {{ arrDiscount[product.id]['percent'] }}%,
+                                        {{ arrDiscount[product.id]['newPrice'] }} BGN)
+                                    </label>
                                 {% else %}
-
-                                    <a class="btn btn-success btn-xs"
-                                       href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart &raquo;</a>
-
+                                    Price:
+                                    <label class="text-info">
+                                        {{ product.price }} BGN
+                                    </label>
                                 {% endif %}
-                            </div>
-                        </footer>
-                    </article>
-                </div>
-            {% endfor %}
+                            </p>
+
+                            <small class="owner">
+                                Owner: {{ product.owner }}
+                            </small>
+
+                            <footer>
+                                <div class="pull-right">
+
+                                    <a class="btn btn-info btn-xs"
+                                       href="{{ path('review_view', {'id' : product.id}) }}">Reviews &raquo;</a>
+
+                                    {% if app.getUser() and app.getUser().isAdmin() %}
+
+                                        <a class="btn btn-success btn-xs"
+                                           href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart
+                                            &raquo;</a>
+                                        <a class="btn btn-default btn-xs"
+                                           href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
+
+                                    {% elseif  app.getUser() and (app.getUser().isEdit()) and (app.getUser().isOwner(product) == null) %}
+
+                                        <a class="btn btn-success btn-xs"
+                                           href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart
+                                            &raquo;</a>
+                                        <a class="btn btn-default btn-xs"
+                                           href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
+
+                                    {% elseif  app.getUser() and (app.getUser().isEdit()) and (app.getUser().isOwner(product) != null) %}
+
+                                        <a class="btn btn-default btn-xs"
+                                           href="{{ path('product_view', {'id' : product.id}) }}">More &raquo;</a>
+
+                                    {% elseif app.getUser() and (app.getUser().isOwner(product) == null) %}
+
+                                        <a class="btn btn-success btn-xs"
+                                           href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart
+                                            &raquo;</a>
+
+                                    {% elseif app.getUser() and (app.getUser().isOwner(product) != null) %}
+
+
+                                    {% else %}
+                                        <a class="btn btn-success btn-xs"
+                                           href="{{ path('payment_cart', {'id' : product.id}) }}">Add to cart
+                                            &raquo;</a>
+                                    {% endif %}
+                                </div>
+                            </footer>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
     {% endif %}
 {% endblock %}

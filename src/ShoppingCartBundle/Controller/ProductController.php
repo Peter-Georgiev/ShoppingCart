@@ -3,6 +3,7 @@
 namespace ShoppingCartBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use ShoppingCartBundle\Entity\Category;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
@@ -368,6 +369,7 @@ class ProductController extends Controller
             return $this->redirectToRoute("security_login");
         }
 
+        /** @var Collection|Payment $payments */
         $payments = $this->getDoctrine()->getRepository(Payment::class)->find($id);
 
         $category = new Category();

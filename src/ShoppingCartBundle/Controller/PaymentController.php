@@ -106,7 +106,7 @@ class PaymentController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function removeAllInCart(Request $request)
+    public function removeAllInCartAction(Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -133,7 +133,7 @@ class PaymentController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function removeProductInCart($id, Request $request)
+    public function removeProductInCartAction($id, Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -160,7 +160,7 @@ class PaymentController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function checkout(Request $request)
+    public function checkoutAction(Request $request)
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -193,12 +193,15 @@ class PaymentController extends Controller
                         $em->flush();
                         $documentId = $document->getId();
                     }
-
+                    //Old owner added cash
+                    $product->getOwner()->setCash($product->getOwner()->getCash() + $payment->getPrice());
                     $product->setQtty($quantity);
                     $em->persist($product);
-                    //pay
+
+                    //New owner added paid
                     $payment->setPayment($payment->getPrice());
                     $pay = $payment->getUsers()->getCash() - $payment->getPrice();
+
                     $payment->getUsers()->setCash($pay);
                     $payment->setDocumentId($documentId);
 

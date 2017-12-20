@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a6d09c98-d36c-423c-bdf5-f8c5ce6cc517" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/app/Resources/views/home/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/home/index.html.twig" />
-      <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/HomeController.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/HomeController.php" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/product/product.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/product/product.html.twig" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/review/view.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/review/view.html.twig" />
+      <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,21 +48,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PaymentController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/PaymentController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="245" column="7" lean-forward="false" selection-start-line="245" selection-start-column="7" selection-end-line="245" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProductController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProductController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4556">
-              <caret line="412" column="52" lean-forward="false" selection-start-line="412" selection-start-column="52" selection-end-line="412" selection-end-column="52" />
+            <state relative-caret-position="436">
+              <caret line="437" column="8" lean-forward="false" selection-start-line="437" selection-start-column="8" selection-end-line="437" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -69,18 +61,18 @@
       <file leaf-file-name="HomeController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/HomeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="39" column="21" lean-forward="false" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+            <state relative-caret-position="272">
+              <caret line="55" column="98" lean-forward="true" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="98" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/home/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="46" column="8" lean-forward="false" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+            <state relative-caret-position="453">
+              <caret line="83" column="36" lean-forward="false" selection-start-line="52" selection-start-column="28" selection-end-line="83" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -89,8 +81,8 @@
       <file leaf-file-name="view.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/review/view.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="25" column="27" lean-forward="false" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+            <state relative-caret-position="436">
+              <caret line="55" column="28" lean-forward="false" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -99,20 +91,8 @@
       <file leaf-file-name="product.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/product/product.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="27" column="27" lean-forward="false" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="view_admin.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/payment/view_admin.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="986">
-              <caret line="58" column="112" lean-forward="false" selection-start-line="58" selection-start-column="112" selection-end-line="58" selection-end-column="112" />
+            <state relative-caret-position="391">
+              <caret line="57" column="28" lean-forward="false" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -182,7 +162,6 @@
         <option value="$PROJECT_DIR$/app/Resources/views/discount/user.html.twig" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/SecurityController.php" />
-        <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/product/sell.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/discount/all_products.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/discount/category.html.twig" />
@@ -193,10 +172,11 @@
         <option value="$PROJECT_DIR$/app/Resources/views/payment/view_cart.html.twig" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/PaymentController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/category/create.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/review/view.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/product/product.html.twig" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/HomeController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/home/index.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/review/view.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/product/product.html.twig" />
+        <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php" />
       </list>
     </option>
   </component>
@@ -254,7 +234,7 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="474" />
     <option name="y" value="235" />
     <option name="width" value="1416" />
@@ -589,12 +569,12 @@
       <workItem from="1513697011204" duration="8000" />
       <workItem from="1513697241126" duration="21126000" />
       <workItem from="1513752602420" duration="122000" />
-      <workItem from="1513752746107" duration="7066000" />
+      <workItem from="1513752746107" duration="7465000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="565557000" />
+    <option name="totallyTimeSpent" value="565956000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -606,7 +586,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="474" y="235" width="1416" height="756" extended-state="1" />
+    <frame x="474" y="235" width="1416" height="756" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2219764" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -970,24 +950,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/review/view.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="25" column="27" lean-forward="false" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/product/product.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="27" lean-forward="false" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/ProductService.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1012,26 +974,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/home/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4556">
-          <caret line="412" column="52" lean-forward="false" selection-start-line="412" selection-start-column="52" selection-end-line="412" selection-end-column="52" />
+        <state relative-caret-position="453">
+          <caret line="83" column="36" lean-forward="false" selection-start-line="52" selection-start-column="28" selection-end-line="83" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/review/view.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="55" column="28" lean-forward="false" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/product/product.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="57" column="28" lean-forward="false" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/HomeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="39" column="21" lean-forward="false" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+        <state relative-caret-position="272">
+          <caret line="55" column="98" lean-forward="true" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="98" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/home/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="46" column="8" lean-forward="false" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+        <state relative-caret-position="436">
+          <caret line="437" column="8" lean-forward="false" selection-start-line="437" selection-start-column="8" selection-end-line="437" selection-end-column="8" />
           <folding />
         </state>
       </provider>

@@ -29,16 +29,26 @@
                     <p>
                         Category: {{ product.category.name }}
                     </p>
+
                     <p>
                         Model: {{ product.model }},
-                        Quantity: {{ product.qtty }},
-                        Price: {{ product.price }}
+                        Quantity: {{ product.qtty }}
+                    </p>
 
+                    <p>
                         {% if product.id in arrDiscount|keys  and arrDiscount[product.id]['percent'] > 0 %}
-                            (Discount: {{ arrDiscount[product.id]['percent'] }}%,
-                            {{ arrDiscount[product.id]['newPrice'] }})
+                            Price:
+                            <label class="text-warning">
+                                <del class="text-info">{{ product.price }}</del>
+                                (Discount: {{ arrDiscount[product.id]['percent'] }}%,
+                                {{ arrDiscount[product.id]['newPrice'] }} BGN)
+                            </label>
+                        {% else %}
+                            Price:
+                            <label class="text-info">
+                                {{ product.price }} BGN
+                            </label>
                         {% endif %}
-
                     </p>
 
                     <small class="owner">

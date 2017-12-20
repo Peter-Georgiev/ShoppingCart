@@ -429,11 +429,12 @@ class ProductController extends Controller
         }
 
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
+        $arrDiscount= $this->discountService->biggestPeriodDiscounts(array($product), $this->getUser());
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart($this->getUser()->getId());
 
-        return $this->render('product/product.html.twig',
-            array('product' => $product, 'payments' => $payments)
-        );
+        return $this->render('product/product.html.twig', array('product' => $product,
+                'payments' => $payments, 'arrDiscount' => $arrDiscount
+        ));
     }
 }

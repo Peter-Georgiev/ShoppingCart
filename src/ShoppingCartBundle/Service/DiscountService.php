@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use ShoppingCartBundle\Entity\Discount;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\User;
+use ShoppingCartBundle\Repository\CategoryRepository;
 use ShoppingCartBundle\Repository\DiscountRepository;
 use ShoppingCartBundle\Repository\ProductRepository;
 
@@ -23,26 +24,109 @@ class DiscountService implements DiscountServiceInterface
     /** @var DiscountRepository */
     private $discountRepository;
 
+    /** @var CategoryRepository */
+    private $categoryRepository;
+
     /**
-     * HomeService constructor.
+     * DiscountService constructor.
      * @param EntityManager $entityManager
      * @param ProductRepository $productRepository
      * @param DiscountRepository $discountRepository
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(EntityManager $entityManager,
                                 ProductRepository $productRepository,
-                                DiscountRepository $discountRepository)
+                                DiscountRepository $discountRepository,
+                                CategoryRepository $categoryRepository)
     {
         $this->entityManager = $entityManager;
         $this->productRepository = $productRepository;
         $this->discountRepository = $discountRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
+    /**
+     * @param Discount $discount
+     * @param int $categoryId
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    public function categoryDiscount(Discount $discount, int $categoryId)
+    {
+        try {
+            $this->entityManager->getConnection()->beginTransaction();
+
+            $this->entityManager->persist($discount);
+            $this->entityManager->flush();
+
+            $category = $this->categoryRepository->find($categoryId);
+
+            $category->addDiscount($discount);
+
+            $this->entityManager->persist($category);
+            $this->entityManager->flush();
+
+            $this->entityManager->getConnection()->commit();
+        } catch (\Exception $e) {
+            $this->entityManager->getConnection()->rollBack();
+        }
+    }
 
     /**
-     * @param Product[] $products
+     * @param array|Product $products
+     * @param Discount $discount
+     * @return mixed|void
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    public function allProductsDiscount($products, Discount $discount)
+    {
+        try {
+            $this->entityManager->getConnection()->beginTransaction();
+
+            $this->entityManager->persist($discount);
+            $this->entityManager->flush();
+
+            foreach ($products as $product) {
+                $product->addDiscount($discount);
+                $this->entityManager->persist($product);
+                $this->entityManager->flush();
+            }
+
+            $this->entityManager->getConnection()->commit();
+        } catch (\Exception $e) {
+            $this->entityManager->getConnection()->rollBack();
+        }
+    }
+
+    /**
+     * @param Discount $discount
+     * @param int $productId
+     * @return mixed|void
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    public function productDiscount(Discount $discount, int $productId)
+    {
+        try {
+            $this->entityManager->getConnection()->beginTransaction();
+
+            $this->entityManager->persist($discount);
+            $this->entityManager->flush();
+
+            $product = $this->productRepository->find($productId);
+
+            $product->addDiscount($discount);
+            $this->entityManager->persist($product);
+            $this->entityManager->flush();
+
+            $this->entityManager->getConnection()->commit();
+        } catch (\Exception $e) {
+            $this->entityManager->getConnection()->rollBack();
+        }
+    }
+
+    /**
+     * @param array|Product $products
      * @param User $currentUser
-     * @return array
+     * @return array|mixed
      */
     public function biggestPeriodDiscounts($products, $currentUser)
     {

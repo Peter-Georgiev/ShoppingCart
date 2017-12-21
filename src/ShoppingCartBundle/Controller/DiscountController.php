@@ -10,12 +10,25 @@ use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Form\DiscountType;
+use ShoppingCartBundle\Service\DiscountService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DiscountController extends Controller
 {
+    /** @var DiscountService */
+    private $discountService;
+
+    /**
+     * DiscountController constructor.
+     * @param DiscountService $discountService
+     */
+    public function __construct(DiscountService $discountService)
+    {
+        $this->discountService = $discountService;
+    }
+
     /**
      * @Route("/discount/category", name="discount_category")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
@@ -27,7 +40,7 @@ class DiscountController extends Controller
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
-        if ($currentUser === null) {
+        if (!$currentUser) {
             return $this->redirectToRoute("security_login");
         }
 
@@ -45,17 +58,12 @@ class DiscountController extends Controller
             $discount->getPercent() > 0;
 
         if ($form->isSubmitted() && $categoryId > 0 && $isValid) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($discount);
-            $em->flush();
-
-            $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
-
-            $category->addDiscount($discount);
-            $em->persist($category);
-            $em->flush();
-
-            return $this->redirectToRoute('discount_category');
+            try {
+                $this->discountService->categoryDiscount($discount, $categoryId);
+                return $this->redirectToRoute('discount_category');
+            } catch (\Exception $e) {
+                //TODO - NO
+            }
         }
 
         $payments = $this->getDoctrine()->getRepository(Payment::class)
@@ -63,8 +71,8 @@ class DiscountController extends Controller
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
         return $this->render('discount/category.html.twig', array('form' => $form->createView(),
-                'categories' => $categories, 'date' => (new \DateTime()), 'payments' => $payments)
-        );
+                'categories' => $categories, 'date' => (new \DateTime()), 'payments' => $payments
+        ));
     }
 
     /**
@@ -78,7 +86,7 @@ class DiscountController extends Controller
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
-        if ($currentUser === null) {
+        if (!$currentUser) {
             return $this->redirectToRoute("security_login");
         }
 
@@ -96,16 +104,12 @@ class DiscountController extends Controller
             $discount->getPercent() > 0;
 
         if ($form->isSubmitted() && $isValid) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($discount);
-            $em->flush();
-
-            foreach ($products as $product) {
-                $product->addDiscount($discount);
-                $em->persist($product);
-                $em->flush();
+            try {
+                $this->discountService->allProductsDiscount($products, $discount);
+                return $this->redirectToRoute('discount_allproducts');
+            } catch (\Exception $e) {
+                //TODO - NO
             }
-            return $this->redirectToRoute('discount_allproducts');
         }
 
         $productsDateDisc = $this->getDoctrine()->getRepository(Product::class)->findAllDateDisc();
@@ -144,17 +148,12 @@ class DiscountController extends Controller
             $discount->getPercent() > 0;
 
         if ($form->isSubmitted() && $isValid) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($discount);
-            $em->flush();
-
-            $product = $this->getDoctrine()->getRepository(Product::class)->find($productId);
-
-            $product->addDiscount($discount);
-            $em->persist($product);
-            $em->flush();
-
-            return $this->redirectToRoute('discount_product');
+            try {
+                $this->discountService->productDiscount($discount, $productId);
+                return $this->redirectToRoute('discount_product');
+            } catch (\Exception $e) {
+                //TODO - NO
+            }
         }
 
         $productsDateDisc = $this->getDoctrine()->getRepository(Product::class)->findAllDateDisc();

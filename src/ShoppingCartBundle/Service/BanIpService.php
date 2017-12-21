@@ -5,7 +5,7 @@ namespace ShoppingCartBundle\Service;
 
 use ShoppingCartBundle\Repository\BanIpRepository;
 
-class BanIpService
+class BanIpService implements BanIpServiceInterface
 {
     /** @var BanIpRepository */
     private $banIpRepository;

@@ -33,3 +33,7 @@ services:
     # ShoppingCartBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    ShoppingCartBundle\Service\PaymentServiceInterface:
+        alias: 'ShoppingCartBundle\Service\PaymentService'
+        public: false

@@ -10,6 +10,7 @@ use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\User;
 use ShoppingCartBundle\Service\DiscountServiceInterface;
+use ShoppingCartBundle\Service\PaymentService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +22,18 @@ class PaymentController extends Controller
     /** @var DiscountServiceInterface */
     private $discountService;
 
+    /** @var PaymentService */
+    private $paymentService;
+
     /**
      * PaymentController constructor.
      * @param DiscountServiceInterface $discountService
      */
-    public function __construct(DiscountServiceInterface $discountService)
+    public function __construct(DiscountServiceInterface $discountService,
+                                PaymentService $paymentService)
     {
         $this->discountService = $discountService;
+        $this->paymentService = $paymentService;
     }
 
     /**
@@ -168,49 +174,16 @@ class PaymentController extends Controller
             return $this->redirectToRoute("security_login");
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $payments = $em->getRepository(Payment::class)->findYourCart($currentUser->getId());
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
 
         if ($payments !== null) {
-
-            $documentId = 0;
-            foreach ($payments as $payment) {
-                /**
-                 * @var Payment $payment
-                 * @var Product $product
-                 */
-                $product = $this->getDoctrine()->getRepository(Product::class)
-                    ->find($payment->getProducts()->getId());
-                $quantity = $product->getQtty() - $payment->getQtty();
-
-                if ($quantity >= 0) {
-                    $em = $this->getDoctrine()->getManager();
-
-                    if ($documentId === 0) {
-                        $document = new Document();
-                        $document->setIsBuy();
-                        $em->persist($document);
-                        $em->flush();
-                        $documentId = $document->getId();
-                    }
-                    //Old owner added cash
-                    $product->getOwner()->setCash($product->getOwner()->getCash() + $payment->getPrice());
-                    $product->setQtty($quantity);
-                    $em->persist($product);
-
-                    //New owner added paid
-                    $payment->setPayment($payment->getPrice());
-                    $pay = $payment->getUsers()->getCash() - $payment->getPrice();
-
-                    $payment->getUsers()->setCash($pay);
-                    $payment->setDocumentId($documentId);
-
-                    $payment->setIsPaid();
-                    $em->persist($payment);
-                    $em->flush();
-                }
+            try {
+                $this->paymentService->checkout($payments);
+                return $this->redirectToRoute('payment_view');
+            } catch (\Exception $e) {
+                //TODO - NO
             }
-            return $this->redirectToRoute('payment_view');
         }
         return $this->redirectToRoute('payment_view_cart');
     }

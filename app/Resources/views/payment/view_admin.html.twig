@@ -39,7 +39,7 @@
                         <td>{{ paymentsPaid.products.name }}</td>
                         <td>{{ paymentsPaid.products.model }}</td>
                         <td>{{ paymentsPaid.qtty }}</td>
-                        <{% if paymentsPaid.discount > 0 %}
+                        {% if paymentsPaid.discount > 0 %}
                             <td>{{ paymentsPaid.discount }}%</td>
                         {% else %}
                             <td class="text-info">NO</td>

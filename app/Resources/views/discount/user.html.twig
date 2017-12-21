@@ -89,6 +89,7 @@
                     <th class="col-sm-1 ">Percent</th>
                     <th class="col-sm-1 ">Days</th>
                     <th class="col-sm-1 ">Cash</th>
+                    <th class="col-sm-1 "></th>
                 </tr>
                 </thead>
 
@@ -109,6 +110,8 @@
                                 {% else %}
                                     <td>Don't Cash</td>
                                 {% endif %}
+                                <td><a type="submit" class="btn-sm btn-danger"
+                                       href="{{ path('discount_del_user', {'id' : discount.id}) }}">Delete</a></td>
                             </tr>
                         {% endif %}
                 {% endfor %}
@@ -127,6 +130,7 @@
                     <th class="col-sm-1 ">Percent</th>
                     <th class="col-sm-1 ">Days</th>
                     <th class="col-sm-1 ">Cash</th>
+                    <th class="col-sm-1 "></th>
                 </tr>
                 </thead>
 
@@ -146,6 +150,8 @@
                                 {% else %}
                                     <td>Don't Cash</td>
                                 {% endif %}
+                                <td><a type="submit" class="btn-sm btn-danger"
+                                       href="{{ path('discount_del_user', {'id' : discount.id}) }}">Delete</a></td>
                             </tr>
                         {% endif %}
                 {% endfor %}
@@ -164,6 +170,7 @@
                     <th class="col-sm-1 ">Percent</th>
                     <th class="col-sm-1 ">Days</th>
                     <th class="col-sm-1 ">Cash</th>
+                    <th class="col-sm-1 "></th>
                 </tr>
                 </thead>
 

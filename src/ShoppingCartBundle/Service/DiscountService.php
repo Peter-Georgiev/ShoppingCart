@@ -125,6 +125,37 @@ class DiscountService implements DiscountServiceInterface
     }
 
     /**
+     * @param Discount $discount
+     * @return bool
+     */
+    public function usedsDiscount(Discount $discount): bool
+    {
+        try {
+            $this->entityManager->persist($discount);
+            $this->entityManager->flush();
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @param Discount $discount
+     * @return bool
+     */
+    public function deleteUserDiscoun(Discount $discount): bool
+    {
+        try {
+            $this->entityManager->remove($discount);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * @param array|Product $products
      * @param User $currentUser
      * @return array|mixed

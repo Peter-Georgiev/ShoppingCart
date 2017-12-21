@@ -184,7 +184,7 @@ class DiscountController extends Controller
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
-        if ($currentUser === null) {
+        if (!$currentUser) {
             return $this->redirectToRoute("security_login");
         }
 
@@ -214,17 +214,54 @@ class DiscountController extends Controller
                 $discount->setUserCash($request->get('discount')['userCash']);
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($discount);
-            $em->flush();
-
-            return $this->redirectToRoute('discount_user');
+            if ($this->discountService->usedsDiscount($discount)) {
+                return $this->redirectToRoute('discount_user');
+            }
         }
 
         $discountUser = $this->getDoctrine()->getRepository(Discount::class)->findAllUserDiscount();
 
         return $this->render('discount/user.html.twig', array('form' => $form->createView(),
-                'discountUser' => $discountUser, 'date' => new \DateTime())
-        );
+                'discountUser' => $discountUser, 'date' => new \DateTime()
+        ));
+    }
+
+    /**
+     * @Route("/discount/deluser/{id}", name="discount_del_user")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param $id
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteUserAction($id, Request $request)
+    {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute("security_login");
+        }
+
+        if (!$currentUser->isAdmin() && !$currentUser->isEdit()) {
+            return $this->redirectToRoute("shop_index");
+        }
+
+        $discount = $this->getDoctrine()->getRepository(Discount::class)->find($id);
+        $form = $this->createForm(DiscountType::class, $discount);
+        $form->handleRequest($request);
+
+        if (!$discount) {
+            return $this->redirectToRoute('discount_user');
+        }
+
+        if ($form->isSubmitted()) {
+            if ($this->discountService->deleteUserDiscoun($discount)) {
+                return $this->redirectToRoute('discount_user');
+            }
+        }
+
+        return $this->render('discount/del_user.html.twig', array('form' => $form->createView(),
+            'discount' => $discount
+        ));
     }
 }

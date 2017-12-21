@@ -33,6 +33,18 @@ interface DiscountServiceInterface
     public function productDiscount(Discount $discount, int $productId);
 
     /**
+     * @param Discount $discount
+     * @return bool
+     */
+    public function usedsDiscount(Discount $discount): bool ;
+
+    /**
+     * @param Discount $discount
+     * @return bool
+     */
+    public function deleteUserDiscoun(Discount $discount): bool;
+
+    /**
      * @param array|Product $products
      * @param User $currentUser
      * @return mixed

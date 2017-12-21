@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block countInCart %}
+    {# •	Count add to carts product #}
+    {# defined works with variable names #}
+
+    {% if payments is defined %}
+        <span class="badge">{{ payments|length }}</span>
+    {% endif %}
+
+{% endblock %}
+
+{% block main %}
+
+    {% if danger is defined %}
+        <div class="container body-content">
+            <h1 class="text-danger text-center">{{ danger }}</h1>
+        </div>
+    {% endif %}
+
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" action="{{ path('discount_del_user', {id: discount.id}) }}" method="POST">
+                <fieldset>
+                    <legend>Create user discounts</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="discount_startDate">Discount starting time</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="discount_startDate"
+                                   value="{{ discount.startDate|date('d.m.Y \\ H:i:s') }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="discount_endDate">Discount ending time</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="discount_endDate"
+                                   value="{{ discount.endDate|date('d.m.Y \\ H:i:s') }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="discount_percent">Discount in percentage</label>
+                        <div class="col-sm-4 ">
+                            <input type="number" step="any" class="form-control" id="discount_percent"
+                                   value="{{ discount.percent }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="discount_userDays">User registered more than X days</label>
+                        <div class="col-sm-4 ">
+                            <input type="number" class="form-control" id="discount_userDays"
+                                   value="{{ discount.userDays }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="discount_userDays">User having more than X cash</label>
+                        <div class="col-sm-4 ">
+                            <input type="number" step="any" class="form-control" id="discount_userCash"
+                                   value="{{ discount.userCash }}" disabled>
+                        </div>
+                    </div>
+
+                    {{ form_row(form._token) }}
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('discount_user') }}">Cancel</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -264,4 +264,47 @@ class DiscountController extends Controller
             'discount' => $discount
         ));
     }
+
+    /**
+     * @Route("/discount/delcat/{id}", name="discount_del_category")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param $id
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteCategoryAction($id, Request $request)
+    {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+        if (!$currentUser) {
+            return $this->redirectToRoute("security_login");
+        }
+
+        if (!$currentUser->isAdmin() && !$currentUser->isEdit()) {
+            return $this->redirectToRoute("shop_index");
+        }
+
+        $discount = $this->getDoctrine()->getRepository(Discount::class)->find($id);
+        $form = $this->createForm(DiscountType::class, $discount);
+        $form->handleRequest($request);
+
+        if (!$discount) {
+            return $this->redirectToRoute('discount_user');
+        }
+
+        //TODO
+
+        $category = $this->getDoctrine()->getRepository(Category::class)
+            ->find(4);
+        if ($form->isSubmitted() && false) {
+            if ($this->discountService->deleteUserDiscoun($discount)) {
+                return $this->redirectToRoute('discount_user');
+            }
+        }
+
+        return $this->render('discount/del_category.html.twig', array('form' => $form->createView(),
+            'discount' => $discount, 'category' => $category
+        ));
+    }
 }

@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6d09c98-d36c-423c-bdf5-f8c5ce6cc517" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/discount/del_user.html.twig" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/discount/del_category.html.twig" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/category/delete.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/category/delete.html.twig" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/discount/user.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/discount/user.html.twig" />
+      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/discount/del_user.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/discount/del_user.html.twig" />
       <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php" />
-      <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php" />
-      <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountServiceInterface.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountServiceInterface.php" />
+      <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/CategoryRepository.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/CategoryRepository.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,61 +49,7 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="del_user.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/discount/del_user.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="22" column="92" lean-forward="false" selection-start-line="22" selection-start-column="92" selection-end-line="22" selection-end-column="92" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DiscountServiceInterface.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountServiceInterface.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="38" column="61" lean-forward="false" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DiscountService.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="136" column="24" lean-forward="false" selection-start-line="136" selection-start-column="24" selection-end-line="136" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DiscountController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="219" column="9" lean-forward="false" selection-start-line="219" selection-start-column="9" selection-end-line="219" selection-end-column="9" />
-              <folding>
-                <element signature="e#7976#8001#0#PHP" expanded="true" />
-                <element signature="e#9250#9279#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/discount/user.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2744">
-              <caret line="174" column="24" lean-forward="false" selection-start-line="174" selection-start-column="24" selection-end-line="174" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -133,7 +78,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error404.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error500.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/user/register.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/category/category.html.twig" />
@@ -171,7 +115,6 @@
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/ProductService.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/BanIpService.php" />
-        <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/CategoryRepository.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/BanIpRepository.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/DiscountRepository.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/PaymentRepository.php" />
@@ -180,9 +123,11 @@
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/UserRepository.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/category/delete.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/discount/user.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/discount/del_user.html.twig" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountServiceInterface.php" />
+        <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/CategoryRepository.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/discount/del_user.html.twig" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/discount/del_category.html.twig" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php" />
       </list>
     </option>
@@ -241,7 +186,7 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="607" />
     <option name="y" value="275" />
     <option name="width" value="1294" />
@@ -582,12 +527,12 @@
       <workItem from="1513697011204" duration="8000" />
       <workItem from="1513697241126" duration="21126000" />
       <workItem from="1513752602420" duration="122000" />
-      <workItem from="1513752746107" duration="37790000" />
+      <workItem from="1513752746107" duration="41454000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="596281000" />
+    <option name="totallyTimeSpent" value="599945000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -599,10 +544,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="607" y="275" width="1294" height="817" extended-state="0" />
-    <editor active="true" />
+    <frame x="607" y="275" width="1294" height="817" extended-state="1" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2439222" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2439222" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288948" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31756756" sideWeight="0.5057307" order="7" side_tool="true" content_ui="tabs" />
@@ -643,29 +587,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/payment/checkout.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="958">
-          <caret line="62" column="14" lean-forward="false" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/category/create.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="75" column="20" lean-forward="false" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/product/product.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="27" column="60" lean-forward="false" selection-start-line="27" selection-start-column="60" selection-end-line="27" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/home/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="317">
@@ -892,14 +813,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/CategoryRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/BanIpRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -1030,44 +943,77 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/discount/user.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2744">
+        <state relative-caret-position="1571">
           <caret line="174" column="24" lean-forward="false" selection-start-line="174" selection-start-column="24" selection-end-line="174" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Entity/Discount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-816">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/discount/del_user.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="22" column="92" lean-forward="false" selection-start-line="22" selection-start-column="92" selection-end-line="22" selection-end-column="92" />
+        <state relative-caret-position="157">
+          <caret line="24" column="40" lean-forward="false" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountServiceInterface.php">
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Entity/Category.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="38" column="61" lean-forward="false" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="61" />
+        <state relative-caret-position="-357">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php">
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/CategoryRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="136" column="24" lean-forward="false" selection-start-line="136" selection-start-column="24" selection-end-line="136" selection-end-column="24" />
+        <state relative-caret-position="238">
+          <caret line="27" column="31" lean-forward="false" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/discount/del_category.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="837">
+          <caret line="55" column="35" lean-forward="false" selection-start-line="55" selection-start-column="35" selection-end-line="55" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="219" column="9" lean-forward="false" selection-start-line="219" selection-start-column="9" selection-end-line="219" selection-end-column="9" />
+        <state relative-caret-position="140">
+          <caret line="283" column="66" lean-forward="true" selection-start-line="283" selection-start-column="66" selection-end-line="283" selection-end-column="66" />
           <folding>
             <element signature="e#7976#8001#0#PHP" expanded="true" />
             <element signature="e#9250#9279#0#PHP" expanded="true" />
+            <element signature="e#10617#10650#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-370">
+          <caret line="138" column="25" lean-forward="false" selection-start-line="138" selection-start-column="25" selection-end-line="138" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountServiceInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="38" column="61" lean-forward="false" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>

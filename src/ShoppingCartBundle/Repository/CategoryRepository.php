@@ -1,7 +1,6 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
-
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping;
 use ShoppingCartBundle\Entity\Category;
@@ -17,7 +16,7 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
     public function __construct(EntityManager $em, Mapping\ClassMetadata $class = null)
     {
         parent::__construct($em,
-            $class == null ? new Mapping\ClassMetadata(Category::class) : $class
+            $class == null ? new Mapping\ClassMetadata(Category::class) :$class
         );
     }
 
@@ -25,9 +24,9 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('c')
             ->where('c.isDelete = :isDelete')
-            ->orderBy('c.name')
-            ->orderBy('c.id')
             ->setParameter('isDelete', false)
+            ->orderBy('c.name')
+            ->addOrderBy('c.id')
             ->getQuery()
             ->getResult();
     }
@@ -37,10 +36,10 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.isDelete = :isDelete')
             ->andWhere('c.name = :name')
-            ->orderBy('c.name')
-            ->orderBy('c.id')
             ->setParameter('isDelete', false)
             ->setParameter('name', $categoryName)
+            ->orderBy('c.name')
+            ->addOrderBy('c.id')
             ->getQuery()
             ->getResult();
     }

@@ -4,13 +4,14 @@ namespace ShoppingCartBundle\Service;
 
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Repository\ProductRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ProductService implements ProductServiceInterface
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
     /** @var ProductRepository */
@@ -28,7 +29,7 @@ class ProductService implements ProductServiceInterface
      * @param ProductRepository $productRepository
      * @param DiscountService $discountServices
      */
-    public function __construct(EntityManager $entityManager,
+    public function __construct(EntityManagerInterface $entityManager,
                                 ProductRepository $productRepository,
                                 DiscountService $discountService,
                                 TokenStorageInterface $tokenStorage)

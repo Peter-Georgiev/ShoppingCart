@@ -1,6 +1,7 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
+
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping;
 use ShoppingCartBundle\Entity\User;

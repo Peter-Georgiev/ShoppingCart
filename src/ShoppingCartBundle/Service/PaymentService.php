@@ -2,9 +2,8 @@
 
 namespace ShoppingCartBundle\Service;
 
-
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use ShoppingCartBundle\Entity\Document;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
@@ -13,7 +12,7 @@ use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
 class PaymentService implements PaymentServiceInterface
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
     /** @var TokenStorageInterface */
@@ -28,7 +27,7 @@ class PaymentService implements PaymentServiceInterface
      * @param TokenStorageInterface $tokenStorage
      * @param ProductRepository $productRepository
      */
-    public function __construct(EntityManager $entityManager,
+    public function __construct(EntityManagerInterface $entityManager,
                                 TokenStorageInterface $tokenStorage,
                                 ProductRepository $productRepository)
     {

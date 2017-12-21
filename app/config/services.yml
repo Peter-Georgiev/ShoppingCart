@@ -36,4 +36,12 @@ services:
 
     ShoppingCartBundle\Service\PaymentServiceInterface:
         alias: 'ShoppingCartBundle\Service\PaymentService'
-        public: false
+        public: true
+
+    ShoppingCartBundle\Service\DiscountServiceInterface:
+        alias: 'ShoppingCartBundle\Service\DiscountService'
+        public: true
+
+    ShoppingCartBundle\Service\ProductServiceInterface:
+        alias: 'ShoppingCartBundle\Service\ProductService'
+        public: true

@@ -4,6 +4,7 @@ namespace ShoppingCartBundle\Service;
 
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use ShoppingCartBundle\Entity\Discount;
 use ShoppingCartBundle\Entity\Product;
 use ShoppingCartBundle\Entity\User;
@@ -15,7 +16,7 @@ class DiscountService implements DiscountServiceInterface
 {
     protected static $DATE_FORMAT = 'Y-m-d H:i:s';
 
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
     /** @var ProductRepository */
@@ -34,7 +35,7 @@ class DiscountService implements DiscountServiceInterface
      * @param DiscountRepository $discountRepository
      * @param CategoryRepository $categoryRepository
      */
-    public function __construct(EntityManager $entityManager,
+    public function __construct(EntityManagerInterface $entityManager,
                                 ProductRepository $productRepository,
                                 DiscountRepository $discountRepository,
                                 CategoryRepository $categoryRepository)

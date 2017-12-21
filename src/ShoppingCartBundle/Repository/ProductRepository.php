@@ -1,6 +1,7 @@
 <?php
 
 namespace ShoppingCartBundle\Repository;
+
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping;
 use Doctrine\ORM\Query\Expr\Join;
@@ -17,7 +18,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
     public function __construct(EntityManager $em, Mapping\ClassMetadata $class = null)
     {
         parent::__construct($em,
-            $class == null ? new Mapping\ClassMetadata(Product::class) :$class
+            $class == null ? new Mapping\ClassMetadata(Product::class) : $class
         );
     }
 

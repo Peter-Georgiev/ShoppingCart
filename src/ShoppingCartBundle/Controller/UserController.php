@@ -33,10 +33,9 @@ class UserController extends Controller
             $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
             $user->addRole($userRole);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-
             try {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
                 $em->flush();
             } catch (\Exception $e) {
                 $error = 'Duplicate user (' . $user->getUsername() . ')';
@@ -44,10 +43,8 @@ class UserController extends Controller
                 return $this->render('user/register.html.twig',
                     array('form' => $form->createView(), 'error' => $error));
             }
-            //$this->userService->register($user);
             return $this->redirectToRoute('security_login');
         }
-
         return $this->render('user/register.html.twig', array('form' => $form->createView()));
     }
 

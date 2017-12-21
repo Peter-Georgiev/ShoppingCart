@@ -45,3 +45,20 @@ services:
     ShoppingCartBundle\Service\ProductServiceInterface:
         alias: 'ShoppingCartBundle\Service\ProductService'
         public: true
+
+    ShoppingCartBundle\Repository\BanIpRepository:
+        factory: 'doctrine.orm.entity_manager:getRepository'
+        arguments: ['ShoppingCartBundle\Entity\BanIp']
+
+    ShoppingCartBundle\Repository\ProductRepository:
+        factory: 'doctrine.orm.entity_manager:getRepository'
+        arguments: ['ShoppingCartBundle\Entity\Product']
+
+    ShoppingCartBundle\Repository\DiscountRepository:
+          factory: 'doctrine.orm.entity_manager:getRepository'
+          arguments: ['ShoppingCartBundle\Entity\Discount']
+
+    ShoppingCartBundle\Repository\CategoryRepository:
+          factory: 'doctrine.orm.entity_manager:getRepository'
+          arguments: ['ShoppingCartBundle\Entity\Category']
+

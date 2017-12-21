@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6d09c98-d36c-423c-bdf5-f8c5ce6cc517" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/UserController.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/UserController.php" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2e60d370-e1bd-451b-b622-f4eef138491c.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/2e60d370-e1bd-451b-b622-f4eef138491c.xml" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/product/sell.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/product/sell.html.twig" />
+      <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,38 +31,129 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="shopping_cart@localhost" type="feb32156:DbDataSourceImpl" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="shopping_cart@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="shopping_cart@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="shopping_cart: schema" type="c314c289:MysqlImplModel$Schema" />
-      </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CategoryController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/CategoryController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="168" column="94" lean-forward="false" selection-start-line="168" selection-start-column="94" selection-end-line="168" selection-end-column="94" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/UserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="75" column="30" lean-forward="true" selection-start-line="75" selection-start-column="30" selection-end-line="75" selection-end-column="30" />
-              <folding />
+      <file leaf-file-name="DATABASE/2e60d370-e1bd-451b-b622-f4eef138491c" pinned="false" current-in-tab="true">
+        <entry file="uml://DATABASE/2e60d370-e1bd-451b-b622-f4eef138491c">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>DATABASE</ID>
+              <OriginalElement>2e60d370-e1bd-451b-b622-f4eef138491c</OriginalElement>
+              <nodes>
+                <node x="870.6607142857142" y="344.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles</node>
+                <node x="891.4107142857142" y="66.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.roles</node>
+                <node x="288.375" y="256.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products</node>
+                <node x="60.17103448275864" y="796.6993103448276">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.ban_ip</node>
+                <node x="98.36607142857139" y="55.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories</node>
+                <node x="684.6607142857142" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.documents</node>
+                <node x="175.07738095238096" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts</node>
+                <node x="475.375" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews</node>
+                <node x="584.8568185550082" y="646.9903448275862">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments</node>
+                <node x="0.0" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts</node>
+                <node x="387.1160714285714" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews</node>
+                <node x="529.0833333333334" y="-23.481379310344828">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users</node>
+                <node x="77.0" y="289.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts</node>
+              </nodes>
+              <notes />
+              <edges>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+                  <point x="41.75" y="-125.0" />
+                  <point x="413.625" y="231.0" />
+                  <point x="551.5833333333334" y="231.0" />
+                  <point x="-67.5" y="103.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
+                  <point x="-37.25" y="-36.5" />
+                  <point x="424.3660714285714" y="536.0" />
+                  <point x="371.875" y="536.0" />
+                  <point x="0.0" y="125.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts">
+                  <point x="38.5" y="-36.5" />
+                  <point x="115.5" y="536.0" />
+                  <point x="122.0" y="536.0" />
+                  <point x="-45.0" y="92.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+                  <point x="-32.25" y="-36.5" />
+                  <point x="902.9107142857142" y="231.0" />
+                  <point x="686.5833333333334" y="231.0" />
+                  <point x="67.5" y="103.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories">
+                  <point x="-41.75" y="-125.0" />
+                  <point x="330.125" y="231.0" />
+                  <point x="213.1160714285714" y="231.0" />
+                  <point x="38.25" y="48.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+                  <point x="0.0" y="-59.0" />
+                  <point x="558.875" y="231.0" />
+                  <point x="596.5833333333334" y="231.0" />
+                  <point x="-22.5" y="103.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+                  <point x="0.0" y="-125.0" />
+                  <point x="677.3892323481116" y="549.208275862069" />
+                  <point x="665.3551970443349" y="550.6758620689654" />
+                  <point x="665.355197044335" y="232.46758620689656" />
+                  <point x="641.5833333333334" y="231.0" />
+                  <point x="22.5" y="103.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.roles">
+                  <point x="32.25" y="-36.5" />
+                  <point x="0.0" y="37.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts">
+                  <point x="-38.0" y="-36.5" />
+                  <point x="213.07738095238096" y="536.0" />
+                  <point x="212.0" y="536.0" />
+                  <point x="45.0" y="92.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.documents">
+                  <point x="62.666666666666686" y="-125.0" />
+                  <point x="742.9910714285714" y="536.0" />
+                  <point x="767.6607142857142" y="536.0" />
+                  <point x="0.0" y="59.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews">
+                  <point x="37.25" y="-36.5" />
+                  <point x="498.8660714285714" y="536.0" />
+                  <point x="558.875" y="536.0" />
+                  <point x="0.0" y="59.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
+                  <point x="-62.66666666666663" y="-125.0" />
+                  <point x="617.6577380952381" y="526.0" />
+                  <point x="427.54166666666663" y="526.0" />
+                  <point x="55.66666666666663" y="125.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
+                  <point x="38.0" y="-36.5" />
+                  <point x="289.07738095238096" y="536.0" />
+                  <point x="316.20833333333337" y="536.0" />
+                  <point x="-55.66666666666663" y="125.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories">
+                  <point x="-38.5" y="-36.5" />
+                  <point x="38.5" y="536.0" />
+                  <point x="45.16071428571422" y="536.0" />
+                  <point x="45.16071428571422" y="231.0" />
+                  <point x="136.6160714285714" y="231.0" />
+                  <point x="-38.25" y="48.0" />
+                </edge>
+              </edges>
+              <settings layout="Hierarchic Group" zoom="0.681390977443609" x="761.216551724138" y="402.92137931034483" />
+              <SelectedNodes>
+                <node>2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Key columns</Category>
+                <Category>Columns</Category>
+              </Categories>
             </state>
           </provider>
         </entry>
@@ -121,7 +214,6 @@
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/BanIpServiceInterface.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentServiceInterface.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/payment/view_admin.html.twig" />
-        <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/BanIpService.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/BanIpRepository.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Repository/DiscountRepository.php" />
@@ -137,7 +229,6 @@
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/discount/del_category.html.twig" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/product/sell.html.twig" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/ProductService.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/ProductServiceInterface.php" />
         <option value="$PROJECT_DIR$/app/config/services.yml" />
@@ -145,6 +236,8 @@
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/PaymentController.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/CategoryController.php" />
         <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Controller/UserController.php" />
+        <option value="$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/product/sell.html.twig" />
       </list>
     </option>
   </component>
@@ -268,12 +361,6 @@
               <item name="ShoppingCart" type="b2602c69:ProjectViewProjectNode" />
               <item name="ShoppingCart" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ShoppingCart" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ShoppingCart" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="ShoppingCart" type="b2602c69:ProjectViewProjectNode" />
@@ -411,11 +498,6 @@
               <item name="ShoppingCartBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Service" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
-            <path>
-              <item name="ShoppingCart" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ShoppingCart" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="web" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -539,12 +621,12 @@
       <workItem from="1513697241126" duration="21126000" />
       <workItem from="1513752602420" duration="122000" />
       <workItem from="1513752746107" duration="44446000" />
-      <workItem from="1513877226635" duration="5361000" />
+      <workItem from="1513877226635" duration="7344000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="608298000" />
+    <option name="totallyTimeSpent" value="610281000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -600,13 +682,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/product/delete.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="90" lean-forward="false" selection-start-line="27" selection-start-column="90" selection-end-line="27" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-612">
@@ -711,7 +786,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php" />
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/BanIpServiceInterface.php" />
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/BanIpService.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -897,14 +971,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/product/sell.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="73" column="26" lean-forward="false" selection-start-line="73" selection-start-column="26" selection-end-line="73" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/DocumentRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -947,10 +1013,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/PaymentController.php">
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="230" column="0" lean-forward="true" selection-start-line="230" selection-start-column="0" selection-end-line="230" selection-end-column="0" />
+        <state relative-caret-position="686">
+          <caret line="75" column="30" lean-forward="true" selection-start-line="75" selection-start-column="30" selection-end-line="75" selection-end-column="30" />
           <folding />
         </state>
       </provider>
@@ -963,11 +1029,147 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/UserController.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/product/sell.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="75" column="30" lean-forward="true" selection-start-line="75" selection-start-column="30" selection-end-line="75" selection-end-column="30" />
+        <state relative-caret-position="318">
+          <caret line="54" column="97" lean-forward="false" selection-start-line="54" selection-start-column="97" selection-end-line="54" selection-end-column="97" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/PaymentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2890">
+          <caret line="181" column="45" lean-forward="false" selection-start-line="181" selection-start-column="45" selection-end-line="181" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/2e60d370-e1bd-451b-b622-f4eef138491c">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>2e60d370-e1bd-451b-b622-f4eef138491c</OriginalElement>
+          <nodes>
+            <node x="870.6607142857142" y="344.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles</node>
+            <node x="891.4107142857142" y="66.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.roles</node>
+            <node x="288.375" y="256.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products</node>
+            <node x="60.17103448275864" y="796.6993103448276">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.ban_ip</node>
+            <node x="98.36607142857139" y="55.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories</node>
+            <node x="684.6607142857142" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.documents</node>
+            <node x="175.07738095238096" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts</node>
+            <node x="475.375" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews</node>
+            <node x="584.8568185550082" y="646.9903448275862">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments</node>
+            <node x="0.0" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts</node>
+            <node x="387.1160714285714" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews</node>
+            <node x="529.0833333333334" y="-23.481379310344828">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users</node>
+            <node x="77.0" y="289.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+              <point x="41.75" y="-125.0" />
+              <point x="413.625" y="231.0" />
+              <point x="551.5833333333334" y="231.0" />
+              <point x="-67.5" y="103.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
+              <point x="-37.25" y="-36.5" />
+              <point x="424.3660714285714" y="536.0" />
+              <point x="371.875" y="536.0" />
+              <point x="0.0" y="125.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts">
+              <point x="38.5" y="-36.5" />
+              <point x="115.5" y="536.0" />
+              <point x="122.0" y="536.0" />
+              <point x="-45.0" y="92.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+              <point x="-32.25" y="-36.5" />
+              <point x="902.9107142857142" y="231.0" />
+              <point x="686.5833333333334" y="231.0" />
+              <point x="67.5" y="103.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories">
+              <point x="-41.75" y="-125.0" />
+              <point x="330.125" y="231.0" />
+              <point x="213.1160714285714" y="231.0" />
+              <point x="38.25" y="48.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+              <point x="0.0" y="-59.0" />
+              <point x="558.875" y="231.0" />
+              <point x="596.5833333333334" y="231.0" />
+              <point x="-22.5" y="103.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+              <point x="0.0" y="-125.0" />
+              <point x="677.3892323481116" y="549.208275862069" />
+              <point x="665.3551970443349" y="550.6758620689654" />
+              <point x="665.355197044335" y="232.46758620689656" />
+              <point x="641.5833333333334" y="231.0" />
+              <point x="22.5" y="103.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.roles">
+              <point x="32.25" y="-36.5" />
+              <point x="0.0" y="37.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts">
+              <point x="-38.0" y="-36.5" />
+              <point x="213.07738095238096" y="536.0" />
+              <point x="212.0" y="536.0" />
+              <point x="45.0" y="92.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.documents">
+              <point x="62.666666666666686" y="-125.0" />
+              <point x="742.9910714285714" y="536.0" />
+              <point x="767.6607142857142" y="536.0" />
+              <point x="0.0" y="59.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews">
+              <point x="37.25" y="-36.5" />
+              <point x="498.8660714285714" y="536.0" />
+              <point x="558.875" y="536.0" />
+              <point x="0.0" y="59.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
+              <point x="-62.66666666666663" y="-125.0" />
+              <point x="617.6577380952381" y="526.0" />
+              <point x="427.54166666666663" y="526.0" />
+              <point x="55.66666666666663" y="125.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
+              <point x="38.0" y="-36.5" />
+              <point x="289.07738095238096" y="536.0" />
+              <point x="316.20833333333337" y="536.0" />
+              <point x="-55.66666666666663" y="125.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories">
+              <point x="-38.5" y="-36.5" />
+              <point x="38.5" y="536.0" />
+              <point x="45.16071428571422" y="536.0" />
+              <point x="45.16071428571422" y="231.0" />
+              <point x="136.6160714285714" y="231.0" />
+              <point x="-38.25" y="48.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.681390977443609" x="761.216551724138" y="402.92137931034483" />
+          <SelectedNodes>
+            <node>2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
         </state>
       </provider>
     </entry>

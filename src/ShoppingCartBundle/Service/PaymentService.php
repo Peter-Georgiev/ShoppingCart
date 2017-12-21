@@ -54,7 +54,6 @@ class PaymentService implements PaymentServiceInterface
             $quantity = $product->getQtty() - $payment->getQtty();
 
             if ($quantity >= 0) {
-                //$em = $this->getDoctrine()->getManager();
                 $this->entityManager->getConnection()->beginTransaction();
 
                 try {
@@ -64,15 +63,13 @@ class PaymentService implements PaymentServiceInterface
                         $document->setIsBuy();
                         $this->entityManager->persist($document);
                         $this->entityManager->flush();
-                        //$em->persist($document);
-                        //$em->flush();
+
                         $documentId = $document->getId();
                     }
                     //Old owner added cash
                     $product->getOwner()->setCash($product->getOwner()->getCash() + $payment->getPrice());
                     $product->setQtty($quantity);
                     $this->entityManager->persist($product);
-                    //$em->persist($product);
 
                     //New owner added paid
                     $payment->setPayment($payment->getPrice());
@@ -84,9 +81,8 @@ class PaymentService implements PaymentServiceInterface
                     $payment->setIsPaid();
                     $this->entityManager->persist($payment);
                     $this->entityManager->flush();
+
                     $this->entityManager->getConnection()->commit();
-                    //$em->persist($payment);
-                    //$em->flush();
                 } catch (\Exception $e) {
                     $this->entityManager->getConnection()->rollBack();
                 }

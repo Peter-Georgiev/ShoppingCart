@@ -219,10 +219,12 @@ class DiscountController extends Controller
             }
         }
 
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
         $discountUser = $this->getDoctrine()->getRepository(Discount::class)->findAllUserDiscount();
 
         return $this->render('discount/user.html.twig', array('form' => $form->createView(),
-                'discountUser' => $discountUser, 'date' => new \DateTime()
+                'discountUser' => $discountUser, 'date' => new \DateTime(), 'payments' => $payments
         ));
     }
 
@@ -259,9 +261,11 @@ class DiscountController extends Controller
                 return $this->redirectToRoute('discount_user');
             }
         }
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
 
         return $this->render('discount/del_user.html.twig', array('form' => $form->createView(),
-            'discount' => $discount
+            'discount' => $discount, 'payments' => $payments
         ));
     }
 

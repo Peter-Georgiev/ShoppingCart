@@ -75,7 +75,7 @@ class ProductController extends Controller
                 $em->persist($product);
                 $em->flush();
 
-                return $this->redirectToRoute('shop_index');
+                return $this->redirectToRoute('product_create');
             }
         }
 
@@ -101,7 +101,7 @@ class ProductController extends Controller
     public function editAction($id, Request $request)
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
-        if ($product === null) {
+        if (!$product) {
             return $this->redirectToRoute("shop_index");
         }
 
@@ -115,7 +115,6 @@ class ProductController extends Controller
             ->find($product->getCategoryId());
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
-
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -131,19 +130,16 @@ class ProductController extends Controller
             $em->persist($product);
             $em->flush();
 
-            return $this->redirectToRoute('product_view',
-                array('id' => $product->getId())
-            );
+            return $this->redirectToRoute('product_create');
         }
 
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart($currentUser->getId());
 
-        return $this->render('product/edit.html.twig',
-            array('product' => $product, 'form' => $form->createView(),
-                'categories' => $categories, 'payments' => $payments)
-        );
+        return $this->render('product/edit.html.twig', array('form' => $form->createView(),
+            'product' => $product, 'categories' => $categories, 'payments' => $payments
+        ));
     }
 
     /**
@@ -157,7 +153,7 @@ class ProductController extends Controller
     public function deleteAction($id, Request $request)
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
-        if ($product === null) {
+        if (!$product) {
             return $this->redirectToRoute("shop_index");
         }
 
@@ -181,20 +177,16 @@ class ProductController extends Controller
             } catch (\Exception $e) {
                 $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
 
-                return $this->render('product/delete.html.twig',
-                    array('product' => $product, 'form' => $form->createView(), 'payments' => $payments,
-                        'danger' => 'Продукта се използва!')
-                );
+                return $this->render('product/delete.html.twig', array('form' => $form->createView(),
+                        'product' => $product, 'payments' => $payments, 'danger' => 'Продукта се използва!'
+                ));
             }
-            //$this->getDoctrine()->getRepository(Product::class)->deleteProduct($id);
-            return $this->redirectToRoute('shop_index',
-                array('id' => $product->getId())
-            );
+            return $this->redirectToRoute('product_create');
         }
 
-        return $this->render('product/delete.html.twig',
-            array('product' => $product, 'form' => $form->createView(), 'payments' => $payments)
-        );
+        return $this->render('product/delete.html.twig', array('form' => $form->createView(),
+            'product' => $product, 'payments' => $payments
+            ));
     }
 
     /**

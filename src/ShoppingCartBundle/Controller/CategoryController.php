@@ -78,7 +78,7 @@ class CategoryController extends Controller
         }
 
         $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $currentUser->getId());
+            ->findYourCart($currentUser->getId());
         $categories = $this->getDoctrine()->getRepository(Category::class)->find($id);
 
         return $this->render('category/category.html.twig',
@@ -118,20 +118,18 @@ class CategoryController extends Controller
             } catch (\Exception $e) {
                 $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
                 $payments = $this->getDoctrine()->getRepository(Payment::class)
-                    ->findYourCart( $currentUser->getId());
+                    ->findYourCart($currentUser->getId());
 
-                return $this->render('category/delete.html.twig',
-                    array('category' => $category, 'form' => $form->createView(),
-                        'payments' => $payments, 'danger' => 'The category is being used!'));
+                return $this->render('category/delete.html.twig', array('category' => $category,
+                    'form' => $form->createView(), 'payments' => $payments,
+                    'danger' => 'The category is being used!'
+                ));
             }
-
-            return $this->redirectToRoute('category_create',
-                array('id' => $category->getId())
-            );
+            return $this->redirectToRoute('category_create', array('id' => $category->getId()));
         }
 
         $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $currentUser->getId());
+            ->findYourCart($currentUser->getId());
 
         return $this->render('category/delete.html.twig',
             array('category' => $category, 'form' => $form->createView(), 'payments' => $payments)
@@ -168,13 +166,11 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('category_create',
-                array('id' => $category->getId())
-            );
+            return $this->redirectToRoute('category_create', array('id' => $category->getId()));
         }
 
         $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $currentUser->getId());
+            ->findYourCart($currentUser->getId());
 
         return $this->render('category/edit.html.twig', array('category' => $category,
                 'form' => $form->createView(), 'payments' => $payments)

@@ -102,7 +102,7 @@ class PaymentController extends Controller
         }
 
         return $this->render('payment/view_cart.html.twig', array('payments' => $payments,
-                'totalPrice' => $totalPrice[0]['totalPrice'], 'hasCheckout' => $hasCheckout));
+            'totalPrice' => $totalPrice[0]['totalPrice'], 'hasCheckout' => $hasCheckout));
     }
 
     /**
@@ -182,7 +182,6 @@ class PaymentController extends Controller
                 $this->paymentService->checkout($payments);
                 return $this->redirectToRoute('payment_view');
             } catch (\Exception $e) {
-                //TODO - NO
             }
         }
         return $this->redirectToRoute('payment_view_cart');
@@ -237,9 +236,9 @@ class PaymentController extends Controller
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart($currentUser->getId());
         $paymentsPaids = $this->getDoctrine()->getRepository(Payment::class)->findAll();
-        //$paymentsSum = $this->getDoctrine()->getRepository(Payment::class)->findAll();
+
         return $this->render('payment/view_admin.html.twig', array('paymentsPaids' => $paymentsPaids,
-                'payments' => $payments
+            'payments' => $payments
         ));
     }
 }

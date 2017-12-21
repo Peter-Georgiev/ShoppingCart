@@ -65,10 +65,10 @@ class UserController extends Controller
 
         $role = str_replace('ROLE_', '', $currentUser->getRoles()[0]);
         $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $currentUser->getId());
+            ->findYourCart($currentUser->getId());
 
         return $this->render("user/profile.html.twig", array('user' => $currentUser,
-                'role' => $role, 'payments' => $payments
+            'role' => $role, 'payments' => $payments
         ));
     }
 
@@ -94,10 +94,10 @@ class UserController extends Controller
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $roles = $this->getDoctrine()->getRepository(Role::class)->findAll();
         $payments = $this->getDoctrine()->getRepository(Payment::class)
-            ->findYourCart( $currentUser->getId());
+            ->findYourCart($currentUser->getId());
 
-        return $this->render("user/view.html.twig",  array('form' => $form->createView(), 'users' => $users,
-                'roles' => $roles, 'payments' => $payments
+        return $this->render("user/view.html.twig", array('form' => $form->createView(), 'users' => $users,
+            'roles' => $roles, 'payments' => $payments
         ));
     }
 }

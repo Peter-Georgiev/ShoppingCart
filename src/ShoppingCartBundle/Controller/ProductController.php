@@ -87,7 +87,7 @@ class ProductController extends Controller
             ->findYourCart($currentUser->getId());
 
         return $this->render('product/create.html.twig', array('form' => $form->createView(),
-                'categories' => $categories, 'products' => $products, 'payments' => $payments
+            'categories' => $categories, 'products' => $products, 'payments' => $payments
         ));
     }
 
@@ -179,7 +179,7 @@ class ProductController extends Controller
                 $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
 
                 return $this->render('product/delete.html.twig', array('form' => $form->createView(),
-                        'product' => $product, 'payments' => $payments, 'danger' => 'Продукта се използва!'
+                    'product' => $product, 'payments' => $payments, 'danger' => 'Продукта се използва!'
                 ));
             }
             return $this->redirectToRoute('product_create');
@@ -187,7 +187,7 @@ class ProductController extends Controller
 
         return $this->render('product/delete.html.twig', array('form' => $form->createView(),
             'product' => $product, 'payments' => $payments
-            ));
+        ));
     }
 
     /**
@@ -392,7 +392,7 @@ class ProductController extends Controller
             ->findYourCart($currentUser->getId());
 
         return $this->render('product/sell.html.twig', array('form' => $form->createView(),
-                'products' => $products, 'payment' => $payment, 'payments' => $payments
+            'products' => $products, 'payment' => $payment, 'payments' => $payments
         ));
     }
 
@@ -410,12 +410,12 @@ class ProductController extends Controller
         }
 
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
-        $arrDiscount= $this->discountService->biggestPeriodDiscounts(array($product), $this->getUser());
+        $arrDiscount = $this->discountService->biggestPeriodDiscounts(array($product), $this->getUser());
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart($this->getUser()->getId());
 
         return $this->render('product/product.html.twig', array('product' => $product,
-                'payments' => $payments, 'arrDiscount' => $arrDiscount
+            'payments' => $payments, 'arrDiscount' => $arrDiscount
         ));
     }
 }

@@ -5,7 +5,9 @@ namespace ShoppingCartBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
+use ShoppingCartBundle\Repository\PaymentRepository;
 use ShoppingCartBundle\Repository\ProductRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -14,30 +16,38 @@ class ProductService implements ProductServiceInterface
     /** @var EntityManagerInterface */
     private $entityManager;
 
+    /** @var TokenStorageInterface */
+    private $tokenStorage;
+
     /** @var ProductRepository */
     private $productRepository;
 
     /** @var DiscountService */
     private $discountService;
 
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
+    /** @var PaymentRepository */
+    private $paymentRepository;
 
     /**
      * ProductService constructor.
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
+     * @param TokenStorageInterface $tokenStorage
      * @param ProductRepository $productRepository
-     * @param DiscountService $discountServices
+     * @param DiscountService $discountService
+     * @param PaymentRepository $paymentRepository
      */
     public function __construct(EntityManagerInterface $entityManager,
+                                TokenStorageInterface $tokenStorage,
                                 ProductRepository $productRepository,
                                 DiscountService $discountService,
-                                TokenStorageInterface $tokenStorage)
+                                PaymentRepository $paymentRepository)
     {
         $this->entityManager = $entityManager;
+        $this->tokenStorage = $tokenStorage;
         $this->productRepository = $productRepository;
         $this->discountService = $discountService;
-        $this->tokenStorage = $tokenStorage;
+        $this->paymentRepository = $paymentRepository;
+
     }
 
     /**
@@ -132,5 +142,44 @@ class ProductService implements ProductServiceInterface
         }
 
         return $products;
+    }
+
+    /**
+     * @param $currentUser
+     * @param Product $product
+     * @param Payment $payment
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    public function sellProduct($currentUser, Product $product, Payment $payment)
+    {
+        try {
+            $product->setOwner($currentUser);
+            $product->setCategory($payment->getProducts()->getCategory());
+            $product->setName($payment->getProducts()->getName());
+            $product->setModel($payment->getProducts()->getModel());
+
+            if (intval($product->getQtty()) <= 0 || $payment->getQtty() < intval($product->getQtty())) {
+                $product->setQtty($payment->getQtty());
+            }
+            if (intval($product->getPrice()) <= 0) {
+                $product->setPrice($payment->getPayment());
+            }
+            $qtty = $payment->getQtty() - $product->getQtty();
+
+            $this->entityManager->getConnection()->beginTransaction();
+            $this->entityManager->persist($product);
+            $this->entityManager->flush();
+
+            if ($qtty <= 0) {
+                $this->entityManager->remove($payment);
+                $this->entityManager->flush();
+            } else {
+                $this->paymentRepository->updateQttyPayment($payment->getId(), $qtty);
+            }
+
+            $this->entityManager->getConnection()->commit();
+        } catch (\Exception $e) {
+            $this->entityManager->getConnection()->rollBack();
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace ShoppingCartBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\ConnectionException;
 use ShoppingCartBundle\Entity\Category;
 use ShoppingCartBundle\Entity\Payment;
 use ShoppingCartBundle\Entity\Product;
@@ -33,7 +34,8 @@ class ProductController extends Controller
      * @param DiscountServiceInterface $discountService
      * @param ProductServiceInterface $productService
      */
-    public function __construct(DiscountServiceInterface $discountService, ProductServiceInterface $productService)
+    public function __construct(DiscountServiceInterface $discountService,
+                                ProductServiceInterface $productService)
     {
         $this->discountService = $discountService;
         $this->productService = $productService;
@@ -84,10 +86,9 @@ class ProductController extends Controller
         $payments = $this->getDoctrine()->getRepository(Payment::class)
             ->findYourCart($currentUser->getId());
 
-        return $this->render('product/create.html.twig',
-            array('form' => $form->createView(), 'categories' => $categories,
-                'products' => $products, 'payments' => $payments)
-        );
+        return $this->render('product/create.html.twig', array('form' => $form->createView(),
+                'categories' => $categories, 'products' => $products, 'payments' => $payments
+        ));
     }
 
     /**
@@ -237,8 +238,9 @@ class ProductController extends Controller
             $arrUrl = explode('/', $url[0]);
             $catecoryId = intval(end($arrUrl));
 
-            return $this->redirectToRoute('product_category',
-                array('id' => $catecoryId, 'sort' => 'price_asc'));
+            return $this->redirectToRoute('product_category', array('id' => $catecoryId,
+                'sort' => 'price_asc'
+            ));
         }
 
         return $this->redirectToRoute('shop_index', array('sort' => 'price_asc'));
@@ -258,8 +260,9 @@ class ProductController extends Controller
             $arrUrl = explode('/', $url[0]);
             $catecoryId = intval(end($arrUrl));
 
-            return $this->redirectToRoute('product_category',
-                array('id' => $catecoryId, 'sort' => 'price_desc'));
+            return $this->redirectToRoute('product_category', array('id' => $catecoryId,
+                'sort' => 'price_desc'
+            ));
         }
 
         return $this->redirectToRoute('shop_index', array('sort' => 'price_desc'));
@@ -279,8 +282,9 @@ class ProductController extends Controller
             $arrUrl = explode('/', $url[0]);
             $catecoryId = intval(end($arrUrl));
 
-            return $this->redirectToRoute('product_category',
-                array('id' => $catecoryId, 'sort' => 'date_asc'));
+            return $this->redirectToRoute('product_category', array('id' => $catecoryId,
+                'sort' => 'date_asc'
+            ));
         }
         return $this->redirectToRoute('shop_index', array('sort' => 'date_asc'));
     }
@@ -299,8 +303,9 @@ class ProductController extends Controller
             $arrUrl = explode('/', $url[0]);
             $catecoryId = intval(end($arrUrl));
 
-            return $this->redirectToRoute('product_category',
-                array('id' => $catecoryId, 'sort' => 'date_desc'));
+            return $this->redirectToRoute('product_category', array('id' => $catecoryId,
+                'sort' => 'date_desc'
+            ));
         }
         return $this->redirectToRoute('shop_index', array('sort' => 'date_desc'));
     }
@@ -319,8 +324,9 @@ class ProductController extends Controller
             $arrUrl = explode('/', $url[0]);
             $catecoryId = intval(end($arrUrl));
 
-            return $this->redirectToRoute('product_category',
-                array('id' => $catecoryId, 'sort' => 'promo'));
+            return $this->redirectToRoute('product_category', array('id' => $catecoryId,
+                'sort' => 'promo'
+            ));
         }
         return $this->redirectToRoute('shop_index', array('sort' => 'promo'));
     }
@@ -357,12 +363,12 @@ class ProductController extends Controller
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
-        if ($currentUser === null) {
+        if (!$currentUser) {
             return $this->redirectToRoute("security_login");
         }
 
-        /** @var Collection|Payment $payments */
-        $payments = $this->getDoctrine()->getRepository(Payment::class)->find($id);
+        /** @var Payment $payment */
+        $payment = $this->getDoctrine()->getRepository(Payment::class)->find($id);
 
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -373,40 +379,21 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $product->setOwner($this->getUser());
-            $product->setCategory($payments->getProducts()->getCategory());
-            $product->setName($payments->getProducts()->getName());
-            $product->setModel($payments->getProducts()->getModel());
-
-            if (intval($product->getQtty()) <= 0 || $payments->getQtty() < intval($product->getQtty())) {
-                $product->setQtty($payments->getQtty());
+            try {
+                $this->productService->sellProduct($currentUser, $product, $payment);
+                return $this->redirectToRoute('shop_index');
+            } catch (ConnectionException $e) {
             }
-            if (intval($product->getPrice()) <= 0) {
-                $product->setPrice($payments->getPayment());
-            }
-            $qtty = $payments->getQtty() - $product->getQtty();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
-            $em->flush();
-
-            if ($qtty <= 0) {
-                $em->remove($payments);
-                $em->flush();
-            } else {
-                $this->getDoctrine()->getRepository(Payment::class)
-                    ->updateQttyPayment($payments->getId(), $qtty);
-            }
-            return $this->redirectToRoute('shop_index');
         }
 
         $products = $this->getDoctrine()->getRepository(Product::class)
             ->findUserByProducts($currentUser->getId());
+        $payments = $this->getDoctrine()->getRepository(Payment::class)
+            ->findYourCart($currentUser->getId());
 
         return $this->render('product/sell.html.twig', array('form' => $form->createView(),
-                'products' => $products, 'payments' => $payments)
-        );
+                'products' => $products, 'payment' => $payment, 'payments' => $payments
+        ));
     }
 
     /**

@@ -36,15 +36,15 @@ services:
 
     ShoppingCartBundle\Service\PaymentServiceInterface:
         alias: 'ShoppingCartBundle\Service\PaymentService'
-        public: true
+        public: false
 
     ShoppingCartBundle\Service\DiscountServiceInterface:
         alias: 'ShoppingCartBundle\Service\DiscountService'
-        public: true
+        public: false
 
     ShoppingCartBundle\Service\ProductServiceInterface:
         alias: 'ShoppingCartBundle\Service\ProductService'
-        public: true
+        public: false
 
     ShoppingCartBundle\Repository\BanIpRepository:
         factory: 'doctrine.orm.entity_manager:getRepository'
@@ -62,3 +62,6 @@ services:
           factory: 'doctrine.orm.entity_manager:getRepository'
           arguments: ['ShoppingCartBundle\Entity\Category']
 
+    ShoppingCartBundle\Repository\PaymentRepository:
+          factory: 'doctrine.orm.entity_manager:getRepository'
+          arguments: ['ShoppingCartBundle\Entity\Payment']

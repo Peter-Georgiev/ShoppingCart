@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6d09c98-d36c-423c-bdf5-f8c5ce6cc517" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2e60d370-e1bd-451b-b622-f4eef138491c.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/2e60d370-e1bd-451b-b622-f4eef138491c.xml" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/product/sell.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/product/sell.html.twig" />
-      <change beforePath="$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php" afterPath="$PROJECT_DIR$/src/ShoppingCartBundle/Service/PaymentService.php" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,26 +41,26 @@
               <ID>DATABASE</ID>
               <OriginalElement>2e60d370-e1bd-451b-b622-f4eef138491c</OriginalElement>
               <nodes>
-                <node x="870.6607142857142" y="344.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles</node>
+                <node x="0.0" y="851.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.ban_ip</node>
                 <node x="891.4107142857142" y="66.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.roles</node>
                 <node x="288.375" y="256.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products</node>
-                <node x="60.17103448275864" y="796.6993103448276">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.ban_ip</node>
                 <node x="98.36607142857139" y="55.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories</node>
                 <node x="684.6607142857142" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.documents</node>
                 <node x="175.07738095238096" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts</node>
-                <node x="475.375" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews</node>
-                <node x="584.8568185550082" y="646.9903448275862">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments</node>
-                <node x="0.0" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts</node>
                 <node x="387.1160714285714" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews</node>
-                <node x="529.0833333333334" y="-23.481379310344828">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users</node>
+                <node x="586.3244047619047" y="556.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments</node>
+                <node x="0.0" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts</node>
+                <node x="529.0833333333333" y="0.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users</node>
+                <node x="870.6607142857142" y="344.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles</node>
                 <node x="77.0" y="289.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts</node>
+                <node x="475.375" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews</node>
               </nodes>
               <notes />
               <edges>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
                   <point x="41.75" y="-125.0" />
                   <point x="413.625" y="231.0" />
-                  <point x="551.5833333333334" y="231.0" />
+                  <point x="551.5833333333333" y="231.0" />
                   <point x="-67.5" y="103.0" />
                 </edge>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
@@ -80,8 +78,14 @@
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
                   <point x="-32.25" y="-36.5" />
                   <point x="902.9107142857142" y="231.0" />
-                  <point x="686.5833333333334" y="231.0" />
+                  <point x="686.5833333333333" y="231.0" />
                   <point x="67.5" y="103.0" />
+                </edge>
+                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+                  <point x="0.0" y="-59.0" />
+                  <point x="558.875" y="231.0" />
+                  <point x="596.5833333333333" y="231.0" />
+                  <point x="-22.5" y="103.0" />
                 </edge>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories">
                   <point x="-41.75" y="-125.0" />
@@ -89,18 +93,12 @@
                   <point x="213.1160714285714" y="231.0" />
                   <point x="38.25" y="48.0" />
                 </edge>
-                <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
-                  <point x="0.0" y="-59.0" />
-                  <point x="558.875" y="231.0" />
-                  <point x="596.5833333333334" y="231.0" />
-                  <point x="-22.5" y="103.0" />
-                </edge>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
                   <point x="0.0" y="-125.0" />
-                  <point x="677.3892323481116" y="549.208275862069" />
-                  <point x="665.3551970443349" y="550.6758620689654" />
-                  <point x="665.355197044335" y="232.46758620689656" />
-                  <point x="641.5833333333334" y="231.0" />
+                  <point x="680.3244047619047" y="536.0" />
+                  <point x="674.1607142857142" y="536.0" />
+                  <point x="674.1607142857142" y="231.0" />
+                  <point x="641.5833333333333" y="231.0" />
                   <point x="22.5" y="103.0" />
                 </edge>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.roles">
@@ -114,8 +112,8 @@
                   <point x="45.0" y="92.0" />
                 </edge>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.documents">
-                  <point x="62.666666666666686" y="-125.0" />
-                  <point x="742.9910714285714" y="536.0" />
+                  <point x="62.666666666666664" y="-125.0" />
+                  <point x="742.9910714285713" y="536.0" />
                   <point x="767.6607142857142" y="536.0" />
                   <point x="0.0" y="59.0" />
                 </edge>
@@ -126,16 +124,16 @@
                   <point x="0.0" y="59.0" />
                 </edge>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
-                  <point x="-62.66666666666663" y="-125.0" />
+                  <point x="-62.66666666666666" y="-125.0" />
                   <point x="617.6577380952381" y="526.0" />
                   <point x="427.54166666666663" y="526.0" />
-                  <point x="55.66666666666663" y="125.0" />
+                  <point x="55.66666666666666" y="125.0" />
                 </edge>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
                   <point x="38.0" y="-36.5" />
                   <point x="289.07738095238096" y="536.0" />
                   <point x="316.20833333333337" y="536.0" />
-                  <point x="-55.66666666666663" y="125.0" />
+                  <point x="-55.666666666666664" y="125.0" />
                 </edge>
                 <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories">
                   <point x="-38.5" y="-36.5" />
@@ -146,14 +144,82 @@
                   <point x="-38.25" y="48.0" />
                 </edge>
               </edges>
-              <settings layout="Hierarchic Group" zoom="0.681390977443609" x="761.216551724138" y="402.92137931034483" />
-              <SelectedNodes>
-                <node>2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts</node>
-              </SelectedNodes>
+              <settings layout="Hierarchic Group" zoom="1.0" x="579.0" y="349.5" />
+              <SelectedNodes />
               <Categories>
-                <Category>Key columns</Category>
                 <Category>Columns</Category>
+                <Category>Key columns</Category>
               </Categories>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiscountController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1309">
+              <caret line="88" column="28" lean-forward="false" selection-start-line="88" selection-start-column="28" selection-end-line="88" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiscountRepository.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/DiscountRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="46" column="42" lean-forward="false" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomeController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/HomeController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="43" column="30" lean-forward="false" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3128">
+              <caret line="199" column="20" lean-forward="false" selection-start-line="199" selection-start-column="20" selection-end-line="199" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductService.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/ProductService.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1785">
+              <caret line="111" column="62" lean-forward="false" selection-start-line="111" selection-start-column="62" selection-end-line="111" selection-end-column="62" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductRepository.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/ProductRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1326">
+              <caret line="81" column="31" lean-forward="false" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiscountService.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1360">
+              <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -295,7 +361,7 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="113" />
     <option name="y" value="76" />
     <option name="width" value="1294" />
@@ -350,6 +416,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -502,8 +570,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -621,12 +687,16 @@
       <workItem from="1513697241126" duration="21126000" />
       <workItem from="1513752602420" duration="122000" />
       <workItem from="1513752746107" duration="44446000" />
-      <workItem from="1513877226635" duration="7344000" />
+      <workItem from="1513877226635" duration="7969000" />
+      <workItem from="1513927891917" duration="3896000" />
+      <workItem from="1514029867185" duration="40000" />
+      <workItem from="1514029988973" duration="68000" />
+      <workItem from="1514049443102" duration="50000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="610281000" />
+    <option name="totallyTimeSpent" value="614960000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -638,10 +708,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="886" extended-state="7" />
+    <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24713467" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1704871" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288948" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31756756" sideWeight="0.5057307" order="7" side_tool="true" content_ui="tabs" />
@@ -682,21 +752,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-612">
-          <caret line="61" column="21" lean-forward="false" selection-start-line="56" selection-start-column="4" selection-end-line="61" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Entity/Review.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
           <caret line="74" column="25" lean-forward="false" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="25" />
-          <folding>
-            <element signature="e#45#93#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -711,7 +770,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="353" column="23" lean-forward="false" selection-start-line="353" selection-start-column="23" selection-end-line="353" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -734,23 +792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/HomeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="55" column="98" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="98" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/SecurityController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="18" column="63" lean-forward="false" selection-start-line="18" selection-start-column="63" selection-end-line="18" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -758,7 +799,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -766,7 +806,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-98">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -774,7 +813,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="16" column="1" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -782,7 +820,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -791,9 +828,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="e#47#87#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -801,7 +835,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -809,17 +842,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="e#49#80#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/ProductRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -834,7 +856,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -842,15 +863,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="32" column="38" lean-forward="false" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DocumentController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -893,7 +905,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-816">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -901,7 +912,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-357">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -909,24 +919,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="27" column="31" lean-forward="false" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/discount/del_category.html.twig" />
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-370">
-          <caret line="138" column="25" lean-forward="false" selection-start-line="138" selection-start-column="25" selection-end-line="138" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountServiceInterface.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="38" column="61" lean-forward="false" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -945,37 +945,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/discount/del_user.html.twig" />
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="219" column="9" lean-forward="false" selection-start-line="219" selection-start-column="9" selection-end-line="219" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/ProductServiceInterface.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-          <folding>
-            <element signature="e#47#85#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/ProductService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="153" column="5" lean-forward="true" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/DocumentRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -983,15 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="26" column="24" lean-forward="false" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/DiscountRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="12" column="2" lean-forward="false" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -999,17 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="516">
           <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1774">
-          <caret line="400" column="17" lean-forward="true" selection-start-line="400" selection-start-column="17" selection-end-line="400" selection-end-column="17" />
-          <folding>
-            <element signature="e#14083#14107#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1017,7 +970,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="686">
           <caret line="75" column="30" lean-forward="true" selection-start-line="75" selection-start-column="30" selection-end-line="75" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1025,7 +977,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
           <caret line="168" column="94" lean-forward="false" selection-start-line="168" selection-start-column="94" selection-end-line="168" selection-end-column="94" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1033,7 +984,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="54" column="97" lean-forward="false" selection-start-line="54" selection-start-column="97" selection-end-line="54" selection-end-column="97" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1041,14 +991,96 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="514">
           <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DocumentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/SecurityController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="12" column="7" lean-forward="false" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/PaymentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2890">
-          <caret line="181" column="45" lean-forward="false" selection-start-line="181" selection-start-column="45" selection-end-line="181" selection-end-column="45" />
+        <state relative-caret-position="136">
+          <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/doctrine/dbal/lib/Doctrine/DBAL/Connection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="1236" column="20" lean-forward="false" selection-start-line="1236" selection-start-column="20" selection-end-line="1236" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/DocumentRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/DiscountController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1309">
+          <caret line="88" column="28" lean-forward="false" selection-start-line="88" selection-start-column="28" selection-end-line="88" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/DiscountService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1360">
+          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/DiscountRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="46" column="42" lean-forward="false" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/HomeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="43" column="30" lean-forward="false" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Controller/ProductController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3128">
+          <caret line="199" column="20" lean-forward="false" selection-start-line="199" selection-start-column="20" selection-end-line="199" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Service/ProductService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="111" column="62" lean-forward="false" selection-start-line="111" selection-start-column="62" selection-end-line="111" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ShoppingCartBundle/Repository/ProductRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1326">
+          <caret line="81" column="31" lean-forward="false" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -1059,26 +1091,26 @@
           <ID>DATABASE</ID>
           <OriginalElement>2e60d370-e1bd-451b-b622-f4eef138491c</OriginalElement>
           <nodes>
-            <node x="870.6607142857142" y="344.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles</node>
+            <node x="0.0" y="851.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.ban_ip</node>
             <node x="891.4107142857142" y="66.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.roles</node>
             <node x="288.375" y="256.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products</node>
-            <node x="60.17103448275864" y="796.6993103448276">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.ban_ip</node>
             <node x="98.36607142857139" y="55.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories</node>
             <node x="684.6607142857142" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.documents</node>
             <node x="175.07738095238096" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts</node>
-            <node x="475.375" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews</node>
-            <node x="584.8568185550082" y="646.9903448275862">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments</node>
-            <node x="0.0" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts</node>
             <node x="387.1160714285714" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews</node>
-            <node x="529.0833333333334" y="-23.481379310344828">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users</node>
+            <node x="586.3244047619047" y="556.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments</node>
+            <node x="0.0" y="644.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts</node>
+            <node x="529.0833333333333" y="0.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users</node>
+            <node x="870.6607142857142" y="344.5">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles</node>
             <node x="77.0" y="289.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts</node>
+            <node x="475.375" y="322.0">2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews</node>
           </nodes>
           <notes />
           <edges>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
               <point x="41.75" y="-125.0" />
               <point x="413.625" y="231.0" />
-              <point x="551.5833333333334" y="231.0" />
+              <point x="551.5833333333333" y="231.0" />
               <point x="-67.5" y="103.0" />
             </edge>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
@@ -1096,8 +1128,14 @@
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
               <point x="-32.25" y="-36.5" />
               <point x="902.9107142857142" y="231.0" />
-              <point x="686.5833333333334" y="231.0" />
+              <point x="686.5833333333333" y="231.0" />
               <point x="67.5" y="103.0" />
+            </edge>
+            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
+              <point x="0.0" y="-59.0" />
+              <point x="558.875" y="231.0" />
+              <point x="596.5833333333333" y="231.0" />
+              <point x="-22.5" y="103.0" />
             </edge>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories">
               <point x="-41.75" y="-125.0" />
@@ -1105,18 +1143,12 @@
               <point x="213.1160714285714" y="231.0" />
               <point x="38.25" y="48.0" />
             </edge>
-            <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.reviews" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
-              <point x="0.0" y="-59.0" />
-              <point x="558.875" y="231.0" />
-              <point x="596.5833333333334" y="231.0" />
-              <point x="-22.5" y="103.0" />
-            </edge>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users">
               <point x="0.0" y="-125.0" />
-              <point x="677.3892323481116" y="549.208275862069" />
-              <point x="665.3551970443349" y="550.6758620689654" />
-              <point x="665.355197044335" y="232.46758620689656" />
-              <point x="641.5833333333334" y="231.0" />
+              <point x="680.3244047619047" y="536.0" />
+              <point x="674.1607142857142" y="536.0" />
+              <point x="674.1607142857142" y="231.0" />
+              <point x="641.5833333333333" y="231.0" />
               <point x="22.5" y="103.0" />
             </edge>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.users_roles" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.roles">
@@ -1130,8 +1162,8 @@
               <point x="45.0" y="92.0" />
             </edge>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.documents">
-              <point x="62.666666666666686" y="-125.0" />
-              <point x="742.9910714285714" y="536.0" />
+              <point x="62.666666666666664" y="-125.0" />
+              <point x="742.9910714285713" y="536.0" />
               <point x="767.6607142857142" y="536.0" />
               <point x="0.0" y="59.0" />
             </edge>
@@ -1142,16 +1174,16 @@
               <point x="0.0" y="59.0" />
             </edge>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.payments" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
-              <point x="-62.66666666666663" y="-125.0" />
+              <point x="-62.66666666666666" y="-125.0" />
               <point x="617.6577380952381" y="526.0" />
               <point x="427.54166666666663" y="526.0" />
-              <point x="55.66666666666663" y="125.0" />
+              <point x="55.66666666666666" y="125.0" />
             </edge>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.products">
               <point x="38.0" y="-36.5" />
               <point x="289.07738095238096" y="536.0" />
               <point x="316.20833333333337" y="536.0" />
-              <point x="-55.66666666666663" y="125.0" />
+              <point x="-55.666666666666664" y="125.0" />
             </edge>
             <edge source="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories_discounts" target="2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.categories">
               <point x="-38.5" y="-36.5" />
@@ -1162,13 +1194,11 @@
               <point x="-38.25" y="48.0" />
             </edge>
           </edges>
-          <settings layout="Hierarchic Group" zoom="0.681390977443609" x="761.216551724138" y="402.92137931034483" />
-          <SelectedNodes>
-            <node>2e60d370-e1bd-451b-b622-f4eef138491c.TABLE:shopping_cart.discounts</node>
-          </SelectedNodes>
+          <settings layout="Hierarchic Group" zoom="1.0" x="579.0" y="349.5" />
+          <SelectedNodes />
           <Categories>
-            <Category>Key columns</Category>
             <Category>Columns</Category>
+            <Category>Key columns</Category>
           </Categories>
         </state>
       </provider>
